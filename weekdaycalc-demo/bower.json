@@ -1,0 +1,18 @@
+{
+  "name": "weekdaycalc-demo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/thesmallestgnome/thesmallestgnome.github.io",
+  "authors": [
+    "Mariia Kondrateva <thesmallestgnome@gmail.com>"
+  ],
+  "description": "demo for moment.js weekdaycalc plugin",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

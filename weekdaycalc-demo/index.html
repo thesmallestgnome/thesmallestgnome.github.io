@@ -1,1 +1,196 @@
-TODO: copypaste contents of weekdaycalc example html for the begining
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Moment Range weekday conter</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../bower_components/core-scroll-header-panel/core-scroll-header-panel.html">
+    <link rel="import" href="../bower_components/core-elements/core-elements.html">
+    <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+
+    <script src="../bower_components/moment/min/moment.min.js"></script>
+    <script src="../bower_components/moment-weekday-calc//build/moment-weekday-calc.min.js"></script>
+
+    <style shim-shadowdom>
+
+        html, body {
+          height: 100%;
+        }
+
+        body {
+          margin: 0;
+          font-family: sans-serif;
+          color: #333;
+        }
+
+        core-scroll-header-panel {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: #eee;
+        }
+
+        /* background for toolbar when it is at its full size */
+        core-scroll-header-panel::shadow #headerBg {
+          background-image: url(images/bg9.jpg);
+        }
+
+        /* background for toolbar when it is condensed */
+        core-scroll-header-panel::shadow #condensedHeaderBg {
+          background-color: #f4b400;
+        }
+
+        core-toolbar {
+          color: #f1f1f1;
+          fill: #f1f1f1;
+          background-color: transparent;
+        }
+
+        .title {
+          -webkit-transform-origin: 0;
+          transform-origin: 0;
+          font-size: 40px;
+        }
+
+        .content {
+          padding: 8px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<core-scroll-header-panel condenses>
+    <core-toolbar class="tall">
+        <h1>TODO weekdaycalc demo</h1>
+    </core-toolbar>
+
+    <div class="content">
+        <div id="range">
+            <label for="start-date">Dates range start:</label>
+            <input id="start-date" value="2015-04-01"/>
+            <!-- <paper-date-picker-dialog id="picker" date="2015/04/01"></paper-date-picker-dialog> -->
+            <label for="end-date">Dates range end:</label>
+            <input id="end-date" value="2016-03-31" />
+        </div>
+
+        <div id="weekdays">
+            <label for="weekday-mo">mo:</label>
+            <input class="weekday" id="weekday-mo" type="checkbox" value="1" checked />
+            <label for="weekday-tu">tu:</label>
+            <input class="weekday" id="weekday-tu" type="checkbox" value="2" checked />
+            <label for="weekday-we">we:</label>
+            <input class="weekday" id="weekday-we" type="checkbox" value="3" checked />
+            <label for="weekday-th">th:</label>
+            <input class="weekday" id="weekday-th" type="checkbox" value="4" checked />
+            <label for="weekday-fr">fr:</label>
+            <input class="weekday" id="weekday-fr" type="checkbox" value="5" checked />
+            <label for="weekday-sa">sa:</label>
+            <input class="weekday" id="weekday-sa" type="checkbox" value="6" />
+            <label for="weekday-su">su:</label>
+            <input class="weekday" id="weekday-su" type="checkbox" value="7" />
+        </div>
+
+        <button id="calculate">Calculate</button>
+
+        <div id="result"></div>
+
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+    </div>
+
+</core-scroll-header-panel>
+
+<script>
+    var calculate = function(){
+        var startDate = document.getElementById('start-date').value;
+        var endDate = document.getElementById('end-date').value;
+        var weekdayInputs = document.getElementsByClassName('weekday');
+        var weekdays = [];
+        for (var i=0;i<weekdayInputs.length;i++) {
+            var weekdayInput = weekdayInputs[i];
+            if (weekdayInput.checked) {
+                weekdays.push(parseInt(weekdayInput.value));
+            }
+        }
+        document.getElementById('result').innerHTML = moment().isoWeekdayCalc(startDate,endDate,weekdays);
+    };
+    document.getElementById('calculate').onclick = calculate;
+    document.getElementById('start-date').onkeyup = function(e) {
+        if (e.keyCode == 13 ) {
+            document.getElementById('end-date').focus();
+            calculate();
+        }
+    };
+    document.getElementById('end-date').onkeyup = function(e) {
+        if (e.keyCode == 13 ) calculate();
+    };
+</script>
+</body>
+</html>

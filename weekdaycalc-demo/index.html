@@ -13,11 +13,20 @@
     <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
     <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
     <link rel="import" href="bower_components/pk-datepicker/pk-datepicker.html">
 
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/moment-weekday-calc/build/moment-weekday-calc.min.js"></script>
-
+    <style>
+        pk-datepicker td>div {
+            border: 1px solid transparent;
+        }
+        pk-datepicker td>div.selected {
+            border: 1px solid black;
+            border-radius: 15px;
+        }
+    </style>
     <style is="custom-style">
         body {
           font-family: 'Roboto', 'Noto', sans-serif;
@@ -162,14 +171,13 @@
 
     <div class="content">
         <div class="horizontal center-justified layout">
-            <pk-datepicker id="picker1" month="4" year="2015"></pk-datepicker>
-            <pk-datepicker id="picker2" month="3" year="2016"></pk-datepicker>
+            <pk-datepicker id="start-date-picker" month="3" year="2015"></pk-datepicker>
+            <pk-datepicker id="end-date-picker" month="2" year="2016"></pk-datepicker>
         </div>
+
         <div id="range" class="horizontal center-justified layout">
-            <label for="start-date">Dates range start:</label>
-            <input id="start-date" value="2015-04-01"/>
-            <label for="end-date">Dates range end:</label>
-            <input id="end-date" value="2016-03-31" />
+            <paper-input disabled label="dates range start" id="start-date" value="2015-04-01"></paper-input>
+            <paper-input disabled label="dates range end" id="end-date" value="2016-03-31"></paper-input>
         </div>
 
         <div id="weekdays" class="horizontal center-justified layout">
@@ -255,12 +263,11 @@
 </paper-scroll-header-panel>
 
 <script>
-    document.getElementById("picker1").addEventListener("date-selected",function(event){
-        document.getElementById("start-date").value = event.detail.year+"-"+event.detail.month+"-"+event.detail.day;
-    });
-    document.getElementById("picker2").addEventListener("date-selected",function(event){
-        document.getElementById("end-date").value = event.detail.year+"-"+event.detail.month+"-"+event.detail.day;
-    });
+    var startDatePiker = document.getElementById("start-date-picker");
+    var endDatePicker = document.getElementById("end-date-picker");
+    var startDateInput = document.getElementById("start-date");
+    var endDateInput = document.getElementById("end-date");
+
     var calculate = function(){
         var startDate = document.getElementById('start-date').value;
         var endDate = document.getElementById('end-date').value;
@@ -274,16 +281,46 @@
         }
         document.getElementById('result').innerHTML = moment().isoWeekdayCalc(startDate,endDate,weekdays);
     };
-    document.getElementById('calculate').onclick = calculate;
-    document.getElementById('start-date').onkeyup = function(e) {
-        if (e.keyCode == 13 ) {
-            document.getElementById('end-date').focus();
-            calculate();
+
+    var highlightDate = function(picker,dateToSelect) {
+        var days = picker.getElementsByClassName('day');
+        for (var i=0;i<days.length;i++) {
+            var day = days[i];
+            if (day.textContent!=dateToSelect) {
+                day.className = "day style-scope pk-datepicker";
+            } else {
+                day.className += " selected";
+            }
         }
     };
-    document.getElementById('end-date').onkeyup = function(e) {
-        if (e.keyCode == 13 ) calculate();
+
+    var changeDate = function (dateInput, picker, date) {
+        dateInput.value = date.year+"-"+date.month+"-"+date.day;
+        highlightDate(picker,date.day);
     };
+
+
+    {
+        highlightDate(startDatePiker,"1");
+        highlightDate(endDatePicker,"31");
+        startDatePiker.addEventListener("date-selected",function(event){
+            changeDate(startDateInput,event.target,event.detail);
+        });
+        endDatePicker.addEventListener("date-selected",function(event){
+            changeDate(endDateInput,event.target,event.detail);
+        });
+        document.getElementById('calculate').onclick = calculate;
+        document.getElementById('start-date').onkeyup = function(e) {
+            if (e.keyCode == 13 ) {
+                document.getElementById('end-date').focus();
+                calculate();
+            }
+        };
+        document.getElementById('end-date').onkeyup = function(e) {
+            if (e.keyCode == 13 ) calculate();
+        };
+    };
+
 </script>
 </body>
 </html>

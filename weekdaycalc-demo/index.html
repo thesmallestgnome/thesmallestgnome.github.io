@@ -49,8 +49,7 @@
           /* background for toolbar when it is condensed */
           --paper-scroll-header-panel-condensed-header: {
             /* background-color: var(--paper-deep-orange-500, #D7B34D); */
-            background-color: #599BCB;
-            background-color: var(--paper-light-blue-100);
+            background-color: rgba(66, 133, 244,0.25);
           };
         }       
 
@@ -73,6 +72,7 @@
 
         .horizontal-section {
           min-width: 130px;
+          max-width: 1000px;
         }
 
         paper-button {
@@ -160,45 +160,29 @@
     </paper-toolbar>
 
     <div class="content">
-        <div id="range">
+        <div id="range" class="horizontal center-justified layout">
             <label for="start-date">Dates range start:</label>
             <input id="start-date" value="2015-04-01"/>
             <label for="end-date">Dates range end:</label>
             <input id="end-date" value="2016-03-31" />
         </div>
 
-        <div id="weekdays" class="horizontal-section">
-            <paper-button tabindex="0" toggles active class="colorful">Monday</paper-button>
-            <paper-button tabindex="0" toggles active class="colorful">Tuesday</paper-button>
-            <paper-button tabindex="0" toggles active class="colorful">Wednesday</paper-button>
-            <paper-button tabindex="0" toggles active class="colorful">Thursday</paper-button>
-            <paper-button tabindex="0" toggles active class="colorful">Friday</paper-button>
-            <paper-button tabindex="0" toggles class="red red_bg colorful">Saturday</paper-button>
-            <paper-button tabindex="0" toggles class="red red_bg colorful">Sunday</paper-button>
-            
-
-
-
-            <label for="weekday-mo">mo:</label>
-            <input class="weekday" id="weekday-mo" type="checkbox" value="1" checked />
-            <label for="weekday-tu">tu:</label>
-            <input class="weekday" id="weekday-tu" type="checkbox" value="2" checked />
-            <label for="weekday-we">we:</label>
-            <input class="weekday" id="weekday-we" type="checkbox" value="3" checked />
-            <label for="weekday-th">th:</label>
-            <input class="weekday" id="weekday-th" type="checkbox" value="4" checked />
-            <label for="weekday-fr">fr:</label>
-            <input class="weekday" id="weekday-fr" type="checkbox" value="5" checked />
-            <label for="weekday-sa">sa:</label>
-            <input class="weekday" id="weekday-sa" type="checkbox" value="6" />
-            <label for="weekday-su">su:</label>
-            <input class="weekday" id="weekday-su" type="checkbox" value="7" />
+        <div id="weekdays" class="horizontal center-justified layout">
+            <paper-button data-value="1" tabindex="0" toggles active class="colorful weekday">Monday</paper-button>
+            <paper-button data-value="2" tabindex="0" toggles active class="colorful weekday">Tuesday</paper-button>
+            <paper-button data-value="3" tabindex="0" toggles active class="colorful weekday">Wednesday</paper-button>
+            <paper-button data-value="4" tabindex="0" toggles active class="colorful weekday">Thursday</paper-button>
+            <paper-button data-value="5" tabindex="0" toggles active class="colorful weekday">Friday</paper-button>
+            <paper-button data-value="6" tabindex="0" toggles class="red red_bg colorful weekday">Saturday</paper-button>
+            <paper-button data-value="7" tabindex="0" toggles class="red red_bg colorful weekday">Sunday</paper-button>
         </div>
 
         <!-- <button id="calculate">Calculate</button> -->
-        <paper-button raised="" role="button" id="calculate" tabindex="0">Calculate</paper-button>
+        <div class="horizontal center-justified layout">
+            <paper-button raised="" role="button" id="calculate" tabindex="0">Calculate</paper-button>
+        </div>
 
-        <div id="result"></div>
+        <div id="result" class="horizontal center-justified layout"></div>
 
         <p>test</p>
         <p>test</p>
@@ -273,8 +257,8 @@
         var weekdays = [];
         for (var i=0;i<weekdayInputs.length;i++) {
             var weekdayInput = weekdayInputs[i];
-            if (weekdayInput.checked) {
-                weekdays.push(parseInt(weekdayInput.value));
+            if (weekdayInput.active) {
+                weekdays.push(parseInt(weekdayInput.dataValue));
             }
         }
         document.getElementById('result').innerHTML = moment().isoWeekdayCalc(startDate,endDate,weekdays);

@@ -8,6 +8,7 @@
     <title>Moment Range weekday conter</title>
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
     
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="bower_components/paper-button/paper-button.html">
     <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
     <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
@@ -42,16 +43,16 @@
 
           /* background for toolbar when it is at its full size */
           --paper-scroll-header-panel-full-header: {
-            background-image: url(images/bg9.jpg);
+            background-image: url(images/bg_dv.jpg);
           };
 
           /* background for toolbar when it is condensed */
           --paper-scroll-header-panel-condensed-header: {
-            background-color: var(--paper-deep-orange-500, #ff5722);
+            /* background-color: var(--paper-deep-orange-500, #D7B34D); */
+            background-color: #599BCB;
+            background-color: var(--paper-light-blue-100);
           };
-        }
-
-       
+        }       
 
         paper-toolbar {
           background-color: transparent;
@@ -69,6 +70,84 @@
         .content {
           padding: 8px;
         }
+
+        .horizontal-section {
+          min-width: 130px;
+        }
+
+        paper-button {
+          display: block;
+          margin-bottom: 24px;
+        }
+
+        paper-button.colorful {
+          color: #4285f4;
+        }
+
+        paper-button[raised].colorful {
+          background: #4285f4;
+          color: #fff;
+        }
+
+        paper-button[toggles] {
+          transition: background-color 0.3s;
+        }
+
+        paper-button[toggles][active] {
+          background-color: rgba(0, 0, 0, 0.25);
+        }
+        paper-button[toggles][active].colorful.red_bg{
+          background-color: rgba(247, 210, 207, 1);
+        }
+
+        paper-button[toggles][active].colorful {
+          background-color: rgba(66, 133, 244, 0.25);
+        }
+
+        paper-button[toggles][active][raised].colorful {
+          background-color: rgba(66, 133, 244, 0.75);
+        }
+
+        paper-button.blue {
+          color: var(--paper-light-blue-500);
+          --paper-button-flat-focus-color: var(--paper-light-blue-50);
+        }
+        paper-button.blue:hover {
+          background: var(--paper-light-blue-50);
+        }
+        paper-button.red {
+          color: var(--paper-red-500);
+          --paper-button-flat-focus-color: var(--paper-red-50);
+        }
+        paper-button.red:hover {
+          background: var(--paper-red-50);
+        }
+        paper-button.green {
+          color: var(--paper-green-500);
+          --paper-button-flat-focus-color: var(--paper-green-50);
+        }
+        paper-button.green:hover {
+          background: var(--paper-green-50);
+        }
+        paper-button.orange {
+          color: var(--paper-orange-500);
+          --paper-button-flat-focus-color: var(--paper-orange-50);
+        }
+        paper-button.orange:hover {
+          background: var(--paper-orange-50);
+        }
+
+        paper-button.hover:hover {
+          background: #eee;
+        }
+
+        paper-button.ripple::shadow paper-ripple {
+          color: var(--paper-pink-a200);
+        }
+
+        paper-button.ripple paper-ripple {
+          color: var(--paper-pink-a200);
+        }
     </style>
 
 </head>
@@ -84,12 +163,22 @@
         <div id="range">
             <label for="start-date">Dates range start:</label>
             <input id="start-date" value="2015-04-01"/>
-            <!-- <paper-date-picker-dialog id="picker" date="2015/04/01"></paper-date-picker-dialog> -->
             <label for="end-date">Dates range end:</label>
             <input id="end-date" value="2016-03-31" />
         </div>
 
-        <div id="weekdays">
+        <div id="weekdays" class="horizontal-section">
+            <paper-button tabindex="0" toggles active class="colorful">Monday</paper-button>
+            <paper-button tabindex="0" toggles active class="colorful">Tuesday</paper-button>
+            <paper-button tabindex="0" toggles active class="colorful">Wednesday</paper-button>
+            <paper-button tabindex="0" toggles active class="colorful">Thursday</paper-button>
+            <paper-button tabindex="0" toggles active class="colorful">Friday</paper-button>
+            <paper-button tabindex="0" toggles class="red red_bg colorful">Saturday</paper-button>
+            <paper-button tabindex="0" toggles class="red red_bg colorful">Sunday</paper-button>
+            
+
+
+
             <label for="weekday-mo">mo:</label>
             <input class="weekday" id="weekday-mo" type="checkbox" value="1" checked />
             <label for="weekday-tu">tu:</label>

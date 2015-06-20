@@ -19,6 +19,7 @@
     "moment": "~2.10.3",
     "moment-weekday-calc": "~1.0.1",
     "polymer": "Polymer/polymer#~1.0.4",
-    "paper-elements": "PolymerElements/paper-elements#~1.0.1"
+    "paper-elements": "PolymerElements/paper-elements#~1.0.1",
+    "pk-datepicker": "~1.0.1"
   }
 }

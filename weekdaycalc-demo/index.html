@@ -13,6 +13,7 @@
     <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
     <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="bower_components/pk-datepicker/pk-datepicker.html">
 
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/moment-weekday-calc/build/moment-weekday-calc.min.js"></script>
@@ -160,6 +161,10 @@
     </paper-toolbar>
 
     <div class="content">
+        <div class="horizontal center-justified layout">
+            <pk-datepicker id="picker1" month="4" year="2015"></pk-datepicker>
+            <pk-datepicker id="picker2" month="3" year="2016"></pk-datepicker>
+        </div>
         <div id="range" class="horizontal center-justified layout">
             <label for="start-date">Dates range start:</label>
             <input id="start-date" value="2015-04-01"/>
@@ -250,6 +255,12 @@
 </paper-scroll-header-panel>
 
 <script>
+    document.getElementById("picker1").addEventListener("date-selected",function(event){
+        document.getElementById("start-date").value = event.detail.year+"-"+event.detail.month+"-"+event.detail.day;
+    });
+    document.getElementById("picker2").addEventListener("date-selected",function(event){
+        document.getElementById("end-date").value = event.detail.year+"-"+event.detail.month+"-"+event.detail.day;
+    });
     var calculate = function(){
         var startDate = document.getElementById('start-date').value;
         var endDate = document.getElementById('end-date').value;

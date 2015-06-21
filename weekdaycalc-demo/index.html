@@ -9,16 +9,35 @@
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
     
     <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="bower_components/iron-icon/iron-icon.html">
+    <link rel="import" href="bower_components/iron-input/iron-input.html">
     <link rel="import" href="bower_components/paper-button/paper-button.html">
     <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
     <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="bower_components/paper-styles/paper-styles.html">
     <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+    <link rel="import" href="bower_components/paper-item/paper-icon-body.html">
+
     <link rel="import" href="bower_components/pk-datepicker/pk-datepicker.html">
 
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/moment-weekday-calc/build/moment-weekday-calc.min.js"></script>
     <style>
+
+        .calculator, .intro, .epilog, article{
+          border: 1px solid #bebebe;
+          padding: 16px;
+          margin: 16px;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #555;
+        }
+        pk-datepicker{
+            padding: 30px;
+        }
         pk-datepicker td>div {
             border: 1px solid transparent;
         }
@@ -26,6 +45,44 @@
             border: 1px solid black;
             border-radius: 15px;
         }
+
+        #start-date{
+            padding: 0 30px 30px 0;
+            width: 320px;
+        }
+        #end-date{
+            padding: 0 0 30px 30px;
+            width: 320px;
+        }
+
+        .result-box{
+              width: 105px;
+              height: 100px;
+              border-radius: 50%;
+              margin: 15px auto;
+              background-color: rgba(81, 252, 88, 0.25);
+              box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); /*fashion google box-shadow*/
+              padding: 15px;
+        }
+
+        code{
+            background: rgba(66, 133, 243, 0.15);
+        }
+        .right{
+            text-align: right;
+        }
+
+        .list {
+          padding-top: 12px;
+          background-color: white;
+          display: inline-block;
+          width: 240px;
+          height: 228px;
+          margin: 12px;
+          @apply(--shadow-elevation-2dp);
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        }
+
     </style>
     <style is="custom-style">
         body {
@@ -158,6 +215,14 @@
         paper-button.ripple paper-ripple {
           color: var(--paper-pink-a200);
         }
+
+        paper-icon-button.green {
+            color: var(--paper-green-500);
+        }
+        paper-icon-button.green:hover {
+            background: rgba(81, 252, 88, 0.15);
+            border-radius: 50%;
+        }
     </style>
 
 </head>
@@ -166,98 +231,140 @@
 
 <paper-scroll-header-panel condenses>
     <paper-toolbar class="tall">
-        <h1>TODO weekdaycalc demo</h1>
+        <a href="https://github.com/thesmallestgnome/thesmallestgnome.github.io"><paper-icon-button class="green" icon="arrow-back"></paper-icon-button></a>
+        <div class="flex"></div>
+        <a href="https://github.com/andruhon/moment-weekday-calc"><paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" title="octocat"></paper-icon-button> Weekday Calc</a>
+        <a href="https://github.com/pkaske/pk-datepicker/"><paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" title="octocat"></paper-icon-button> pk-daypicker</a>
+        <paper-icon-button class="pink" icon="polymer"></paper-icon-button>
+
+        <div class="bottom title"><h1>Moment Weekday Calculator plugin demo</h1></div>        
     </paper-toolbar>
 
     <div class="content">
-        <div class="horizontal center-justified layout">
-            <pk-datepicker id="start-date-picker" month="3" year="2015"></pk-datepicker>
-            <pk-datepicker id="end-date-picker" month="2" year="2016"></pk-datepicker>
+        <article class="intro">
+            <div ><p>This plugin will count specific weekdays in the range.</p></div>
+
+            
+        </article>
+           
+
+        <div class="calculator">
+            <div class="horizontal center-justified layout">
+                <pk-datepicker id="start-date-picker" month="3" year="2015"></pk-datepicker>
+                <pk-datepicker id="end-date-picker" month="2" year="2016"></pk-datepicker>
+            </div>
+
+            <div id="range" class="horizontal center-justified layout">
+                
+                    <paper-input disabled label="dates range start" id="start-date" value="2015-04-01"></paper-input>
+                    <paper-input disabled label="dates range end" id="end-date" value="2016-03-31"></paper-input>
+                
+                
+            </div>
+
+            <div id="weekdays" class="horizontal center-justified layout">
+                <paper-button data-value="1" tabindex="1" toggles active class="colorful weekday">Monday</paper-button>
+                <paper-button data-value="2" tabindex="2" toggles active class="colorful weekday">Tuesday</paper-button>
+                <paper-button data-value="3" tabindex="3" toggles active class="colorful weekday">Wednesday</paper-button>
+                <paper-button data-value="4" tabindex="4" toggles active class="colorful weekday">Thursday</paper-button>
+                <paper-button data-value="5" tabindex="5" toggles active class="colorful weekday">Friday</paper-button>
+                <paper-button data-value="6" tabindex="6" toggles class="red red_bg colorful weekday">Saturday</paper-button>
+                <paper-button data-value="7" tabindex="7" toggles class="red red_bg colorful weekday">Sunday</paper-button>
+            </div>
+
+            <!-- <button id="calculate">Calculate</button> -->
+            <div class="horizontal center-justified layout">
+                <paper-button raised="" role="button" id="calculate" tabindex="0">Calculate</paper-button>
+            </div>
+
+            <div class="horizontal center-justified layout result-box">
+                <paper-input label="Result:" id="result" value=""></paper-input>
+            </div>
         </div>
 
-        <div id="range" class="horizontal center-justified layout">
-            <paper-input disabled label="dates range start" id="start-date" value="2015-04-01"></paper-input>
-            <paper-input disabled label="dates range end" id="end-date" value="2016-03-31"></paper-input>
-        </div>
 
-        <div id="weekdays" class="horizontal center-justified layout">
-            <paper-button data-value="1" tabindex="0" toggles active class="colorful weekday">Monday</paper-button>
-            <paper-button data-value="2" tabindex="0" toggles active class="colorful weekday">Tuesday</paper-button>
-            <paper-button data-value="3" tabindex="0" toggles active class="colorful weekday">Wednesday</paper-button>
-            <paper-button data-value="4" tabindex="0" toggles active class="colorful weekday">Thursday</paper-button>
-            <paper-button data-value="5" tabindex="0" toggles active class="colorful weekday">Friday</paper-button>
-            <paper-button data-value="6" tabindex="0" toggles class="red red_bg colorful weekday">Saturday</paper-button>
-            <paper-button data-value="7" tabindex="0" toggles class="red red_bg colorful weekday">Sunday</paper-button>
-        </div>
+<article class="entry-content"><h1>Moment Weekday Calculator plugin</h1>
 
-        <!-- <button id="calculate">Calculate</button> -->
-        <div class="horizontal center-justified layout">
-            <paper-button raised="" role="button" id="calculate" tabindex="0">Calculate</paper-button>
-        </div>
+<h2>Usage</h2>
 
-        <div id="result" class="horizontal center-justified layout"></div>
+<p>Count all weekdays in the range:<br>
+<code>moment().weekdayCalc('1 Apr 2015','31 Mar 2016',[0,1,2,3,4,5,6]); //366, here Sunday is 0</code><br>
+<code>moment().isoWeekdayCalc('1 Apr 2015','31 Mar 2016',[1,2,3,4,5,6,7]); //366, here Sunday is 7</code><br>
+please notice that <strong>weekdays in the array must be integers</strong>, NOT strings like '1', '2'</p>
 
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
+<p>Count all Monday to Friday workdays of 2015-2016 financial year:<br>
+<code>moment().weekdayCalc('1 Apr 2015','31 Mar 2016',[1,2,3,4,5]); //262</code><br>
+<code>moment().isoWeekdayCalc('1 Apr 2015','31 Mar 2016',[1,2,3,4,5]); //262</code></p>
+
+<p>Count all Mondays and Tuesdays of 2015 calendar year:<br>
+<code>moment('2015').weekdayCalc([1,2]); //104</code><br>
+<code>moment('2015').isoWeekdayCalc([1,2]); //104</code></p>
+
+<p>Count all Fridays in the range:<br>
+<code>moment('14 Feb 2014').weekdayCalc('23 Feb 2014',[5]); //2</code><br>
+<code>moment('14 Feb 2014').isoWeekdayCalc('23 Feb 2014',[5]); //2</code></p>
+
+<p>Node "Standalone" usage (it is not actually standalone, just uses moment as inner dependency):<br>
+<code>WeekDayCalc = require('moment-weekday-calc);</code><br>
+<code>var useIsoWeekdays = true;</code><br>
+<code>var calc = new WeekDayCalc('1 Jan 2015', '31 Dec 2015', [1,2,3,4,5,6,7], useIsoWeekdays);</code><br>
+<code>var result = calc.calculate(); //365</code>  </p>
+
+<h2>Installation</h2>
+
+<h3>NPM</h3>
+
+<p><code>npm install moment-weekday-calc</code></p>
+
+<h3>Bower</h3>
+
+<p><code>bower install moment-weekday-calc</code></p>
+
+<h2>Syntax</h2>
+
+<h3>iso weekdays weekdayCalc</h3>
+
+<p>Calculate specified weekdays for dates range:<br>
+<code>moment().isoWeekdayCalc(rangeStart moment|Date|String, rangeEnd moment|Date|String, weekdays Array);</code></p>
+
+<p>Calculate specified weekdays for dates range:<br>
+<code>moment(rangeStart moment|Date|String).weekdayCalc(rangeEnd moment|Date|String, weekdays Array);</code></p>
+
+<p>Calculate specified weekdays for the whole current calendar year:<br>
+<code>moment().isoWeekdayCalc(weekdays Array);</code></p>
+
+<p><strong>rangeStart</strong> - the range start</p>
+
+<p><strong>rangeEnd</strong> - the range end</p>
+
+<p><strong>weekdays</strong> - array of iso weekdays as integers to count [1, 2, 3, 4, 5, 6, 7], 1 is always Monday 7 is always Sunday</p>
+
+<h3>locale aware weekdayCalc</h3>
+
+<p>Calculate specified weekdays for dates range:<br>
+<code>moment().weekdayCalc(rangeStart moment|Date|String, rangeEnd moment|Date|String, weekdays Array);</code></p>
+
+<p>Calculate specified weekdays for dates range:<br>
+<code>moment(rangeStart moment|Date|String).weekdayCalc(rangeEnd moment|Date|String, weekdays Array);</code></p>
+
+<p>Calculate specified weekdays for the whole current calendar year:<br>
+<code>moment().weekdayCalc(weekdays Array);</code></p>
+
+<p><strong>rangeStart</strong> - the range start</p>
+
+<p><strong>rangeEnd</strong> - the range end</p>
+
+<p><strong>weekdays</strong> - array of locale aware weekday numbers as integers, for example [1, 2, 3]
+please notice that range may be 1-7 or 0-6 depending on locale,
+Sunday may be 0 or 7, depending on locale, monday is usualy 1</p>
+
+<p>Please be aware that you may receive unexpected results if you use weekdays not matching your locale,
+for example, if your locale weekdays range is 0-6:<br>
+<code>moment().weekdayCalc('1 Jan 2015','31 Dec 2015',[1,2,3,4,5,6,7]);</code>// returns 364<br>
+It happens because 7 here is a 'next monday', not sunday, and the last 'next' monday is out of the range, so one day of the year is not properly counted. Please visit <a href="http://momentjs.com/docs/#/get-set/weekday/">http://momentjs.com/docs/#/get-set/weekday/</a> for reference.</p>
+
+<p>The demo uses <a href="https://github.com/pkaske/pk-datepicker/">pk-datepicker plugin from <i class="fa fa-github-alt"></i>pkaske</a>.</p>
+</article>  
     </div>
 
 </paper-scroll-header-panel>
@@ -279,7 +386,7 @@
                 weekdays.push(parseInt(weekdayInput.dataValue));
             }
         }
-        document.getElementById('result').innerHTML = moment().isoWeekdayCalc(startDate,endDate,weekdays);
+        document.getElementById('result').value = moment().isoWeekdayCalc(startDate,endDate,weekdays);
     };
 
     var highlightDate = function(picker,dateToSelect) {
@@ -295,7 +402,7 @@
     };
 
     var changeDate = function (dateInput, picker, date) {
-        dateInput.value = date.year+"-"+date.month+"-"+date.day;
+        dateInput.value = date.year+"-"+(date.month+1)+"-"+date.day;
         highlightDate(picker,date.day);
     };
 

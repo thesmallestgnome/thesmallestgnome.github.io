@@ -19,77 +19,21 @@
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="bower_components/paper-item/paper-item.html">
     <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
-    <link rel="import" href="bower_components/paper-item/paper-icon-body.html">
 
     <link rel="import" href="bower_components/pk-datepicker/pk-datepicker.html">
 
+    <link rel="import" href="weekdaycalc-element.html">
+
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/moment-weekday-calc/build/moment-weekday-calc.min.js"></script>
-    <style>
-
-        .calculator, .intro, .epilog, article{
-          border: 1px solid #bebebe;
-          padding: 16px;
-          margin: 16px;
-          border-radius: 5px;
-          background-color: #fff;
-          color: #555;
-        }
-        pk-datepicker{
-            padding: 30px;
-        }
-        pk-datepicker td>div {
-            border: 1px solid transparent;
-        }
-        pk-datepicker td>div.selected {
-            border: 1px solid black;
-            border-radius: 15px;
-        }
-
-        #start-date{
-            padding: 0 30px 30px 0;
-            width: 320px;
-        }
-        #end-date{
-            padding: 0 0 30px 30px;
-            width: 320px;
-        }
-
-        .result-box{
-              width: 105px;
-              height: 100px;
-              border-radius: 50%;
-              margin: 15px auto;
-              background-color: rgba(81, 252, 88, 0.25);
-              box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); /*fashion google box-shadow*/
-              padding: 15px;
-        }
-
-        code{
-            background: rgba(66, 133, 243, 0.15);
-        }
-        .right{
-            text-align: right;
-        }
-
-        .list {
-          padding-top: 12px;
-          background-color: white;
-          display: inline-block;
-          width: 240px;
-          height: 228px;
-          margin: 12px;
-          @apply(--shadow-elevation-2dp);
-          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-        }
-
-    </style>
+    
     <style is="custom-style">
+
         body {
-          font-family: 'Roboto', 'Noto', sans-serif;
-          font-size: 14px;
-          margin: 0;
-          padding: 24px;
+            font-family: 'Roboto', 'Noto', sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 24px;
         }
 
         section {
@@ -100,6 +44,7 @@
           padding: 14px;
           font-size: 16px;
         }
+
         paper-scroll-header-panel {
           position: absolute;
           top: 0;
@@ -142,87 +87,43 @@
           max-width: 1000px;
         }
 
-        paper-button {
-          display: block;
-          margin-bottom: 24px;
+        paper-icon-button {
+            margin-left: 30px;
+            display: block;
+            width: 24px;
+            text-align: center;
         }
-
-        paper-button.colorful {
-          color: #4285f4;
+      
+        paper-icon-button.indigo {
+            color: var(--paper-indigo-500);
         }
-
-        paper-button[raised].colorful {
-          background: #4285f4;
-          color: #fff;
-        }
-
-        paper-button[toggles] {
-          transition: background-color 0.3s;
-        }
-
-        paper-button[toggles][active] {
-          background-color: rgba(0, 0, 0, 0.25);
-        }
-        paper-button[toggles][active].colorful.red_bg{
-          background-color: rgba(247, 210, 207, 1);
-        }
-
-        paper-button[toggles][active].colorful {
-          background-color: rgba(66, 133, 244, 0.25);
-        }
-
-        paper-button[toggles][active][raised].colorful {
-          background-color: rgba(66, 133, 244, 0.75);
-        }
-
-        paper-button.blue {
-          color: var(--paper-light-blue-500);
-          --paper-button-flat-focus-color: var(--paper-light-blue-50);
-        }
-        paper-button.blue:hover {
-          background: var(--paper-light-blue-50);
-        }
-        paper-button.red {
-          color: var(--paper-red-500);
-          --paper-button-flat-focus-color: var(--paper-red-50);
-        }
-        paper-button.red:hover {
-          background: var(--paper-red-50);
-        }
-        paper-button.green {
-          color: var(--paper-green-500);
-          --paper-button-flat-focus-color: var(--paper-green-50);
-        }
-        paper-button.green:hover {
-          background: var(--paper-green-50);
-        }
-        paper-button.orange {
-          color: var(--paper-orange-500);
-          --paper-button-flat-focus-color: var(--paper-orange-50);
-        }
-        paper-button.orange:hover {
-          background: var(--paper-orange-50);
-        }
-
-        paper-button.hover:hover {
-          background: #eee;
-        }
-
-        paper-button.ripple::shadow paper-ripple {
-          color: var(--paper-pink-a200);
-        }
-
-        paper-button.ripple paper-ripple {
-          color: var(--paper-pink-a200);
-        }
-
-        paper-icon-button.green {
-            color: var(--paper-green-500);
-        }
-        paper-icon-button.green:hover {
+        paper-icon-button.indigo:hover {
             background: rgba(81, 252, 88, 0.15);
             border-radius: 50%;
         }
+
+        paper-icon-button:not([style-scope]):not(.style-scope) {
+            margin-left: 0;
+            width: initial;
+        }
+
+        ::content .calculator, .intro, .epilog, article{
+          border: 1px solid #bebebe;
+          padding: 16px;
+          margin: 16px;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #555;
+        }
+        
+        code{
+            background: rgba(66, 133, 243, 0.15);
+        }
+
+        .tall a{
+            padding: 15px;
+        }
+
     </style>
 
 </head>
@@ -231,56 +132,22 @@
 
 <paper-scroll-header-panel condenses>
     <paper-toolbar class="tall">
-        <a href="https://github.com/thesmallestgnome/thesmallestgnome.github.io"><paper-icon-button class="green" icon="arrow-back"></paper-icon-button></a>
+        <a href="https://github.com/thesmallestgnome/thesmallestgnome.github.io"><paper-icon-button class="indigo" icon="arrow-back"></paper-icon-button></a>
         <div class="flex"></div>
         <a href="https://github.com/andruhon/moment-weekday-calc"><paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" title="octocat"></paper-icon-button> Weekday Calc</a>
         <a href="https://github.com/pkaske/pk-datepicker/"><paper-icon-button src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="octocat" title="octocat"></paper-icon-button> pk-daypicker</a>
-        <paper-icon-button class="pink" icon="polymer"></paper-icon-button>
+        <a href="https://www.polymer-project.org/1.0/"><paper-icon-button class="indigo" icon="polymer"></paper-icon-button>Polymer</a>
 
         <div class="bottom title"><h1>Moment Weekday Calculator plugin demo</h1></div>        
     </paper-toolbar>
 
     <div class="content">
         <article class="intro">
-            <div ><p>This plugin will count specific weekdays in the range.</p></div>
-
-            
+            <div ><p>This plugin will count specific weekdays in the range.</p></div>            
         </article>
-           
 
-        <div class="calculator">
-            <div class="horizontal center-justified layout">
-                <pk-datepicker id="start-date-picker" month="3" year="2015"></pk-datepicker>
-                <pk-datepicker id="end-date-picker" month="2" year="2016"></pk-datepicker>
-            </div>
-
-            <div id="range" class="horizontal center-justified layout">
-                
-                    <paper-input disabled label="dates range start" id="start-date" value="2015-04-01"></paper-input>
-                    <paper-input disabled label="dates range end" id="end-date" value="2016-03-31"></paper-input>
-                
-                
-            </div>
-
-            <div id="weekdays" class="horizontal center-justified layout">
-                <paper-button data-value="1" tabindex="1" toggles active class="colorful weekday">Monday</paper-button>
-                <paper-button data-value="2" tabindex="2" toggles active class="colorful weekday">Tuesday</paper-button>
-                <paper-button data-value="3" tabindex="3" toggles active class="colorful weekday">Wednesday</paper-button>
-                <paper-button data-value="4" tabindex="4" toggles active class="colorful weekday">Thursday</paper-button>
-                <paper-button data-value="5" tabindex="5" toggles active class="colorful weekday">Friday</paper-button>
-                <paper-button data-value="6" tabindex="6" toggles class="red red_bg colorful weekday">Saturday</paper-button>
-                <paper-button data-value="7" tabindex="7" toggles class="red red_bg colorful weekday">Sunday</paper-button>
-            </div>
-
-            <!-- <button id="calculate">Calculate</button> -->
-            <div class="horizontal center-justified layout">
-                <paper-button raised="" role="button" id="calculate" tabindex="0">Calculate</paper-button>
-            </div>
-
-            <div class="horizontal center-justified layout result-box">
-                <paper-input label="Result:" id="result" value=""></paper-input>
-            </div>
-        </div>
+        <!-- custom element for weekdaycalc demo -->
+        <weekdaycalc-element></weekdaycalc-element>
 
 
 <article class="entry-content"><h1>Moment Weekday Calculator plugin</h1>
@@ -369,65 +236,5 @@ It happens because 7 here is a 'next monday', not sunday, and the last 'next' mo
 
 </paper-scroll-header-panel>
 
-<script>
-    var startDatePiker = document.getElementById("start-date-picker");
-    var endDatePicker = document.getElementById("end-date-picker");
-    var startDateInput = document.getElementById("start-date");
-    var endDateInput = document.getElementById("end-date");
-
-    var calculate = function(){
-        var startDate = document.getElementById('start-date').value;
-        var endDate = document.getElementById('end-date').value;
-        var weekdayInputs = document.getElementsByClassName('weekday');
-        var weekdays = [];
-        for (var i=0;i<weekdayInputs.length;i++) {
-            var weekdayInput = weekdayInputs[i];
-            if (weekdayInput.active) {
-                weekdays.push(parseInt(weekdayInput.dataValue));
-            }
-        }
-        document.getElementById('result').value = moment().isoWeekdayCalc(startDate,endDate,weekdays);
-    };
-
-    var highlightDate = function(picker,dateToSelect) {
-        var days = picker.getElementsByClassName('day');
-        for (var i=0;i<days.length;i++) {
-            var day = days[i];
-            if (day.textContent!=dateToSelect) {
-                day.className = "day style-scope pk-datepicker";
-            } else {
-                day.className += " selected";
-            }
-        }
-    };
-
-    var changeDate = function (dateInput, picker, date) {
-        dateInput.value = date.year+"-"+(date.month+1)+"-"+date.day;
-        highlightDate(picker,date.day);
-    };
-
-
-    {
-        highlightDate(startDatePiker,"1");
-        highlightDate(endDatePicker,"31");
-        startDatePiker.addEventListener("date-selected",function(event){
-            changeDate(startDateInput,event.target,event.detail);
-        });
-        endDatePicker.addEventListener("date-selected",function(event){
-            changeDate(endDateInput,event.target,event.detail);
-        });
-        document.getElementById('calculate').onclick = calculate;
-        document.getElementById('start-date').onkeyup = function(e) {
-            if (e.keyCode == 13 ) {
-                document.getElementById('end-date').focus();
-                calculate();
-            }
-        };
-        document.getElementById('end-date').onkeyup = function(e) {
-            if (e.keyCode == 13 ) calculate();
-        };
-    };
-
-</script>
 </body>
 </html>

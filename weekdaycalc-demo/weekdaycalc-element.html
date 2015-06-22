@@ -180,7 +180,7 @@
         for (var i=0; i < weekdayInputs.length; i++) {
             var weekdayInput = weekdayInputs[i];
             if (weekdayInput.active) {
-                weekdays.push(parseInt(weekdayInput.dataValue));
+                weekdays.push(parseInt(weekdayInput.dataset.value));
             }
         }
         document.getElementById('result').value = moment().isoWeekdayCalc(startDate,endDate,weekdays);

@@ -2600,6 +2600,10 @@
       document.getElementById('prevBtn').disabled = idx === 0;
       document.getElementById('nextBtn').disabled = idx === screens.length - 1;
 
+      if (screens[idx] === 'screen-chat') {
+        resetAgent();
+        runAgentAnimation();
+      }
       if (screens[idx] === 'screen-chat-2') {
         resetAgent2();
         runAgentAnimation2();
@@ -2613,8 +2617,6 @@
         || '3-bed house under $900k near a good school, 30 min from CBD';
       document.getElementById('userMsg').textContent = query;
       goTo('screen-chat');
-      resetAgent();
-      runAgentAnimation();
     }
 
     function resetAgent() {

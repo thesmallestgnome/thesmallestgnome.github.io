@@ -103,14 +103,11 @@
                 font-size: 13px;
             }
 
-            /* Hamburger menu — top-left corner of every screen */
+            /* Hamburger menu — replaces the top-left back button on each screen */
             .hamburger-btn {
-                position: absolute;
-                top: 10px;
-                left: 14px;
-                width: 28px;
-                height: 28px;
-                display: flex;
+                width: 32px;
+                height: 32px;
+                display: inline-flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -119,8 +116,8 @@
                 background: transparent;
                 border: none;
                 cursor: pointer;
-                z-index: 30;
                 color: inherit;
+                flex-shrink: 0;
             }
             .hamburger-btn span {
                 display: block;
@@ -129,18 +126,23 @@
                 background: currentColor;
                 border-radius: 1px;
             }
-            /* Make time/icons in status-bar leave room for hamburger on the left */
-            .status-bar {
-                padding-left: 52px !important;
-            }
-            #screen-chat .hamburger-btn,
-            #screen-chat-2 .hamburger-btn {
-                color: var(--text);
-            }
-            #screen-onboarding .hamburger-btn,
-            #screen-detail .hamburger-btn {
+            /* Onboarding has no header bar, so the hamburger floats below the status bar */
+            #screen-onboarding > .hamburger-btn {
+                position: absolute;
+                top: 52px;
+                left: 18px;
+                z-index: 30;
                 color: white;
                 filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+            }
+            /* Detail: circular translucent background, matching the original back-btn treatment over the hero image */
+            #screen-detail .hamburger-btn {
+                width: 36px;
+                height: 36px;
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 50%;
+                color: white;
+                backdrop-filter: blur(8px);
             }
 
             /* Bottom tab bar */
@@ -2788,18 +2790,15 @@
                 id="screen-chat"
                 data-label="2. Agentic Chat — Guide at work"
             >
-                <button class="hamburger-btn" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
                 <div class="status-bar">
                     <div class="time">21:35</div>
                     <div class="icons">●●● ▲ ◼</div>
                 </div>
 
                 <div class="chat-header">
-                    <div class="chat-back" onclick="goTo('screen-onboarding')">
-                        ‹
-                    </div>
+                    <button class="hamburger-btn" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
                     <div class="chat-title-wrap">
                         <img
                             src="icons/icon-guide.svg"
@@ -3085,16 +3084,15 @@
                 id="screen-chat-2"
                 data-label="3. Agentic Chat — Follow-up"
             >
-                <button class="hamburger-btn" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
                 <div class="status-bar">
                     <div class="time">21:36</div>
                     <div class="icons">●●● ▲ ◼</div>
                 </div>
 
                 <div class="chat-header">
-                    <div class="chat-back" onclick="goTo('screen-chat')">‹</div>
+                    <button class="hamburger-btn" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
                     <div class="chat-title-wrap">
                         <img
                             src="icons/icon-guide.svg"
@@ -3590,9 +3588,6 @@
                 id="screen-detail"
                 data-label="4. Property Detail — Guide Insights"
             >
-                <button class="hamburger-btn" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
                 <div class="detail-scroll">
                     <div class="detail-hero">
                         <div class="status-bar">
@@ -3600,12 +3595,9 @@
                             <div class="icons">●●● ▲ ◼</div>
                         </div>
                         <div class="detail-hero-overlay">
-                            <div
-                                class="back-btn"
-                                onclick="goTo('screen-chat-2')"
-                            >
-                                ‹
-                            </div>
+                            <button class="hamburger-btn" aria-label="Menu">
+                                <span></span><span></span><span></span>
+                            </button>
                             <div class="detail-hero-actions">
                                 <div class="share-btn">♡</div>
                                 <div class="share-btn">⤴</div>

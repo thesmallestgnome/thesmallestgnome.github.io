@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>OneRoof Guide — Concept Summary</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --orange: #F27B20;
+      --orange-light: #FFF3E8;
+      --dark: #1A1A1A;
+      --text: #2A2A2A;
+      --text-secondary: #555;
+      --text-tertiary: #888;
+      --border: #E0E0E0;
+      --bg-subtle: #FAFAFA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: #2a2a2a;
+      color: var(--text);
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .a4 {
+      width: 210mm;
+      height: 297mm;
+      background: white;
+      padding: 9mm 13mm;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      font-size: 8.3pt;
+      line-height: 1.3;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--orange);
+      padding-bottom: 3px;
+      margin-bottom: 3px;
+    }
+
+    .title {
+      font-size: 15pt;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+
+    .title .accent {
+      color: var(--orange);
+    }
+
+    .meta {
+      font-size: 7.3pt;
+      color: var(--text-tertiary);
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      font-size: 8.8pt;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+      font-style: italic;
+    }
+
+    .workflow-note {
+      font-size: 7.2pt;
+      color: var(--text-tertiary);
+      background: var(--orange-light);
+      border-left: 2px solid var(--orange);
+      padding: 2px 7px;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* Two-column layout */
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10mm;
+    }
+
+    /* Section */
+    section {
+      margin-bottom: 4px;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 8.6pt;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 3px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p {
+      margin-bottom: 2px;
+    }
+
+    strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    /* Modes box */
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .mode {
+      background: var(--orange-light);
+      border-left: 3px solid var(--orange);
+      padding: 5px 7px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .mode-title {
+      font-size: 8pt;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 1px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .mode-desc {
+      font-size: 7.7pt;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    /* Principles */
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px 8px;
+    }
+
+    .principle {
+      font-size: 7.8pt;
+      line-height: 1.3;
+      padding-left: 9px;
+      position: relative;
+    }
+
+    .principle::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 4px;
+      height: 4px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+
+    .principle strong {
+      display: block;
+    }
+
+    /* Architecture */
+    .arch {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin-top: 3px;
+      font-size: 7.8pt;
+      line-height: 1.35;
+    }
+
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    .arch-node {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 7.3pt;
+      font-weight: 600;
+    }
+
+    .arch-node.router {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--orange-light);
+    }
+
+    .arch-arrow {
+      color: var(--text-tertiary);
+      font-weight: bold;
+    }
+
+    /* KPI table */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .kpi-group {
+      background: var(--bg-subtle);
+      border-left: 2px solid var(--orange);
+      padding: 4px 7px;
+      font-size: 7.5pt;
+      line-height: 1.3;
+    }
+
+    .kpi-group strong {
+      display: block;
+      font-size: 7.8pt;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding-top: 3px;
+      margin-top: 4px;
+      font-size: 7pt;
+      color: var(--text-tertiary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .a4 {
+        box-shadow: none;
+        width: 210mm;
+        min-height: 297mm;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="a4">
+
+    <div class="header">
+      <div>
+        <div class="title">OneRoof <span class="accent">Guide</span></div>
+      </div>
+      <div class="meta">
+        Concept Summary · Design Challenge<br>
+        Mari Kondrateva · April 2026
+      </div>
+    </div>
+    <div class="subtitle">An agentic search experience for property discovery — mobile-first</div>
+    <div class="workflow-note">Built as a functional HTML prototype rather than a static Figma mock — the workflow
+      described in <a href="https://verifiedinsider.substack.com/p/operating-as-an-ai-native-product">"Operating as an
+        AI-native product designer in 2026"</a>. With Claude Design (launched 17 April) reading a team's codebase and
+      design system directly, this is rapidly becoming how designers will ship.</div>
+
+    <div class="columns">
+
+      <!-- LEFT COLUMN -->
+      <div>
+
+        <section>
+          <h2>The Problem</h2>
+          <p>OneRoof's current app offers 20+ filters, suburb profiles, estimates, school zones, commute times and
+            council data — but each lives in a separate tool. Users translate real questions ("near a good school, 30
+            min to work, not on a busy road") into checkboxes, then cross-reference results manually.</p>
+          <p>App Store reviews confirm the gap: users ask for keyword search ("do-up", "urgent sale"), complain "For
+            You" can't be filtered, and wish saved searches remembered what matters to them. The data is rich. The
+            intelligence connecting it isn't.</p>
+        </section>
+
+        <section>
+          <h2>The Opportunity</h2>
+          <p>No major NZ property portal offers AI-powered search. <strong>Trade Me</strong> is a generalist marketplace
+            with filter-only search. <strong>Realestate.co.nz</strong> is industry-owned with strong map search but no
+            AI. <strong>Homes.co.nz</strong> is a data reference tool, not listings-first.</p>
+          <p>Internationally, Zillow launched natural language search in 2023, ChatGPT integration in Oct 2025, and full
+            conversational AI Mode in Mar 2026. Homes.com and Realtor.com followed. In NZ, the market is wide open — and
+            OneRoof holds the strongest data foundation to move first.</p>
+        </section>
+
+        <section>
+          <h2>Who We're Designing For</h2>
+          <p><strong>Primary users:</strong> <strong>First-home buyers</strong> — anxious, often uneducated on the process, highest emotional and financial stakes. <strong>Move-up buyers</strong> — time-pressed, already own and need to coordinate buy and sell. <strong>Investors</strong> — data-driven, yield-focused, fast to shortlist.</p>
+          <p><strong>Secondary users:</strong> <strong>Real estate agents</strong> (OneRoof's paying customers — they need qualified leads, not volume). Sellers, renters, and property-curious homeowners who rely on OneRoof Estimates and suburb data.</p>
+        </section>
+
+        <section>
+          <h2>The Concept — OneRoof Guide</h2>
+          <p>A mobile-first agentic search layer that sits alongside existing filter search. Meets users where they are
+            — whether starting out or deep in a months-long search — with three modes of interaction:</p>
+          <div class="modes">
+            <div class="mode">
+              <div class="mode-title">Ask</div>
+              <div class="mode-desc">Describe what you want in your own words. The Guide translates intent into a
+                multi-dimensional query and returns ranked matches with "Why this matches" reasoning.</div>
+            </div>
+            <div class="mode">
+              <div class="mode-title">Learn</div>
+              <div class="mode-desc">As users browse, save and dismiss, the Guide learns implicit preferences and
+                surfaces them back with consent. Delivers timely nudges: price drops, new matches, market shifts.</div>
+            </div>
+            <div class="mode">
+              <div class="mode-title">Guide</div>
+              <div class="mode-desc">Structures trade-offs when comparing shortlisted properties. Brings estimates,
+                suburb trends, commute and mortgage context into a single decision view — without deciding for the user.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Design Principles</h2>
+          <div class="principles">
+            <div class="principle"><strong>User stays in control</strong>Suggests, never decides. Filter search always
+              available.</div>
+            <div class="principle"><strong>Transparency over magic</strong>Every recommendation shows reasoning. No
+              black boxes.</div>
+            <div class="principle"><strong>Earned autonomy</strong>Starts conservative; becomes proactive with opt-in.
+            </div>
+            <div class="principle"><strong>Mobile-first &amp; glanceable</strong>Cards and nudges, not long
+              conversations. Layered depth.</div>
+            <div class="principle"><strong>Augment, don't replace</strong>Open homes and agents stay central. Guide
+              prepares users.</div>
+            <div class="principle"><strong>Trust is the product</strong>Commercial interests never compromise
+              neutrality.</div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Rollout</h2>
+          <p style="font-size:7.8pt"><strong>P1</strong> (3mo): NL search, Router + Search Specialist, 10% cohort ·
+            <strong>P2</strong> (3mo): Insights cards, all users · <strong>P3</strong> (3mo): For You nudges,
+            comparison, learned preferences, desktop · <strong>P4</strong>: Coach Specialist for first-home buyers,
+            agent-facing tools.</p>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+
+        <section>
+          <h2>Technical Architecture — Multi-Agent System</h2>
+          <div class="arch">
+            <div class="arch-flow">
+              <span class="arch-node">User input</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-node router">Router (Haiku/Flash)</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-node">Specialist (Sonnet)</span>
+            </div>
+            <p style="margin-bottom:4px"><strong>Router agent</strong> (lightweight, cheap, fast) accepts input,
+              classifies intent, dispatches to a specialist. It streams transparency messages on-screen ("Understanding
+              your needs…", "Searching 46,000+ listings…") <em>while</em> the specialist works in parallel. Messages
+              build trust and mask latency.</p>
+            <p style="margin-bottom:0"><strong>Specialist agents</strong> (scoped, prompt-tuned): Search · Insights ·
+              Comparison · Coach. Each handles one capability well. Swappable, individually observable, invoked only
+              when justified.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>What This Means for OneRoof's Design System</h2>
+          <p>The Guide reuses the existing system wherever possible — cards, list rows, pill buttons, tab bar, type,
+            spacing. What's new is small: a Guide tab icon, a match-% badge, reasoning tags (green ✓ / amber ⚠ / blue
+            ↗), a confidence chip, a streamed Router status line, and a "Why this matches" dialog. Roughly one atom, two
+            molecules, one organism — the rest is composition.</p>
+          <p>With the OneRoof codebase and Figma library in hand, Claude Design (Anthropic Labs, launched 17 April)
+            would generate these against the real tokens — shortening concept-to-developer-ready prototype from weeks to
+            days, and how I'd expect to work on this team.</p>
+        </section>
+
+        <section>
+          <h2>Business Model &amp; Commercial Considerations</h2>
+          <p><strong>Free for end users.</strong> Property search is top-of-funnel. Gating it behind a paywall hands
+            differentiation to Trade Me the moment they catch up. Monetisation flows through existing revenue streams,
+            amplified: better-qualified enquiries justify premium agent listings and subscriptions.</p>
+          <p><strong>Cost containment.</strong> Router-first pattern + caching of common suburb/school/commute data
+            keeps per-query cost in single-digit NZ cents. Heavy specialists run only when justified.</p>
+          <p><strong>Future revenue:</strong> agent-facing AI tools, labelled sponsored suggestions for new-builds,
+            home-loan partner integration when the Guide discusses affordability. <strong>What we avoid:</strong>
+            charging end users, hiding listings behind AI, compromising Guide neutrality.</p>
+        </section>
+
+        <section>
+          <h2>Key Metrics &amp; KPIs</h2>
+          <div class="kpis">
+            <div class="kpi-group">
+              <strong>Engagement</strong>
+              Time-to-shortlist (target −30%); weekly active on "For You"; search-to-enquiry conversion; return sessions
+              per saved property
+            </div>
+            <div class="kpi-group">
+              <strong>Lead Quality</strong>
+              Enquiry-to-viewing rate (agent-reported); agent NPS on leads (+15pts goal); impression-to-enquiry ratio
+              vs. filter search
+            </div>
+            <div class="kpi-group">
+              <strong>Trust &amp; Health</strong>
+              Suggestion acceptance (40–70%); reversion to filter search (&lt;15%); explainability click-through;
+              negative feedback (&lt;5%)
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Testing &amp; Validation</h2>
+          <p><strong>Pre-launch eval.</strong> ~200 real NZ queries (from saved-search logs + App Store review language)
+            with expected top-5 results, scored by property experts. Every agent change must pass before shipping.
+            LLM-as-judge for hallucination and citation coverage.</p>
+          <p><strong>Moderated usability testing</strong> — 6–8 users per segment (first-home, move-up, investor) each
+            phase. Can they articulate what they want? Do they trust the reasoning? Recruited from existing saved-search
+            users.</p>
+          <p><strong>In-market A/B</strong> — 10% cohort at P1, Guide vs. filter-search control. Primary metric:
+            search-to-enquiry rate. Guardrails: reversion, negative feedback, latency. Quarterly qualitative check-ins
+            with 10 agencies validate lead quality.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>OneRoof Guide — Agentic Search Concept</span>
+      <span>Prepared by Mari Kondrateva</span>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

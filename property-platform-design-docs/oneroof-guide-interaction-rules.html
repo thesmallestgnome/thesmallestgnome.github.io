@@ -239,12 +239,19 @@
   <div class="header">
     <div>
       <div class="title">OneRoof <span class="accent">Guide</span> — Interaction Rules &amp; Metrics</div>
-      <div class="subtitle">Working notes for Product &amp; Engineering</div>
+      <div class="subtitle">Agentic Chat — how the Guide behaves, and how we'll know it works</div>
     </div>
     <div class="meta">
       Design Challenge<br>
       Mari Kondrateva · April 2026
     </div>
+  </div>
+
+  <div class="callout" style="margin-top:2px">
+    <strong>Recommended option: Agentic Chat.</strong> A conversational Guide drives the journey with streamed working
+    steps, data-source pills (MoE, Maps, OneRoof), inline property cards and multi-turn follow-ups that re-rank in place.
+    A Smart Search variant (NL populates filter; ranked list) was also prototyped as a lower-risk comparison — the rules
+    below are written for Agentic Chat; filter search stays available as the always-on escape hatch.
   </div>
 
   <h2>Core Interaction Principles</h2>
@@ -293,39 +300,35 @@
       <th>Rationale</th>
     </tr>
     <tr>
-      <td>User types a natural language query</td>
-      <td>Active — translate to search, return ranked matches with reasoning</td>
-      <td>Explicit request for help</td>
+      <td>User types a natural-language query</td>
+      <td>Open chat; stream working steps inline with data-source pills (MoE, Maps, OneRoof); deliver property cards in
+        the thread</td>
+      <td>Conversational surface — transparency <em>is</em> the UI</td>
+    </tr>
+    <tr>
+      <td>User asks a follow-up ("walk time to primary?")</td>
+      <td>Re-rank the existing shortlist in place using conversation state; don't re-search from scratch</td>
+      <td>Multi-turn refinement is the Guide's signature capability</td>
+    </tr>
+    <tr>
+      <td>Guide is mid-stream and user taps Stop</td>
+      <td>Halt the specialist immediately; leave completed working steps visible; surface partial results</td>
+      <td>Interruption is a first-class interaction, not an error</td>
     </tr>
     <tr>
       <td>User opens a property detail page</td>
-      <td>Active — render Guide Insights card with contextual data</td>
-      <td>Reduces cognitive load at decision moment</td>
+      <td>Render Guide Insights card with contextual data (school zone, commute, price, suburb signals)</td>
+      <td>Reduces cognitive load at the decision moment</td>
     </tr>
     <tr>
-      <td>User saves 3+ similar properties</td>
-      <td>Detect pattern silently; ask at next "For You" visit</td>
-      <td>Consent-based learning, no surprise behaviour</td>
+      <td>User switches to filter search</td>
+      <td>Silent. Small "Ask Guide" entry point stays in the search bar</td>
+      <td>Filter search is a first-class path; don't force AI</td>
     </tr>
     <tr>
-      <td>New listing matches saved search</td>
-      <td>Push notification if user opted in, else surface in "For You"</td>
-      <td>Respects notification preferences</td>
-    </tr>
-    <tr>
-      <td>User browses filter-search mode</td>
-      <td>Silent — no interruptions. Small "Ask Guide" entry point remains available</td>
-      <td>Respects user preference; don't force AI</td>
-    </tr>
-    <tr>
-      <td>User dismisses 3+ Guide suggestions in a row</td>
+      <td>User dismisses 3+ suggestions in a row</td>
       <td>Pause proactive nudges for 7 days; keep reactive features active</td>
       <td>Low acceptance = signal to back off</td>
-    </tr>
-    <tr>
-      <td>User asks something outside Guide's scope (e.g. legal advice)</td>
-      <td>Decline with explanation; suggest qualified professional or OneRoof News article</td>
-      <td>Trust through honesty about limits</td>
     </tr>
     <tr>
       <td>Low-confidence match or sparse data</td>
@@ -386,11 +389,6 @@
       <td>Zero results for natural language query</td>
       <td>Suggest loosening 1–2 constraints (e.g. "+10% on budget would show 8 more")</td>
       <td>Preserves user's original criteria</td>
-    </tr>
-    <tr>
-      <td>User reports bad recommendation</td>
-      <td>Remove from results; thank them; never show that property in that context again</td>
-      <td>Feedback becomes training signal</td>
     </tr>
     <tr>
       <td>Insight contradicts visible listing data</td>
@@ -611,8 +609,9 @@
     </tr>
     <tr>
       <td>What does the minimum viable Phase 1 look like?</td>
-      <td>"NL search + Router + Search Specialist" could be 6 weeks or 6 months depending on how much of the existing listings pipeline we can reuse vs. rebuild.</td>
-      <td>Ship Ask mode only. Defer Learn and Guide modes to P2/P3. One specialist agent, one new route in the app, reuse every existing listings component.</td>
+      <td>"Agentic Chat + Router + Search Specialist" could be 6 weeks or 6 months depending on how much of the listings pipeline we reuse vs. rebuild.</td>
+      <td>Ship Ask mode only: one specialist agent, chat surface, data-source pills, multi-turn follow-up. Defer Learn
+        (For You nudges, learned preferences) and full Guide (Compare) to P2/P3.</td>
     </tr>
     <tr>
       <td>Who owns the agents — Product Engineering or a new AI/Platform function?</td>
@@ -679,6 +678,7 @@
   <h2>Things I'd Want to Know from the OneRoof Team</h2>
 
   <ul class="compact-list" style="columns: 2; column-gap: 10mm;">
+    <li><strong>Gut read on the chat surface?</strong> Does OneRoof's user base — first-home buyers especially — want to converse, or would they rather see a ranked list? (I'm backing chat on the 79% NZ conversational-AI adoption stat; interested where the panel lands.)</li>
     <li>Where does the current app have its worst drop-off — search, detail, or enquiry? That's where the Guide earns its place first.</li>
     <li>What's the real relationship with CoreLogic on data licensing and ML use of Estimates?</li>
     <li>How much of the listings pipeline is real-time vs. batch? Affects how fresh the Guide's context can be.</li>

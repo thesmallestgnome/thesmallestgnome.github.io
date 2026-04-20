@@ -1540,6 +1540,509 @@
       color: var(--text);
     }
 
+    /* ========================================
+     SCREEN 2: AGENTIC CHAT
+     ======================================== */
+    #screen-chat {
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+    }
+
+    #screen-chat .status-bar {
+      color: var(--text);
+      background: var(--white);
+      padding: 16px 24px 8px 24px;
+      flex-shrink: 0;
+    }
+
+    .chat-header {
+      padding: 4px 16px 12px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .chat-back {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .chat-title-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .chat-title-wrap img {
+      flex-shrink: 0;
+    }
+
+    .chat-title-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .chat-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .chat-status {
+      font-size: 11px;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+    }
+
+    .chat-status.idle {
+      color: var(--text-tertiary);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .stop-btn {
+      background: var(--red-light);
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    .stop-btn:hover {
+      background: #fcdad6;
+    }
+
+    .stop-btn .stop-icon {
+      width: 9px;
+      height: 9px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg);
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      display: none;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      max-width: 82%;
+      background: var(--orange);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 18px 18px 4px 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .msg-guide {
+      align-self: flex-start;
+      max-width: 92%;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .msg-guide-avatar {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .msg-guide-content {
+      flex: 1;
+      background: var(--white);
+      border-radius: 4px 18px 18px 18px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .msg-guide-content b {
+      font-weight: 600;
+    }
+
+    .msg-lead {
+      margin-bottom: 10px;
+    }
+
+    .working-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .working-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .working-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .working-step .step-indicator {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      border: 2px solid var(--border);
+      font-size: 9px;
+      color: white;
+      font-weight: 700;
+    }
+
+    .working-step.active .step-indicator {
+      border-color: var(--orange);
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .working-step.done .step-indicator {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .working-step.done .step-indicator::after {
+      content: "✓";
+    }
+
+    .step-text {
+      flex: 1;
+    }
+
+    .step-source {
+      display: inline-block;
+      font-size: 10px;
+      color: var(--text-secondary);
+      margin-left: 4px;
+      padding: 1px 6px;
+      background: var(--bg);
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .msg-cards {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 36px;
+    }
+
+    .msg-cards.hidden {
+      display: none !important;
+    }
+
+    .turn-divider {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 4px 2px;
+      color: var(--text-tertiary);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .turn-divider::before,
+    .turn-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .chat-prop-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+
+    .chat-prop-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .chat-prop-image {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      background-color: #ddd;
+    }
+
+    .chat-prop-match {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      backdrop-filter: blur(8px);
+    }
+
+    .chat-prop-match .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .chat-prop-body {
+      padding: 12px 14px;
+    }
+
+    .chat-prop-price {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .chat-prop-address {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin: 2px 0 8px;
+    }
+
+    .chat-prop-specs {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .chat-prop-specs .spec {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chat-prop-specs .spec img {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+      opacity: 0.7;
+    }
+
+    .chat-prop-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-chip {
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-size: 10.5px;
+      font-weight: 500;
+    }
+
+    .chat-chip.green {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .chat-chip.blue {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .chat-chip.orange {
+      background: var(--orange-light);
+      color: var(--orange);
+    }
+
+    .walk-banner {
+      background: linear-gradient(90deg, var(--orange-light), rgba(255, 243, 232, 0.2));
+      border-left: 3px solid var(--orange);
+      padding: 9px 14px;
+      font-size: 12px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+    }
+
+    .walk-banner b {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .walk-banner .walk-meta {
+      color: var(--text-secondary);
+      font-size: 11px;
+    }
+
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-left: 36px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.4s, max-height 0.4s;
+    }
+
+    .suggestion-chips.visible {
+      opacity: 1;
+      max-height: 200px;
+    }
+
+    .suggestion-chip {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--text);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .suggestion-chip:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .chat-input-wrap {
+      padding: 10px 14px 24px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 11px 16px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      color: var(--text);
+      background: var(--bg);
+      transition: all 0.2s;
+    }
+
+    .chat-input:focus {
+      border-color: var(--orange);
+      background: var(--white);
+    }
+
+    .chat-input:disabled {
+      opacity: 0.6;
+    }
+
+    .chat-send {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--orange);
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .chat-send:hover:not(:disabled) {
+      background: var(--orange-hover);
+    }
+
+    .chat-send:disabled {
+      background: var(--border);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+    }
+
     /* Navigation label */
     .screen-label {
       position: absolute;
@@ -1660,7 +2163,7 @@
           <div class="nl-input-area">
             <textarea class="nl-input"
               placeholder="e.g. 3-bed house under $900k near a good school, 30 min from Auckland CBD..."></textarea>
-            <button class="nl-send" onclick="goTo('screen-processing')">Search</button>
+            <button class="nl-send" onclick="startAgenticSearch()">Search</button>
           </div>
 
           <div class="or-divider">or</div>
@@ -1670,6 +2173,394 @@
             Search with filters
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ====== SCREEN 2: AGENTIC CHAT ====== -->
+    <div class="screen" id="screen-chat" data-label="2. Agentic Chat — Guide at work">
+      <div class="status-bar">
+        <div class="time">21:35</div>
+        <div class="icons">●●● ▲ ◼</div>
+      </div>
+
+      <div class="chat-header">
+        <div class="chat-back" onclick="goTo('screen-onboarding')">‹</div>
+        <div class="chat-title-wrap">
+          <img src="icons/icon-guide.svg" style="width:30px;height:30px;">
+          <div class="chat-title-text">
+            <div class="chat-title">OneRoof Guide</div>
+            <div class="chat-status" id="chatStatus"><span class="pulse-dot"></span> Thinking…</div>
+          </div>
+        </div>
+        <button class="stop-btn" id="stopBtn" onclick="stopAgent()">
+          <span class="stop-icon"></span> Stop
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+
+        <!-- User query bubble -->
+        <div class="msg-user" id="userMsg">3-bed house under $900k near a good school, 30 min from CBD</div>
+
+        <!-- Guide reasoning / working steps -->
+        <div class="msg-guide">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            <div class="msg-lead">Let me break this down and search for you…</div>
+            <div class="working-list" id="workingList">
+              <div class="working-step" data-step="0">
+                <div class="step-indicator"></div>
+                <div class="step-text">Understanding your needs</div>
+              </div>
+              <div class="working-step" data-step="1">
+                <div class="step-indicator"></div>
+                <div class="step-text">Searching 46,000+ listings <span class="step-source">OneRoof</span></div>
+              </div>
+              <div class="working-step" data-step="2">
+                <div class="step-indicator"></div>
+                <div class="step-text">Checking school zones, Decile 8+ <span class="step-source">MoE</span></div>
+              </div>
+              <div class="working-step" data-step="3">
+                <div class="step-indicator"></div>
+                <div class="step-text">Calculating CBD commute <span class="step-source">Maps</span></div>
+              </div>
+              <div class="working-step" data-step="4">
+                <div class="step-indicator"></div>
+                <div class="step-text">Ranking by overall match</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guide results summary -->
+        <div class="msg-guide" id="resultsSummary" style="display:none;">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            I found <b>12 strong matches</b>. Here are your top 3 — all under $900k, in a Decile 8+ school zone, with a CBD commute under 30 minutes.
+          </div>
+        </div>
+
+        <!-- Property cards streamed inline -->
+        <div class="msg-cards hidden" id="propCards">
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property1.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 94% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$865,000</div>
+              <div class="chat-prop-address">12 Woodside Ave, Mount Albert</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Mt Albert Grammar zone</span>
+                <span class="chat-chip green">✓ 22 min to CBD</span>
+                <span class="chat-chip blue">↗ Suburb trending up</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property2.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 89% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$820,000</div>
+              <div class="chat-prop-address">8 Rimu Road, Mount Roskill</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 1</div>
+                <div class="spec"><img src="icons/icon-car.png"> 2</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Decile 9 school zone</span>
+                <span class="chat-chip green">✓ 25 min to CBD</span>
+                <span class="chat-chip orange">⚠ Older kitchen — may need work</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property3.jpeg');">
+              <div class="chat-prop-match"><span class="dot match-med"></span> 81% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$890,000</div>
+              <div class="chat-prop-address">45 Kauri St, Sandringham</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Balmoral Int. (Decile 8)</span>
+                <span class="chat-chip orange">⚠ 32 min to CBD (slight stretch)</span>
+                <span class="chat-chip blue">↗ 3 similar sold in 30 days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow-up suggestion chips -->
+        <div class="suggestion-chips" id="suggestionChips">
+          <button class="suggestion-chip" onclick="askAboutSchoolWalk()">Walking distance to primary school?</button>
+          <button class="suggestion-chip" onclick="sendFollowup('Show only 4-bedroom options')">Show 4-bed options</button>
+          <button class="suggestion-chip" onclick="sendFollowup('Sort by commute time')">Sort by commute</button>
+          <button class="suggestion-chip" onclick="sendFollowup('Save this search')">Save this search</button>
+        </div>
+      </div>
+
+      <div class="chat-input-wrap">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Refine your search…" disabled>
+        <button class="chat-send" id="chatSendBtn" onclick="sendMessage()" disabled>→</button>
+      </div>
+    </div>
+
+    <!-- ====== SCREEN 3: AGENTIC CHAT — FOLLOW-UP ====== -->
+    <div class="screen" id="screen-chat-2" data-label="3. Agentic Chat — Follow-up">
+      <div class="status-bar">
+        <div class="time">21:36</div>
+        <div class="icons">●●● ▲ ◼</div>
+      </div>
+
+      <div class="chat-header">
+        <div class="chat-back" onclick="goTo('screen-chat')">‹</div>
+        <div class="chat-title-wrap">
+          <img src="icons/icon-guide.svg" style="width:30px;height:30px;">
+          <div class="chat-title-text">
+            <div class="chat-title">OneRoof Guide</div>
+            <div class="chat-status" id="chatStatus2"><span class="pulse-dot"></span> Thinking…</div>
+          </div>
+        </div>
+        <button class="stop-btn" id="stopBtn2" onclick="stopAgent2()">
+          <span class="stop-icon"></span> Stop
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages2">
+
+        <!-- ===== Turn 1 (completed) ===== -->
+        <div class="msg-user">3-bed house under $900k near a good school, 30 min from CBD</div>
+
+        <div class="msg-guide">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            <div class="msg-lead">Let me break this down and search for you…</div>
+            <div class="working-list">
+              <div class="working-step visible done">
+                <div class="step-indicator"></div>
+                <div class="step-text">Understanding your needs</div>
+              </div>
+              <div class="working-step visible done">
+                <div class="step-indicator"></div>
+                <div class="step-text">Searching 46,000+ listings <span class="step-source">OneRoof</span></div>
+              </div>
+              <div class="working-step visible done">
+                <div class="step-indicator"></div>
+                <div class="step-text">Checking school zones, Decile 8+ <span class="step-source">MoE</span></div>
+              </div>
+              <div class="working-step visible done">
+                <div class="step-indicator"></div>
+                <div class="step-text">Calculating CBD commute <span class="step-source">Maps</span></div>
+              </div>
+              <div class="working-step visible done">
+                <div class="step-indicator"></div>
+                <div class="step-text">Ranking by overall match</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg-guide">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            I found <b>12 strong matches</b>. Here are your top 3 — all under $900k, in a Decile 8+ school zone, with a CBD commute under 30 minutes.
+          </div>
+        </div>
+
+        <div class="msg-cards">
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property1.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 94% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$865,000</div>
+              <div class="chat-prop-address">12 Woodside Ave, Mount Albert</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Mt Albert Grammar zone</span>
+                <span class="chat-chip green">✓ 22 min to CBD</span>
+                <span class="chat-chip blue">↗ Suburb trending up</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property2.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 89% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$820,000</div>
+              <div class="chat-prop-address">8 Rimu Road, Mount Roskill</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 1</div>
+                <div class="spec"><img src="icons/icon-car.png"> 2</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Decile 9 school zone</span>
+                <span class="chat-chip green">✓ 25 min to CBD</span>
+                <span class="chat-chip orange">⚠ Older kitchen — may need work</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property3.jpeg');">
+              <div class="chat-prop-match"><span class="dot match-med"></span> 81% match</div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$890,000</div>
+              <div class="chat-prop-address">45 Kauri St, Sandringham</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Balmoral Int. (Decile 8)</span>
+                <span class="chat-chip orange">⚠ 32 min to CBD (slight stretch)</span>
+                <span class="chat-chip blue">↗ 3 similar sold in 30 days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="turn-divider">Follow-up</div>
+
+        <!-- ===== Turn 2 (new, animates) ===== -->
+        <div class="msg-user">What's the walking distance from a primary school?</div>
+
+        <div class="msg-guide">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            <div class="msg-lead">Good question — let me re-rank these by walk time to the nearest primary.</div>
+            <div class="working-list" id="workingList2">
+              <div class="working-step" data-step="0">
+                <div class="step-indicator"></div>
+                <div class="step-text">Reading your follow-up</div>
+              </div>
+              <div class="working-step" data-step="1">
+                <div class="step-indicator"></div>
+                <div class="step-text">Finding primary schools within 2 km <span class="step-source">MoE</span></div>
+              </div>
+              <div class="working-step" data-step="2">
+                <div class="step-indicator"></div>
+                <div class="step-text">Calculating walk times <span class="step-source">Maps</span></div>
+              </div>
+              <div class="working-step" data-step="3">
+                <div class="step-indicator"></div>
+                <div class="step-text">Re-ranking top 3 by proximity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg-guide" id="resultsSummary2" style="display:none;">
+          <div class="msg-guide-avatar"><img src="icons/icon-guide.svg" style="width:26px;height:26px;"></div>
+          <div class="msg-guide-content">
+            Here's your shortlist <b>re-ranked by walk to the nearest primary school</b> — closest first. Prices, specs and other reasoning unchanged.
+          </div>
+        </div>
+
+        <div class="msg-cards" id="propCards2">
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property2.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 89% match</div>
+            </div>
+            <div class="walk-banner">
+              <div><b>6 min walk</b> to Three Kings Primary <span class="walk-meta">· 0.5 km · Decile 9</span></div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$820,000</div>
+              <div class="chat-prop-address">8 Rimu Road, Mount Roskill</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 1</div>
+                <div class="spec"><img src="icons/icon-car.png"> 2</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Decile 9 school zone</span>
+                <span class="chat-chip green">✓ 25 min to CBD</span>
+                <span class="chat-chip orange">⚠ Older kitchen — may need work</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property3.jpeg');">
+              <div class="chat-prop-match"><span class="dot match-med"></span> 81% match</div>
+            </div>
+            <div class="walk-banner">
+              <div><b>9 min walk</b> to Edendale Primary <span class="walk-meta">· 0.75 km · Decile 8</span></div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$890,000</div>
+              <div class="chat-prop-address">45 Kauri St, Sandringham</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Balmoral Int. (Decile 8)</span>
+                <span class="chat-chip orange">⚠ 32 min to CBD (slight stretch)</span>
+                <span class="chat-chip blue">↗ 3 similar sold in 30 days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-prop-card">
+            <div class="chat-prop-image" style="background-image: url('bg-images/property1.png');">
+              <div class="chat-prop-match"><span class="dot match-high"></span> 94% match</div>
+            </div>
+            <div class="walk-banner">
+              <div><b>14 min walk</b> to Mt Albert Primary <span class="walk-meta">· 1.1 km · Decile 8</span></div>
+            </div>
+            <div class="chat-prop-body">
+              <div class="chat-prop-price">$865,000</div>
+              <div class="chat-prop-address">12 Woodside Ave, Mount Albert</div>
+              <div class="chat-prop-specs">
+                <div class="spec"><img src="icons/icon-bed.png"> 3</div>
+                <div class="spec"><img src="icons/icon-bath.png"> 2</div>
+                <div class="spec"><img src="icons/icon-car.png"> 1</div>
+              </div>
+              <div class="chat-prop-reasons">
+                <span class="chat-chip green">✓ Mt Albert Grammar zone</span>
+                <span class="chat-chip green">✓ 22 min to CBD</span>
+                <span class="chat-chip blue">↗ Suburb trending up</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-chips" id="suggestionChips2">
+          <button class="suggestion-chip">Compare these 3</button>
+          <button class="suggestion-chip">What about bus routes?</button>
+          <button class="suggestion-chip">Show decile details</button>
+          <button class="suggestion-chip">Save this search</button>
+        </div>
+      </div>
+
+      <div class="chat-input-wrap">
+        <input type="text" class="chat-input" id="chatInput2" placeholder="Ask a follow-up…" disabled>
+        <button class="chat-send" id="chatSendBtn2" disabled>→</button>
       </div>
     </div>
 
@@ -1683,9 +2574,13 @@
 
   <script>
     const screens = [
-      'screen-onboarding'
+      'screen-onboarding',
+      'screen-chat',
+      'screen-chat-2'
     ];
     let currentScreen = 0;
+    let agentTimeouts = [];
+    let agentTimeouts2 = [];
 
     function goTo(screenId) {
       const idx = screens.indexOf(screenId);
@@ -1704,10 +2599,229 @@
       document.getElementById('screenCounter').textContent = `${idx + 1} / ${screens.length}`;
       document.getElementById('prevBtn').disabled = idx === 0;
       document.getElementById('nextBtn').disabled = idx === screens.length - 1;
+
+      if (screens[idx] === 'screen-chat-2') {
+        resetAgent2();
+        runAgentAnimation2();
+      }
     }
 
-    // Keyboard navigation
+    // ===== Agentic chat flow =====
+    function startAgenticSearch() {
+      const input = document.querySelector('#screen-onboarding .nl-input');
+      const query = (input && input.value.trim())
+        || '3-bed house under $900k near a good school, 30 min from CBD';
+      document.getElementById('userMsg').textContent = query;
+      goTo('screen-chat');
+      resetAgent();
+      runAgentAnimation();
+    }
+
+    function resetAgent() {
+      agentTimeouts.forEach(clearTimeout);
+      agentTimeouts = [];
+      document.querySelectorAll('.working-step').forEach(s => {
+        s.classList.remove('visible', 'active', 'done');
+      });
+      document.getElementById('resultsSummary').style.display = 'none';
+      document.getElementById('propCards').classList.add('hidden');
+      document.getElementById('suggestionChips').classList.remove('visible');
+      document.getElementById('chatInput').disabled = true;
+      document.getElementById('chatSendBtn').disabled = true;
+      document.getElementById('stopBtn').style.display = 'flex';
+      const status = document.getElementById('chatStatus');
+      status.innerHTML = '<span class="pulse-dot"></span> Thinking…';
+      status.classList.remove('idle');
+      document.getElementById('chatMessages').scrollTop = 0;
+    }
+
+    function runAgentAnimation() {
+      const steps = document.querySelectorAll('.working-step');
+      const stepStart = [400, 1500, 2700, 3900, 5000];
+      const stepDone = 1000;
+
+      steps.forEach((step, i) => {
+        agentTimeouts.push(setTimeout(() => {
+          step.classList.add('visible', 'active');
+          scrollChatToBottom();
+        }, stepStart[i]));
+        agentTimeouts.push(setTimeout(() => {
+          step.classList.remove('active');
+          step.classList.add('done');
+        }, stepStart[i] + stepDone));
+      });
+
+      agentTimeouts.push(setTimeout(() => {
+        document.getElementById('resultsSummary').style.display = 'flex';
+        scrollChatToBottom();
+      }, 6200));
+
+      agentTimeouts.push(setTimeout(() => {
+        document.getElementById('propCards').classList.remove('hidden');
+        scrollChatToBottom();
+      }, 6700));
+
+      agentTimeouts.push(setTimeout(() => {
+        finishAgent();
+      }, 7600));
+    }
+
+    function finishAgent() {
+      document.getElementById('suggestionChips').classList.add('visible');
+      document.getElementById('chatInput').disabled = false;
+      document.getElementById('chatSendBtn').disabled = false;
+      document.getElementById('stopBtn').style.display = 'none';
+      const status = document.getElementById('chatStatus');
+      status.innerHTML = 'Ready · 12 matches found';
+      status.classList.add('idle');
+      scrollChatToBottom();
+    }
+
+    function stopAgent() {
+      agentTimeouts.forEach(clearTimeout);
+      agentTimeouts = [];
+      document.querySelectorAll('.working-step.active').forEach(s => {
+        s.classList.remove('active');
+        s.classList.add('done');
+      });
+      document.getElementById('stopBtn').style.display = 'none';
+      const status = document.getElementById('chatStatus');
+      status.innerHTML = 'Stopped — refine anytime';
+      status.classList.add('idle');
+      document.getElementById('chatInput').disabled = false;
+      document.getElementById('chatSendBtn').disabled = false;
+      document.getElementById('chatInput').focus();
+    }
+
+    function sendFollowup(text) {
+      const input = document.getElementById('chatInput');
+      input.value = text;
+      input.focus();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const val = input.value.trim();
+      if (!val) return;
+      document.getElementById('userMsg').textContent = val;
+      input.value = '';
+      resetAgent();
+      runAgentAnimation();
+    }
+
+    // Submit chat input with Enter
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !chatInput.disabled) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+      }
+    });
+
+    function scrollChatToBottom() {
+      const el = document.getElementById('chatMessages');
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+
+    // ===== Follow-up (Turn 2) — walking distance to primary school =====
+    function askAboutSchoolWalk() {
+      goTo('screen-chat-2');
+    }
+
+    function resetAgent2() {
+      agentTimeouts2.forEach(clearTimeout);
+      agentTimeouts2 = [];
+      document.querySelectorAll('#workingList2 .working-step').forEach(s => {
+        s.classList.remove('visible', 'active', 'done');
+      });
+      document.getElementById('resultsSummary2').style.display = 'none';
+      document.getElementById('suggestionChips2').classList.remove('visible');
+      document.getElementById('chatInput2').disabled = true;
+      document.getElementById('chatSendBtn2').disabled = true;
+      document.getElementById('stopBtn2').style.display = 'flex';
+      const status = document.getElementById('chatStatus2');
+      status.innerHTML = '<span class="pulse-dot"></span> Thinking…';
+      status.classList.remove('idle');
+      // Let Turn 1 cards stay visible as context above the new question
+      const msgs = document.getElementById('chatMessages2');
+      setTimeout(() => {
+        const divider = msgs.querySelector('.turn-divider');
+        if (divider) {
+          // Show the divider + new question near top, keeping last Turn 1 card peeking above
+          msgs.scrollTop = Math.max(0, divider.offsetTop - 160);
+        }
+      }, 50);
+    }
+
+    function runAgentAnimation2() {
+      const steps = document.querySelectorAll('#workingList2 .working-step');
+      const stepStart = [300, 1100, 1900, 2700];
+      const stepDone = 750;
+
+      steps.forEach((step, i) => {
+        agentTimeouts2.push(setTimeout(() => {
+          step.classList.add('visible', 'active');
+        }, stepStart[i]));
+        agentTimeouts2.push(setTimeout(() => {
+          step.classList.remove('active');
+          step.classList.add('done');
+        }, stepStart[i] + stepDone));
+      });
+
+      agentTimeouts2.push(setTimeout(() => {
+        document.getElementById('resultsSummary2').style.display = 'flex';
+        // Scroll so summary + Turn 2 cards come into view
+        const msgs = document.getElementById('chatMessages2');
+        const summary = document.getElementById('resultsSummary2');
+        if (summary) msgs.scrollTop = summary.offsetTop - 60;
+      }, 3500));
+
+      agentTimeouts2.push(setTimeout(() => {
+        finishAgent2();
+      }, 4400));
+    }
+
+    function finishAgent2() {
+      document.getElementById('suggestionChips2').classList.add('visible');
+      document.getElementById('chatInput2').disabled = false;
+      document.getElementById('chatSendBtn2').disabled = false;
+      document.getElementById('stopBtn2').style.display = 'none';
+      const status = document.getElementById('chatStatus2');
+      status.innerHTML = 'Ready · re-ranked by walk time';
+      status.classList.add('idle');
+    }
+
+    function stopAgent2() {
+      agentTimeouts2.forEach(clearTimeout);
+      agentTimeouts2 = [];
+      document.querySelectorAll('#workingList2 .working-step.active').forEach(s => {
+        s.classList.remove('active');
+        s.classList.add('done');
+      });
+      // Reveal partial results so user always sees context
+      document.getElementById('resultsSummary2').style.display = 'flex';
+      document.getElementById('suggestionChips2').classList.add('visible');
+      document.getElementById('stopBtn2').style.display = 'none';
+      const status = document.getElementById('chatStatus2');
+      status.innerHTML = 'Stopped — showing partial results';
+      status.classList.add('idle');
+      document.getElementById('chatInput2').disabled = false;
+      document.getElementById('chatSendBtn2').disabled = false;
+      scrollChat2ToBottom();
+    }
+
+    function scrollChat2ToBottom() {
+      const el = document.getElementById('chatMessages2');
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+
+    // Keyboard navigation (ignored while typing)
     document.addEventListener('keydown', (e) => {
+      if (e.target.matches('input, textarea')) return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
     });

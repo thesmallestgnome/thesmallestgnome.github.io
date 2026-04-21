@@ -1507,6 +1507,91 @@
                 border: 1px solid var(--border);
             }
 
+            /* For You header: hamburger + greeting sit on one row,
+               consistent with the chat-header pattern */
+            #screen-nudge .nudge-header {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 20px 16px;
+            }
+            #screen-nudge .nudge-header .hamburger-btn {
+                color: var(--text);
+                flex-shrink: 0;
+            }
+            #screen-nudge .nudge-header-text {
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Guide rationale line inside a nudge card — small avatar
+               + one sentence explaining why the Guide surfaced this.
+               Transparency-first pattern, same as the chat bubbles. */
+            .nudge-guide-line {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                margin-bottom: 12px;
+                padding: 10px 12px;
+                background: var(--orange-light);
+                border-radius: var(--radius-sm);
+                font-size: 12.5px;
+                line-height: 1.5;
+                color: var(--text);
+            }
+            .nudge-guide-line .guide-avatar-xs {
+                width: 20px;
+                height: 20px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .nudge-guide-line .guide-avatar-xs img {
+                width: 20px;
+                height: 20px;
+            }
+
+            /* Data-source pills — every claim cites where it came from.
+               Mirrors the step-source pills in the working-steps list. */
+            .nudge-sources {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 10px;
+                font-size: 10.5px;
+            }
+            .nudge-source {
+                display: inline-flex;
+                align-items: center;
+                padding: 3px 9px;
+                background: var(--bg);
+                border-radius: 10px;
+                font-weight: 500;
+                color: var(--text-secondary);
+            }
+
+            .npp-price-drop {
+                color: var(--red);
+                font-size: 11px;
+                font-weight: 600;
+                margin-left: 4px;
+            }
+
+            /* Opt-out affordance — users can always pause or refine */
+            .nudge-footer-note {
+                text-align: center;
+                padding: 6px 24px 28px;
+                font-size: 11.5px;
+                color: var(--text-tertiary);
+                line-height: 1.55;
+            }
+            .nudge-footer-note a {
+                color: var(--orange);
+                font-weight: 500;
+                text-decoration: none;
+            }
+
             /* ========================================
      SCREEN 6: COMPARISON
      ======================================== */
@@ -5047,6 +5132,234 @@
                     </div>
                 </div>
 
+                <!-- ====== SCREEN 5: FOR YOU — PROACTIVE GUIDE NUDGES ====== -->
+                <div
+                    class="screen"
+                    id="screen-nudge"
+                    data-label="5. For You — Proactive Guide Nudges"
+                >
+                    <div class="status-bar" style="background: var(--white)">
+                        <div class="time">08:15</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+
+                    <div class="nudge-header">
+                        <button class="hamburger-btn" aria-label="Menu">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div class="nudge-header-text">
+                            <div class="nudge-greeting">Good morning, Mari</div>
+                            <div class="nudge-sub">
+                                3 updates on your search — while you were away
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scroll-content">
+                        <div class="nudge-cards">
+                            <!-- New match: a fresh listing that fits the brief.
+                                 Guide earns its spot by getting there before the
+                                 user refreshes the feed. -->
+                            <div class="nudge-card">
+                                <div class="nudge-card-header">
+                                    <span class="nudge-type new-match"
+                                        >New match</span
+                                    >
+                                    <span class="nudge-time">2 hrs ago</span>
+                                </div>
+                                <div class="nudge-guide-line">
+                                    <span class="guide-avatar-xs">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            alt=""
+                                        />
+                                    </span>
+                                    <span>
+                                        A fresh listing in
+                                        <b>Mount Roskill</b> just came up that
+                                        hits your brief — decile 9 zone, 3-bed,
+                                        and $45k under your $900k ceiling.
+                                    </span>
+                                </div>
+                                <div class="nudge-property-preview">
+                                    <div
+                                        class="npp-image"
+                                        style="
+                                            background-image: url(&quot;bg-images/property1.png&quot;);
+                                        "
+                                    ></div>
+                                    <div class="npp-info">
+                                        <div class="npp-price">$855,000</div>
+                                        <div class="npp-address">
+                                            17 Walters Rd, Mount Roskill
+                                        </div>
+                                        <div class="npp-specs">
+                                            3 bed · 1 bath · 102m²
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nudge-sources">
+                                    <span class="nudge-source"
+                                        >OneRoof listing</span
+                                    >
+                                    <span class="nudge-source">MoE zone</span>
+                                    <span class="nudge-source"
+                                        >Maps · 24 min CBD</span
+                                    >
+                                </div>
+                                <div class="nudge-card-actions">
+                                    <button
+                                        class="nudge-action primary"
+                                        onclick="goTo('screen-detail')"
+                                    >
+                                        View property
+                                    </button>
+                                    <button class="nudge-action secondary">
+                                        Not for me
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Price drop on a property already in the shortlist.
+                                 Brings the user back at the right moment. -->
+                            <div class="nudge-card">
+                                <div class="nudge-card-header">
+                                    <span class="nudge-type price-drop"
+                                        >Price drop</span
+                                    >
+                                    <span class="nudge-time">Yesterday</span>
+                                </div>
+                                <div class="nudge-guide-line">
+                                    <span class="guide-avatar-xs">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            alt=""
+                                        />
+                                    </span>
+                                    <span>
+                                        <b>45 Kauri St, Sandringham</b> —
+                                        yesterday's result — dropped from $890k
+                                        to <b>$855k</b>. On market 42 days, so
+                                        the vendor may be open to offers.
+                                    </span>
+                                </div>
+                                <div class="nudge-property-preview">
+                                    <div
+                                        class="npp-image"
+                                        style="
+                                            background-image: url(&quot;bg-images/property3.jpeg&quot;);
+                                        "
+                                    ></div>
+                                    <div class="npp-info">
+                                        <div class="npp-price">
+                                            $855,000
+                                            <span class="npp-price-drop"
+                                                >−$35k</span
+                                            >
+                                        </div>
+                                        <div class="npp-address">
+                                            45 Kauri St, Sandringham
+                                        </div>
+                                        <div class="npp-specs">
+                                            3 bed · 2 bath · 95m²
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nudge-sources">
+                                    <span class="nudge-source"
+                                        >OneRoof listing history</span
+                                    >
+                                    <span class="nudge-source"
+                                        >CoreLogic estimate · $868k</span
+                                    >
+                                </div>
+                                <div class="nudge-card-actions">
+                                    <button class="nudge-action primary">
+                                        View update
+                                    </button>
+                                    <button class="nudge-action secondary">
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Learning: earned autonomy.
+                                 The Guide spots a behavioural pattern and asks
+                                 permission before applying it to future
+                                 searches — never just acting. -->
+                            <div class="nudge-card">
+                                <div class="nudge-card-header">
+                                    <span class="nudge-type learning"
+                                        >Learning</span
+                                    >
+                                </div>
+                                <div class="learning-card-body">
+                                    <div
+                                        class="guide-avatar-sm"
+                                        style="flex-shrink: 0"
+                                    >
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 28px; height: 28px"
+                                        />
+                                    </div>
+                                    <div class="learning-text">
+                                        I've noticed you save
+                                        <b>single-level homes</b> and skip
+                                        listings with stairs. Want me to
+                                        prioritise single-level in your next
+                                        search?
+                                    </div>
+                                    <div class="learning-actions">
+                                        <button class="learning-yes">
+                                            Yes, please
+                                        </button>
+                                        <button class="learning-no">
+                                            Not yet
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Market insight: neutral context, no hard CTA.
+                                 Guide adds value without nagging. -->
+                            <div class="nudge-card">
+                                <div class="nudge-card-header">
+                                    <span class="nudge-type insight"
+                                        >Market insight</span
+                                    >
+                                    <span class="nudge-time">This week</span>
+                                </div>
+                                <div class="nudge-guide-line">
+                                    <span class="guide-avatar-xs">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            alt=""
+                                        />
+                                    </span>
+                                    <span>
+                                        3-bed listings in Mt Albert, Mt Roskill
+                                        and Sandringham are up
+                                        <b>18% this month</b>. More choice
+                                        usually means more negotiating room at
+                                        open homes this weekend.
+                                    </span>
+                                </div>
+                                <div class="nudge-sources">
+                                    <span class="nudge-source"
+                                        >OneRoof listings · last 30 days</span
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="nudge-footer-note">
+                                I only flag what matches your saved search.<br />
+                                <a href="#">Adjust or pause nudges</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ====== SIDE MENU ====== -->
                 <div
                     class="side-menu-overlay"
@@ -5102,7 +5415,7 @@
                         </button>
                         <button
                             class="side-menu-item has-badge"
-                            onclick="closeSideMenu()"
+                            onclick="goTo('screen-nudge'); closeSideMenu();"
                         >
                             <span class="side-menu-item-icon">
                                 <img src="icons/icon-for-you.PNG" alt="" />
@@ -5209,6 +5522,7 @@
                 "screen-chat",
                 "screen-chat-2",
                 "screen-detail",
+                "screen-nudge",
             ];
             let currentScreen = 0;
             let agentTimeouts = [];

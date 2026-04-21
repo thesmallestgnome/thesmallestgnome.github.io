@@ -118,6 +118,7 @@
                 cursor: pointer;
                 color: inherit;
                 flex-shrink: 0;
+                position: relative;
             }
             .hamburger-btn span {
                 display: block;
@@ -125,6 +126,28 @@
                 height: 2px;
                 background: currentColor;
                 border-radius: 1px;
+            }
+            /* Notification dot — signals pending updates before the menu is opened */
+            .hamburger-btn.has-badge::after {
+                content: "";
+                position: absolute;
+                top: -1px;
+                right: -1px;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--orange);
+                box-shadow: 0 0 0 2px var(--white);
+            }
+            /* Onboarding hamburger floats over dark imagery — keep dot readable */
+            #screen-onboarding > .hamburger-btn.has-badge::after {
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
+            }
+            /* Detail hamburger sits on a dark translucent circle */
+            #screen-detail .hamburger-btn.has-badge::after {
+                top: 1px;
+                right: 1px;
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
             }
             /* Onboarding has no header bar, so the hamburger floats below the status bar */
             #screen-onboarding > .hamburger-btn {
@@ -1926,6 +1949,40 @@
                 border-radius: 50%;
             }
 
+            /* Save / share quick actions in the top-right of each card image */
+            .chat-prop-actions {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                display: flex;
+                gap: 6px;
+                z-index: 2;
+            }
+
+            .chat-prop-action-btn {
+                width: 32px;
+                height: 32px;
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 50%;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                line-height: 1;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                backdrop-filter: blur(8px);
+                font-family: inherit;
+                -webkit-tap-highlight-color: transparent;
+                transition: background 0.15s;
+            }
+
+            .chat-prop-action-btn:hover {
+                background: rgba(0, 0, 0, 0.55);
+            }
+
             .chat-prop-body {
                 padding: 12px 14px;
             }
@@ -2655,1424 +2712,1943 @@
                 z-index: 20;
                 backdrop-filter: blur(8px);
             }
+
+            /* ========================================
+     SIDE MENU (slides in from left on hamburger tap)
+     ======================================== */
+            .frame-inner {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                border-radius: 44px;
+            }
+
+            .side-menu-overlay {
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+                z-index: 100;
+            }
+
+            .side-menu-overlay.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .side-menu {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 300px;
+                background: var(--white);
+                transform: translateX(-100%);
+                transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+                z-index: 101;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 2px 0 24px rgba(0, 0, 0, 0.15);
+            }
+
+            .side-menu.open {
+                transform: translateX(0);
+            }
+
+            .side-menu-header {
+                padding: 52px 22px 18px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border-bottom: 1px solid var(--border);
+                flex-shrink: 0;
+            }
+
+            .side-menu-brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 20px;
+                font-weight: 700;
+                color: var(--text);
+            }
+
+            .side-menu-close {
+                margin-left: auto;
+                width: 32px;
+                height: 32px;
+                border: none;
+                background: transparent;
+                font-size: 22px;
+                line-height: 1;
+                color: var(--text-secondary);
+                cursor: pointer;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .side-menu-close:hover {
+                background: var(--bg);
+                color: var(--text);
+            }
+
+            .side-menu-items {
+                flex: 1;
+                overflow-y: auto;
+                padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .side-menu-items::-webkit-scrollbar {
+                display: none;
+            }
+
+            .side-menu-item {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                width: 100%;
+                text-align: left;
+                padding: 14px 22px;
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid var(--border);
+                cursor: pointer;
+                font-family: inherit;
+                -webkit-tap-highlight-color: transparent;
+                transition: background 0.15s;
+            }
+
+            .side-menu-item:hover {
+                background: var(--bg);
+            }
+
+            .side-menu-item:active {
+                background: var(--orange-light);
+            }
+
+            .side-menu-item-icon {
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                position: relative;
+            }
+
+            /* Notification dot for menu items with pending updates */
+            .side-menu-item.has-badge .side-menu-item-text {
+                position: relative;
+            }
+            .side-menu-item.has-badge .side-menu-item-text::after {
+                content: "";
+                position: absolute;
+                top: calc(50% - 5px);
+                right: 0;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--orange);
+                box-shadow: 0 0 0 2px var(--white);
+            }
+
+            .side-menu-item-icon img {
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+            }
+
+            .side-menu-item-icon svg {
+                width: 18px;
+                height: 18px;
+                object-fit: contain;
+            }
+
+            .side-menu-item-text {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .side-menu-item-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            .side-menu-item-sub {
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 2px;
+            }
         </style>
     </head>
 
     <body>
         <div class="device-frame" id="app">
-            <!-- ====== SCREEN 1: ONBOARDING ====== -->
-            <div
-                class="screen active"
-                id="screen-onboarding"
-                data-label="1. Onboarding — Meet the Guide"
-            >
-                <div class="onboarding-bg"></div>
-                <button class="hamburger-btn" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
-                <div class="onboarding-content">
+            <div class="frame-inner">
+                <!-- ====== SCREEN 1: ONBOARDING ====== -->
+                <div
+                    class="screen active"
+                    id="screen-onboarding"
+                    data-label="1. Onboarding — Meet the Guide"
+                >
+                    <div class="onboarding-bg"></div>
+                    <button class="hamburger-btn has-badge" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="onboarding-content">
+                        <div class="status-bar">
+                            <div class="time">21:35</div>
+                            <div class="icons">●●● ▲ ◼</div>
+                        </div>
+                        <div class="onboarding-logo">
+                            <div class="welcome-text">Welcome to</div>
+                            <div class="brand">
+                                <span class="icon-house"
+                                    ><svg
+                                        width="28"
+                                        height="27"
+                                        viewBox="0 0 37 36"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M36.6 26.4H31.2V18.8L18.3 7.3L5.4 18.8V26.4H0V16.4L18.3 0L36.6 16.4V26.4ZM0 29.9H36.6V35.3H0V29.9Z"
+                                            fill="#FF8500"
+                                        /></svg
+                                ></span>
+                                OneRoof
+                            </div>
+                        </div>
+
+                        <div class="intent-tabs">
+                            <div class="intent-tab active">
+                                <img
+                                    src="icons/icon-buying.png"
+                                    style="
+                                        width: 28px;
+                                        height: 28px;
+                                        object-fit: contain;
+                                        vertical-align: middle;
+                                        margin-right: 4px;
+                                        margin-bottom: -3px;
+                                    "
+                                /><span>Buying</span>
+                            </div>
+                            <div class="intent-tab">
+                                <img
+                                    src="icons/icon-renting.png"
+                                    style="
+                                        width: 28px;
+                                        height: 28px;
+                                        object-fit: contain;
+                                        vertical-align: middle;
+                                        margin-right: 4px;
+                                        margin-bottom: -3px;
+                                    "
+                                /><span>Renting</span>
+                            </div>
+                            <div class="intent-tab">
+                                <img
+                                    src="icons/icon-estimates.png"
+                                    style="
+                                        width: 28px;
+                                        height: 28px;
+                                        object-fit: contain;
+                                        vertical-align: middle;
+                                        margin-right: 4px;
+                                        margin-bottom: -3px;
+                                    "
+                                /><span>Estimates</span>
+                            </div>
+                        </div>
+
+                        <div class="onboarding-card">
+                            <div class="guide-intro">
+                                <div class="guide-avatar">
+                                    <img
+                                        src="icons/icon-guide.svg"
+                                        style="width: 39px; height: 36px"
+                                    />
+                                </div>
+                                <div class="guide-bubble">
+                                    Hi! I'm your OneRoof Guide. Tell me
+                                    <b>what you're looking for</b> in your own
+                                    words — I'll search across listings,
+                                    suburbs, schools and prices to find the best
+                                    matches.
+                                </div>
+                            </div>
+
+                            <div class="nl-input-area">
+                                <textarea
+                                    class="nl-input"
+                                    placeholder="e.g. 3-bed house under $900k near a good school, 30 min from Auckland CBD..."
+                                ></textarea>
+                                <button
+                                    class="nl-send"
+                                    onclick="startAgenticSearch()"
+                                >
+                                    Search
+                                </button>
+                            </div>
+
+                            <div class="or-divider">or</div>
+
+                            <div class="filter-fallback">
+                                <img
+                                    src="icons/icon-filter.png"
+                                    style="
+                                        width: 23px;
+                                        height: 19px;
+                                        object-fit: contain;
+                                        vertical-align: middle;
+                                    "
+                                />
+                                Search with filters
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== SCREEN 2: AGENTIC CHAT ====== -->
+                <div
+                    class="screen"
+                    id="screen-chat"
+                    data-label="2. Agentic Chat — Guide at work"
+                >
                     <div class="status-bar">
                         <div class="time">21:35</div>
                         <div class="icons">●●● ▲ ◼</div>
                     </div>
-                    <div class="onboarding-logo">
-                        <div class="welcome-text">Welcome to</div>
-                        <div class="brand">
-                            <span class="icon-house"
-                                ><svg
-                                    width="28"
-                                    height="27"
-                                    viewBox="0 0 37 36"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M36.6 26.4H31.2V18.8L18.3 7.3L5.4 18.8V26.4H0V16.4L18.3 0L36.6 16.4V26.4ZM0 29.9H36.6V35.3H0V29.9Z"
-                                        fill="#FF8500"
-                                    /></svg
-                            ></span>
-                            OneRoof
+
+                    <div class="chat-header">
+                        <button
+                            class="hamburger-btn has-badge"
+                            aria-label="Menu"
+                        >
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div class="chat-title-wrap">
+                            <img
+                                src="icons/icon-guide.svg"
+                                style="width: 30px; height: 30px"
+                            />
+                            <div class="chat-title-text">
+                                <div class="chat-title">OneRoof Guide</div>
+                                <div class="chat-status" id="chatStatus">
+                                    <span class="pulse-dot"></span> Thinking…
+                                </div>
+                            </div>
                         </div>
+                        <button
+                            class="stop-btn"
+                            id="stopBtn"
+                            onclick="stopAgent()"
+                        >
+                            <span class="stop-icon"></span> Stop
+                        </button>
                     </div>
 
-                    <div class="intent-tabs">
-                        <div class="intent-tab active">
-                            <img
-                                src="icons/icon-buying.png"
-                                style="
-                                    width: 28px;
-                                    height: 28px;
-                                    object-fit: contain;
-                                    vertical-align: middle;
-                                    margin-right: 4px;
-                                    margin-bottom: -3px;
-                                "
-                            /><span>Buying</span>
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- User query bubble -->
+                        <div class="msg-user" id="userMsg">
+                            3-bed house under $900k near a good school, 30 min
+                            from CBD
                         </div>
-                        <div class="intent-tab">
-                            <img
-                                src="icons/icon-renting.png"
-                                style="
-                                    width: 28px;
-                                    height: 28px;
-                                    object-fit: contain;
-                                    vertical-align: middle;
-                                    margin-right: 4px;
-                                    margin-bottom: -3px;
-                                "
-                            /><span>Renting</span>
-                        </div>
-                        <div class="intent-tab">
-                            <img
-                                src="icons/icon-estimates.png"
-                                style="
-                                    width: 28px;
-                                    height: 28px;
-                                    object-fit: contain;
-                                    vertical-align: middle;
-                                    margin-right: 4px;
-                                    margin-bottom: -3px;
-                                "
-                            /><span>Estimates</span>
-                        </div>
-                    </div>
 
-                    <div class="onboarding-card">
-                        <div class="guide-intro">
-                            <div class="guide-avatar">
+                        <!-- Guide reasoning / working steps -->
+                        <div class="msg-guide">
+                            <div class="msg-guide-avatar">
                                 <img
                                     src="icons/icon-guide.svg"
-                                    style="width: 39px; height: 36px"
+                                    style="width: 26px; height: 26px"
                                 />
                             </div>
-                            <div class="guide-bubble">
-                                Hi! I'm your OneRoof Guide. Tell me
-                                <b>what you're looking for</b> in your own words
-                                — I'll search across listings, suburbs, schools
-                                and prices to find the best matches.
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Let me break this down and search for you…
+                                </div>
+                                <div class="working-list" id="workingList">
+                                    <div class="working-step" data-step="0">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Understanding your needs
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="1">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Searching 46,000+ listings
+                                            <span class="step-source"
+                                                >OneRoof</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="2">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Checking school zones, Decile 8+
+                                            <span class="step-source">MoE</span>
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="3">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Calculating CBD commute
+                                            <span class="step-source"
+                                                >Maps</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="4">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Ranking by overall match
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="nl-input-area">
-                            <textarea
-                                class="nl-input"
-                                placeholder="e.g. 3-bed house under $900k near a good school, 30 min from Auckland CBD..."
-                            ></textarea>
+                        <!-- Guide results summary -->
+                        <div
+                            class="msg-guide"
+                            id="resultsSummary"
+                            style="display: none"
+                        >
+                            <div class="msg-guide-avatar">
+                                <img
+                                    src="icons/icon-guide.svg"
+                                    style="width: 26px; height: 26px"
+                                />
+                            </div>
+                            <div class="msg-guide-content">
+                                I found <b>12 strong matches</b>. Here are your
+                                top 3 — all under $900k, in a Decile 8+ school
+                                zone, with a CBD commute under 30 minutes.
+                            </div>
+                        </div>
+
+                        <!-- Property cards streamed inline -->
+                        <div class="msg-cards hidden" id="propCards">
+                            <div
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
+                            >
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property1.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 94%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$865,000</div>
+                                    <div class="chat-prop-address">
+                                        12 Woodside Ave, Mount Albert
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Mt Albert Grammar zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 22 min to CBD</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ Suburb trending up</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
+                            >
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property2.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 89%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$820,000</div>
+                                    <div class="chat-prop-address">
+                                        8 Rimu Road, Mount Roskill
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 1
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 2
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Decile 9 school zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 25 min to CBD</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ Older kitchen — may need
+                                            work</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
+                            >
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property3.jpeg&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-med"></span> 81%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$890,000</div>
+                                    <div class="chat-prop-address">
+                                        45 Kauri St, Sandringham
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Balmoral Int. (Decile 8)</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ 32 min to CBD (slight
+                                            stretch)</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ 3 similar sold in 30 days</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Follow-up suggestion chips -->
+                        <div class="suggestion-chips" id="suggestionChips">
                             <button
-                                class="nl-send"
-                                onclick="startAgenticSearch()"
+                                class="suggestion-chip"
+                                onclick="askAboutSchoolWalk()"
                             >
-                                Search
+                                Walking distance to primary school?
+                            </button>
+                            <button
+                                class="suggestion-chip"
+                                onclick="sendFollowup('Show only 4-bedroom options')"
+                            >
+                                Show 4-bed options
+                            </button>
+                            <button
+                                class="suggestion-chip"
+                                onclick="sendFollowup('Sort by commute time')"
+                            >
+                                Sort by commute
+                            </button>
+                            <button
+                                class="suggestion-chip"
+                                onclick="sendFollowup('Save this search')"
+                            >
+                                Save this search
                             </button>
                         </div>
-
-                        <div class="or-divider">or</div>
-
-                        <div class="filter-fallback">
-                            <img
-                                src="icons/icon-filter.png"
-                                style="
-                                    width: 23px;
-                                    height: 19px;
-                                    object-fit: contain;
-                                    vertical-align: middle;
-                                "
-                            />
-                            Search with filters
-                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- ====== SCREEN 2: AGENTIC CHAT ====== -->
-            <div
-                class="screen"
-                id="screen-chat"
-                data-label="2. Agentic Chat — Guide at work"
-            >
-                <div class="status-bar">
-                    <div class="time">21:35</div>
-                    <div class="icons">●●● ▲ ◼</div>
-                </div>
-
-                <div class="chat-header">
-                    <button class="hamburger-btn" aria-label="Menu">
-                        <span></span><span></span><span></span>
-                    </button>
-                    <div class="chat-title-wrap">
-                        <img
-                            src="icons/icon-guide.svg"
-                            style="width: 30px; height: 30px"
+                    <div class="chat-input-wrap">
+                        <input
+                            type="text"
+                            class="chat-input"
+                            id="chatInput"
+                            placeholder="Refine your search…"
+                            disabled
                         />
-                        <div class="chat-title-text">
-                            <div class="chat-title">OneRoof Guide</div>
-                            <div class="chat-status" id="chatStatus">
-                                <span class="pulse-dot"></span> Thinking…
-                            </div>
-                        </div>
-                    </div>
-                    <button class="stop-btn" id="stopBtn" onclick="stopAgent()">
-                        <span class="stop-icon"></span> Stop
-                    </button>
-                </div>
-
-                <div class="chat-messages" id="chatMessages">
-                    <!-- User query bubble -->
-                    <div class="msg-user" id="userMsg">
-                        3-bed house under $900k near a good school, 30 min from
-                        CBD
-                    </div>
-
-                    <!-- Guide reasoning / working steps -->
-                    <div class="msg-guide">
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
-                        </div>
-                        <div class="msg-guide-content">
-                            <div class="msg-lead">
-                                Let me break this down and search for you…
-                            </div>
-                            <div class="working-list" id="workingList">
-                                <div class="working-step" data-step="0">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Understanding your needs
-                                    </div>
-                                </div>
-                                <div class="working-step" data-step="1">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Searching 46,000+ listings
-                                        <span class="step-source">OneRoof</span>
-                                    </div>
-                                </div>
-                                <div class="working-step" data-step="2">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Checking school zones, Decile 8+
-                                        <span class="step-source">MoE</span>
-                                    </div>
-                                </div>
-                                <div class="working-step" data-step="3">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Calculating CBD commute
-                                        <span class="step-source">Maps</span>
-                                    </div>
-                                </div>
-                                <div class="working-step" data-step="4">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Ranking by overall match
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Guide results summary -->
-                    <div
-                        class="msg-guide"
-                        id="resultsSummary"
-                        style="display: none"
-                    >
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
-                        </div>
-                        <div class="msg-guide-content">
-                            I found <b>12 strong matches</b>. Here are your top
-                            3 — all under $900k, in a Decile 8+ school zone,
-                            with a CBD commute under 30 minutes.
-                        </div>
-                    </div>
-
-                    <!-- Property cards streamed inline -->
-                    <div class="msg-cards hidden" id="propCards">
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
-                            <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property1.png&quot;);
-                                "
-                            >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 94%
-                                    match
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$865,000</div>
-                                <div class="chat-prop-address">
-                                    12 Woodside Ave, Mount Albert
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Mt Albert Grammar zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 22 min to CBD</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ Suburb trending up</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
-                            <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property2.png&quot;);
-                                "
-                            >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 89%
-                                    match
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$820,000</div>
-                                <div class="chat-prop-address">
-                                    8 Rimu Road, Mount Roskill
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 1
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 2
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Decile 9 school zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 25 min to CBD</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ Older kitchen — may need work</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
-                            <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property3.jpeg&quot;);
-                                "
-                            >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-med"></span> 81%
-                                    match
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$890,000</div>
-                                <div class="chat-prop-address">
-                                    45 Kauri St, Sandringham
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Balmoral Int. (Decile 8)</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ 32 min to CBD (slight stretch)</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ 3 similar sold in 30 days</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Follow-up suggestion chips -->
-                    <div class="suggestion-chips" id="suggestionChips">
                         <button
-                            class="suggestion-chip"
-                            onclick="askAboutSchoolWalk()"
+                            class="chat-send"
+                            id="chatSendBtn"
+                            onclick="sendMessage()"
+                            disabled
                         >
-                            Walking distance to primary school?
+                            →
                         </button>
+                    </div>
+                </div>
+
+                <!-- ====== SCREEN 3: AGENTIC CHAT — FOLLOW-UP ====== -->
+                <div
+                    class="screen"
+                    id="screen-chat-2"
+                    data-label="3. Agentic Chat — Follow-up"
+                >
+                    <div class="status-bar">
+                        <div class="time">21:36</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+
+                    <div class="chat-header">
                         <button
-                            class="suggestion-chip"
-                            onclick="sendFollowup('Show only 4-bedroom options')"
+                            class="hamburger-btn has-badge"
+                            aria-label="Menu"
                         >
-                            Show 4-bed options
+                            <span></span><span></span><span></span>
                         </button>
+                        <div class="chat-title-wrap">
+                            <img
+                                src="icons/icon-guide.svg"
+                                style="width: 30px; height: 30px"
+                            />
+                            <div class="chat-title-text">
+                                <div class="chat-title">OneRoof Guide</div>
+                                <div class="chat-status" id="chatStatus2">
+                                    <span class="pulse-dot"></span> Thinking…
+                                </div>
+                            </div>
+                        </div>
                         <button
-                            class="suggestion-chip"
-                            onclick="sendFollowup('Sort by commute time')"
+                            class="stop-btn"
+                            id="stopBtn2"
+                            onclick="stopAgent2()"
                         >
-                            Sort by commute
-                        </button>
-                        <button
-                            class="suggestion-chip"
-                            onclick="sendFollowup('Save this search')"
-                        >
-                            Save this search
+                            <span class="stop-icon"></span> Stop
                         </button>
                     </div>
-                </div>
 
-                <div class="chat-input-wrap">
-                    <input
-                        type="text"
-                        class="chat-input"
-                        id="chatInput"
-                        placeholder="Refine your search…"
-                        disabled
-                    />
-                    <button
-                        class="chat-send"
-                        id="chatSendBtn"
-                        onclick="sendMessage()"
-                        disabled
-                    >
-                        →
-                    </button>
-                </div>
-            </div>
-
-            <!-- ====== SCREEN 3: AGENTIC CHAT — FOLLOW-UP ====== -->
-            <div
-                class="screen"
-                id="screen-chat-2"
-                data-label="3. Agentic Chat — Follow-up"
-            >
-                <div class="status-bar">
-                    <div class="time">21:36</div>
-                    <div class="icons">●●● ▲ ◼</div>
-                </div>
-
-                <div class="chat-header">
-                    <button class="hamburger-btn" aria-label="Menu">
-                        <span></span><span></span><span></span>
-                    </button>
-                    <div class="chat-title-wrap">
-                        <img
-                            src="icons/icon-guide.svg"
-                            style="width: 30px; height: 30px"
-                        />
-                        <div class="chat-title-text">
-                            <div class="chat-title">OneRoof Guide</div>
-                            <div class="chat-status" id="chatStatus2">
-                                <span class="pulse-dot"></span> Thinking…
-                            </div>
+                    <div class="chat-messages" id="chatMessages2">
+                        <!-- ===== Turn 1 (completed) ===== -->
+                        <div class="msg-user">
+                            3-bed house under $900k near a good school, 30 min
+                            from CBD
                         </div>
-                    </div>
-                    <button
-                        class="stop-btn"
-                        id="stopBtn2"
-                        onclick="stopAgent2()"
-                    >
-                        <span class="stop-icon"></span> Stop
-                    </button>
-                </div>
 
-                <div class="chat-messages" id="chatMessages2">
-                    <!-- ===== Turn 1 (completed) ===== -->
-                    <div class="msg-user">
-                        3-bed house under $900k near a good school, 30 min from
-                        CBD
-                    </div>
-
-                    <div class="msg-guide">
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
-                        </div>
-                        <div class="msg-guide-content">
-                            <div class="msg-lead">
-                                Let me break this down and search for you…
+                        <div class="msg-guide">
+                            <div class="msg-guide-avatar">
+                                <img
+                                    src="icons/icon-guide.svg"
+                                    style="width: 26px; height: 26px"
+                                />
                             </div>
-                            <div class="working-list">
-                                <div class="working-step visible done">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Understanding your needs
-                                    </div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Let me break this down and search for you…
                                 </div>
-                                <div class="working-step visible done">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Searching 46,000+ listings
-                                        <span class="step-source">OneRoof</span>
+                                <div class="working-list">
+                                    <div class="working-step visible done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Understanding your needs
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="working-step visible done">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Checking school zones, Decile 8+
-                                        <span class="step-source">MoE</span>
+                                    <div class="working-step visible done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Searching 46,000+ listings
+                                            <span class="step-source"
+                                                >OneRoof</span
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="working-step visible done">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Calculating CBD commute
-                                        <span class="step-source">Maps</span>
+                                    <div class="working-step visible done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Checking school zones, Decile 8+
+                                            <span class="step-source">MoE</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="working-step visible done">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Ranking by overall match
+                                    <div class="working-step visible done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Calculating CBD commute
+                                            <span class="step-source"
+                                                >Maps</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step visible done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Ranking by overall match
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="msg-guide">
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
+                        <div class="msg-guide">
+                            <div class="msg-guide-avatar">
+                                <img
+                                    src="icons/icon-guide.svg"
+                                    style="width: 26px; height: 26px"
+                                />
+                            </div>
+                            <div class="msg-guide-content">
+                                I found <b>12 strong matches</b>. Here are your
+                                top 3 — all under $900k, in a Decile 8+ school
+                                zone, with a CBD commute under 30 minutes.
+                            </div>
                         </div>
-                        <div class="msg-guide-content">
-                            I found <b>12 strong matches</b>. Here are your top
-                            3 — all under $900k, in a Decile 8+ school zone,
-                            with a CBD commute under 30 minutes.
-                        </div>
-                    </div>
 
-                    <div class="msg-cards">
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
+                        <div class="msg-cards">
                             <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property1.png&quot;);
-                                "
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
                             >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 94%
-                                    match
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property1.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 94%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$865,000</div>
+                                    <div class="chat-prop-address">
+                                        12 Woodside Ave, Mount Albert
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Mt Albert Grammar zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 22 min to CBD</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ Suburb trending up</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$865,000</div>
-                                <div class="chat-prop-address">
-                                    12 Woodside Ave, Mount Albert
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Mt Albert Grammar zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 22 min to CBD</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ Suburb trending up</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
 
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
                             <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property2.png&quot;);
-                                "
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
                             >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 89%
-                                    match
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property2.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 89%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$820,000</div>
+                                    <div class="chat-prop-address">
+                                        8 Rimu Road, Mount Roskill
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 1
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 2
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Decile 9 school zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 25 min to CBD</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ Older kitchen — may need
+                                            work</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$820,000</div>
-                                <div class="chat-prop-address">
-                                    8 Rimu Road, Mount Roskill
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 1
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 2
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Decile 9 school zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 25 min to CBD</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ Older kitchen — may need work</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
 
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
                             <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property3.jpeg&quot;);
-                                "
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
                             >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-med"></span> 81%
-                                    match
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$890,000</div>
-                                <div class="chat-prop-address">
-                                    45 Kauri St, Sandringham
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property3.jpeg&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-med"></span> 81%
+                                        match
                                     </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
-                                    </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Balmoral Int. (Decile 8)</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ 32 min to CBD (slight stretch)</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ 3 similar sold in 30 days</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="turn-divider">Follow-up</div>
-
-                    <!-- ===== Turn 2 (new, animates) ===== -->
-                    <div class="msg-user">
-                        What's the walking distance from a primary school?
-                    </div>
-
-                    <div class="msg-guide">
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
-                        </div>
-                        <div class="msg-guide-content">
-                            <div class="msg-lead">
-                                Good question — let me re-rank these by walk
-                                time to the nearest primary.
-                            </div>
-                            <div class="working-list" id="workingList2">
-                                <div class="working-step" data-step="0">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Reading your follow-up
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="working-step" data-step="1">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Finding primary schools within 2 km
-                                        <span class="step-source">MoE</span>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$890,000</div>
+                                    <div class="chat-prop-address">
+                                        45 Kauri St, Sandringham
                                     </div>
-                                </div>
-                                <div class="working-step" data-step="2">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Calculating walk times
-                                        <span class="step-source">Maps</span>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="working-step" data-step="3">
-                                    <div class="step-indicator"></div>
-                                    <div class="step-text">
-                                        Re-ranking top 3 by proximity
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Balmoral Int. (Decile 8)</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ 32 min to CBD (slight
+                                            stretch)</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ 3 similar sold in 30 days</span
+                                        >
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div
-                        class="msg-guide"
-                        id="resultsSummary2"
-                        style="display: none"
-                    >
-                        <div class="msg-guide-avatar">
-                            <img
-                                src="icons/icon-guide.svg"
-                                style="width: 26px; height: 26px"
-                            />
-                        </div>
-                        <div class="msg-guide-content">
-                            Here's your shortlist
-                            <b
-                                >re-ranked by walk to the nearest primary
-                                school</b
-                            >
-                            — closest first. Prices, specs and other reasoning
-                            unchanged.
-                        </div>
-                    </div>
+                        <div class="turn-divider">Follow-up</div>
 
-                    <div class="msg-cards" id="propCards2">
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
-                            <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property2.png&quot;);
-                                "
-                            >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 89%
-                                    match
-                                </div>
+                        <!-- ===== Turn 2 (new, animates) ===== -->
+                        <div class="msg-user">
+                            What's the walking distance from a primary school?
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="msg-guide-avatar">
+                                <img
+                                    src="icons/icon-guide.svg"
+                                    style="width: 26px; height: 26px"
+                                />
                             </div>
-                            <div class="walk-banner">
-                                <div>
-                                    <b>6 min walk</b> to Three Kings Primary
-                                    <span class="walk-meta"
-                                        >· 0.5 km · Decile 9</span
-                                    >
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Good question — let me re-rank these by walk
+                                    time to the nearest primary.
                                 </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$820,000</div>
-                                <div class="chat-prop-address">
-                                    8 Rimu Road, Mount Roskill
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
+                                <div class="working-list" id="workingList2">
+                                    <div class="working-step" data-step="0">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Reading your follow-up
+                                        </div>
                                     </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 1
+                                    <div class="working-step" data-step="1">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Finding primary schools within 2 km
+                                            <span class="step-source">MoE</span>
+                                        </div>
                                     </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 2
+                                    <div class="working-step" data-step="2">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Calculating walk times
+                                            <span class="step-source"
+                                                >Maps</span
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Decile 9 school zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 25 min to CBD</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ Older kitchen — may need work</span
-                                    >
+                                    <div class="working-step" data-step="3">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Re-ranking top 3 by proximity
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
+                            class="msg-guide"
+                            id="resultsSummary2"
+                            style="display: none"
                         >
+                            <div class="msg-guide-avatar">
+                                <img
+                                    src="icons/icon-guide.svg"
+                                    style="width: 26px; height: 26px"
+                                />
+                            </div>
+                            <div class="msg-guide-content">
+                                Here's your shortlist
+                                <b
+                                    >re-ranked by walk to the nearest primary
+                                    school</b
+                                >
+                                — closest first. Prices, specs and other
+                                reasoning unchanged.
+                            </div>
+                        </div>
+
+                        <div class="msg-cards" id="propCards2">
                             <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property3.jpeg&quot;);
-                                "
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
                             >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-med"></span> 81%
-                                    match
-                                </div>
-                            </div>
-                            <div class="walk-banner">
-                                <div>
-                                    <b>9 min walk</b> to Edendale Primary
-                                    <span class="walk-meta"
-                                        >· 0.75 km · Decile 8</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$890,000</div>
-                                <div class="chat-prop-address">
-                                    45 Kauri St, Sandringham
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property2.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 89%
+                                        match
                                     </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Balmoral Int. (Decile 8)</span
-                                    >
-                                    <span class="chat-chip orange"
-                                        >⚠ 32 min to CBD (slight stretch)</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ 3 similar sold in 30 days</span
-                                    >
+                                <div class="walk-banner">
+                                    <div>
+                                        <b>6 min walk</b> to Three Kings Primary
+                                        <span class="walk-meta"
+                                            >· 0.5 km · Decile 9</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$820,000</div>
+                                    <div class="chat-prop-address">
+                                        8 Rimu Road, Mount Roskill
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 1
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 2
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Decile 9 school zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 25 min to CBD</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ Older kitchen — may need
+                                            work</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div
-                            class="chat-prop-card"
-                            onclick="goTo('screen-detail')"
-                        >
                             <div
-                                class="chat-prop-image"
-                                style="
-                                    background-image: url(&quot;bg-images/property1.png&quot;);
-                                "
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
                             >
-                                <div class="chat-prop-match">
-                                    <span class="dot match-high"></span> 94%
-                                    match
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property3.jpeg&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-med"></span> 81%
+                                        match
+                                    </div>
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="walk-banner">
+                                    <div>
+                                        <b>9 min walk</b> to Edendale Primary
+                                        <span class="walk-meta"
+                                            >· 0.75 km · Decile 8</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$890,000</div>
+                                    <div class="chat-prop-address">
+                                        45 Kauri St, Sandringham
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Balmoral Int. (Decile 8)</span
+                                        >
+                                        <span class="chat-chip orange"
+                                            >⚠ 32 min to CBD (slight
+                                            stretch)</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ 3 similar sold in 30 days</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                            <div class="walk-banner">
-                                <div>
-                                    <b>14 min walk</b> to Mt Albert Primary
-                                    <span class="walk-meta"
-                                        >· 1.1 km · Decile 8</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="chat-prop-body">
-                                <div class="chat-prop-price">$865,000</div>
-                                <div class="chat-prop-address">
-                                    12 Woodside Ave, Mount Albert
-                                </div>
-                                <div class="chat-prop-specs">
-                                    <div class="spec">
-                                        <img src="icons/icon-bed.png" /> 3
+
+                            <div
+                                class="chat-prop-card"
+                                onclick="goTo('screen-detail')"
+                            >
+                                <div
+                                    class="chat-prop-image"
+                                    style="
+                                        background-image: url(&quot;bg-images/property1.png&quot;);
+                                    "
+                                >
+                                    <div class="chat-prop-match">
+                                        <span class="dot match-high"></span> 94%
+                                        match
                                     </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-bath.png" /> 2
-                                    </div>
-                                    <div class="spec">
-                                        <img src="icons/icon-car.png" /> 1
+                                    <div class="chat-prop-actions">
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Save"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ♡
+                                        </button>
+                                        <button
+                                            class="chat-prop-action-btn"
+                                            aria-label="Share"
+                                            onclick="event.stopPropagation();"
+                                        >
+                                            ⤴
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="chat-prop-reasons">
-                                    <span class="chat-chip green"
-                                        >✓ Mt Albert Grammar zone</span
-                                    >
-                                    <span class="chat-chip green"
-                                        >✓ 22 min to CBD</span
-                                    >
-                                    <span class="chat-chip blue"
-                                        >↗ Suburb trending up</span
-                                    >
+                                <div class="walk-banner">
+                                    <div>
+                                        <b>14 min walk</b> to Mt Albert Primary
+                                        <span class="walk-meta"
+                                            >· 1.1 km · Decile 8</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="chat-prop-body">
+                                    <div class="chat-prop-price">$865,000</div>
+                                    <div class="chat-prop-address">
+                                        12 Woodside Ave, Mount Albert
+                                    </div>
+                                    <div class="chat-prop-specs">
+                                        <div class="spec">
+                                            <img src="icons/icon-bed.png" /> 3
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-bath.png" /> 2
+                                        </div>
+                                        <div class="spec">
+                                            <img src="icons/icon-car.png" /> 1
+                                        </div>
+                                    </div>
+                                    <div class="chat-prop-reasons">
+                                        <span class="chat-chip green"
+                                            >✓ Mt Albert Grammar zone</span
+                                        >
+                                        <span class="chat-chip green"
+                                            >✓ 22 min to CBD</span
+                                        >
+                                        <span class="chat-chip blue"
+                                            >↗ Suburb trending up</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="suggestion-chips" id="suggestionChips2">
-                        <button class="suggestion-chip">Compare these 3</button>
-                        <button class="suggestion-chip">
-                            What about bus routes?
-                        </button>
-                        <button class="suggestion-chip">
-                            Show decile details
-                        </button>
-                        <button class="suggestion-chip">
-                            Save this search
-                        </button>
-                    </div>
-                </div>
-
-                <div class="chat-input-wrap">
-                    <input
-                        type="text"
-                        class="chat-input"
-                        id="chatInput2"
-                        placeholder="Ask a follow-up…"
-                        disabled
-                    />
-                    <button class="chat-send" id="chatSendBtn2" disabled>
-                        →
-                    </button>
-                </div>
-            </div>
-
-            <!-- ====== SCREEN 4: PROPERTY DETAIL — GUIDE INSIGHTS ====== -->
-            <div
-                class="screen"
-                id="screen-detail"
-                data-label="4. Property Detail — Guide Insights"
-            >
-                <div class="detail-scroll">
-                    <div class="detail-hero">
-                        <div class="status-bar">
-                            <div class="time">21:38</div>
-                            <div class="icons">●●● ▲ ◼</div>
-                        </div>
-                        <div class="detail-hero-overlay">
-                            <button class="hamburger-btn" aria-label="Menu">
-                                <span></span><span></span><span></span>
+                        <div class="suggestion-chips" id="suggestionChips2">
+                            <button class="suggestion-chip">
+                                Compare these 3
                             </button>
-                            <div class="detail-hero-actions">
-                                <div class="share-btn">♡</div>
-                                <div class="share-btn">⤴</div>
-                            </div>
-                        </div>
-                        <div class="detail-hero-bottom">
-                            <div class="hero-match">
-                                <span class="dot match-high"></span> 89% match
-                            </div>
-                            <div class="hero-walk">
-                                <b>6 min walk</b> to Three Kings Primary ·
-                                Decile 9
-                            </div>
+                            <button class="suggestion-chip">
+                                What about bus routes?
+                            </button>
+                            <button class="suggestion-chip">
+                                Show decile details
+                            </button>
+                            <button class="suggestion-chip">
+                                Save this search
+                            </button>
                         </div>
                     </div>
 
-                    <div class="detail-info-card">
-                        <div class="detail-price">$820,000</div>
-                        <div class="detail-address">
-                            8 Rimu Road, Mount Roskill, Auckland
-                        </div>
-                        <div class="detail-specs">
-                            <div class="detail-spec">
-                                <div class="spec-icon">
-                                    <img
-                                        src="icons/icon-bed.png"
-                                        style="
-                                            width: 16px;
-                                            height: 16px;
-                                            object-fit: contain;
-                                            vertical-align: middle;
-                                        "
-                                    />
-                                </div>
-                                <span>3 bed</span>
-                            </div>
-                            <div class="detail-spec">
-                                <div class="spec-icon">
-                                    <img
-                                        src="icons/icon-bath.png"
-                                        style="
-                                            width: 16px;
-                                            height: 16px;
-                                            object-fit: contain;
-                                            vertical-align: middle;
-                                        "
-                                    />
-                                </div>
-                                <span>1 bath</span>
-                            </div>
-                            <div class="detail-spec">
-                                <div class="spec-icon">
-                                    <img
-                                        src="icons/icon-car.png"
-                                        style="
-                                            width: 16px;
-                                            height: 16px;
-                                            object-fit: contain;
-                                            vertical-align: middle;
-                                        "
-                                    />
-                                </div>
-                                <span>1 park</span>
-                            </div>
-                            <div class="detail-spec">
-                                <div class="spec-icon">
-                                    <img
-                                        src="icons/icon-floor.png"
-                                        style="
-                                            width: 16px;
-                                            height: 16px;
-                                            object-fit: contain;
-                                            vertical-align: middle;
-                                        "
-                                    />
-                                </div>
-                                <span>95m²</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-stack">
-                        <!-- Card 1: Match breakdown -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Why this is an 89% match
-                                </div>
-                                <span class="verdict-pill green">Strong</span>
-                            </div>
-                            <div class="match-list">
-                                <div class="match-row">
-                                    <div class="mark">✓</div>
-                                    <div class="match-row-body">
-                                        3 bedrooms — matches your request
-                                    </div>
-                                </div>
-                                <div class="match-row">
-                                    <div class="mark">✓</div>
-                                    <div class="match-row-body">
-                                        $820,000 — <b>$80k under</b> your $900k
-                                        cap
-                                        <span class="match-row-meta"
-                                            >Room for reno or negotiation
-                                            headroom</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="match-row">
-                                    <div class="mark">✓</div>
-                                    <div class="match-row-body">
-                                        25 min to CBD — under your 30 min target
-                                    </div>
-                                </div>
-                                <div class="match-row">
-                                    <div class="mark">✓</div>
-                                    <div class="match-row-body">
-                                        Three Kings Primary (Decile 9) —
-                                        <b>6 min walk</b>
-                                        <span class="match-row-meta"
-                                            >In zone · 0.5 km · Ministry of
-                                            Education</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="match-row warn">
-                                    <div class="mark">!</div>
-                                    <div class="match-row-body">
-                                        Listing notes
-                                        <b>original 1970s kitchen</b> — may need
-                                        work
-                                        <span class="match-row-meta"
-                                            >Budget for refresh or negotiate
-                                            price</span
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Price intelligence -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Price intelligence
-                                </div>
-                                <span class="verdict-pill green"
-                                    >Well priced</span
-                                >
-                            </div>
-                            <div class="price-grid">
-                                <div class="price-cell">
-                                    <div class="price-label">Asking</div>
-                                    <div class="price-value-lg">$820,000</div>
-                                    <div class="price-delta green">
-                                        ↓ $65k from $885k
-                                    </div>
-                                </div>
-                                <div class="price-cell">
-                                    <div class="price-label">Suburb median</div>
-                                    <div class="price-value-lg">$855,000</div>
-                                    <div class="price-delta green">
-                                        −4% vs median
-                                    </div>
-                                </div>
-                                <div class="price-cell">
-                                    <div class="price-label">
-                                        Council CV (2021)
-                                    </div>
-                                    <div class="price-value-lg">$850,000</div>
-                                    <div class="price-delta">−4% vs CV</div>
-                                </div>
-                                <div class="price-cell">
-                                    <div class="price-label">
-                                        OneRoof Estimate
-                                    </div>
-                                    <div class="price-value-lg">$810–865k</div>
-                                    <div class="price-delta">Within range</div>
-                                </div>
-                            </div>
-                            <div class="price-note">
-                                <b>Reduced from $885k 13 days ago.</b> Currently
-                                sits 4% under the Mt Roskill median and inside
-                                OneRoof's estimate range — a fair ask for the
-                                condition noted.
-                            </div>
-                            <div class="data-sources">
-                                <strong>Sources:</strong> CoreLogic · OneRoof
-                                Estimates · Auckland Council records
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Schools in zone -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Schools in zone
-                                </div>
-                                <span class="verdict-pill green"
-                                    >Decile 9 zone</span
-                                >
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge green">P</div>
-                                <div class="row-main">
-                                    Three Kings Primary
-                                    <div class="row-meta">
-                                        Decile 9 · 0.5 km · In zone
-                                    </div>
-                                </div>
-                                <div class="row-value">
-                                    6 min<span class="row-value-sub">walk</span>
-                                </div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge blue">I</div>
-                                <div class="row-main">
-                                    Mt Roskill Intermediate
-                                    <div class="row-meta">
-                                        Decile 8 · 2.1 km · In zone
-                                    </div>
-                                </div>
-                                <div class="row-value">
-                                    8 min<span class="row-value-sub"
-                                        >drive</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge">S</div>
-                                <div class="row-main">
-                                    Mt Roskill Grammar
-                                    <div class="row-meta">
-                                        Decile 7 · 2.8 km · In zone
-                                    </div>
-                                </div>
-                                <div class="row-value">
-                                    10 min<span class="row-value-sub"
-                                        >drive</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="data-sources">
-                                <strong>Source:</strong> Ministry of Education
-                                school zones, current year
-                            </div>
-                        </div>
-
-                        <!-- Card 4: Commute to CBD -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Commute to CBD
-                                </div>
-                                <span class="verdict-pill green"
-                                    >Under 30 min</span
-                                >
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge">🚗</div>
-                                <div class="row-main">
-                                    Car — peak (Tue 8 am)
-                                    <div class="row-meta">Via SH20 · 14 km</div>
-                                </div>
-                                <div class="row-value">25 min</div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge">🚗</div>
-                                <div class="row-main">
-                                    Car — off-peak
-                                    <div class="row-meta">Typical Sunday</div>
-                                </div>
-                                <div class="row-value">18 min</div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge blue">🚌</div>
-                                <div class="row-main">
-                                    Bus — Route 27 to Britomart
-                                    <div class="row-meta">
-                                        Stop 120 m from property
-                                    </div>
-                                </div>
-                                <div class="row-value">35 min</div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge green">🚲</div>
-                                <div class="row-main">
-                                    Cycle via Dominion Rd
-                                    <div class="row-meta">
-                                        Mostly on-road lane
-                                    </div>
-                                </div>
-                                <div class="row-value">28 min</div>
-                            </div>
-                            <div class="data-sources">
-                                <strong>Source:</strong> Google Maps typical
-                                Tuesday 8 am; AT for bus route
-                            </div>
-                        </div>
-
-                        <!-- Card 5: Suburb signals -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Mt Roskill signals
-                                </div>
-                                <span class="verdict-pill blue"
-                                    >Trending up</span
-                                >
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge blue">↗</div>
-                                <div class="row-main">
-                                    Median sale price, 12-mo
-                                    <div class="row-meta">
-                                        Suburb-wide, 3-bed houses
-                                    </div>
-                                </div>
-                                <div
-                                    class="row-value"
-                                    style="color: var(--blue)"
-                                >
-                                    +3.2%
-                                </div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge green">✓</div>
-                                <div class="row-main">
-                                    Recent sales within 800 m
-                                    <div class="row-meta">
-                                        Avg 18 days on market
-                                    </div>
-                                </div>
-                                <div
-                                    class="row-value"
-                                    style="color: var(--green)"
-                                >
-                                    8 sold
-                                </div>
-                            </div>
-                            <div class="insight-row">
-                                <div class="row-badge">%</div>
-                                <div class="row-main">
-                                    Gross rental yield
-                                    <div class="row-meta">
-                                        Based on suburb avg rent $720/wk
-                                    </div>
-                                </div>
-                                <div class="row-value">~4.1%</div>
-                            </div>
-                            <div class="data-sources">
-                                <strong>Sources:</strong> OneRoof Sold Data ·
-                                CoreLogic · Tenancy Services
-                            </div>
-                        </div>
-
-                        <!-- Card 6: Things to check -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Things to check before you offer
-                                </div>
-                                <span class="verdict-pill orange">3 flags</span>
-                            </div>
-                            <div class="caution-item">
-                                <div class="caution-icon">!</div>
-                                <div class="caution-text">
-                                    <b>Kitchen:</b> Listing describes it as
-                                    "original 1970s". Budget ~$15–25k for a
-                                    refresh, or use it as negotiation leverage.
-                                </div>
-                            </div>
-                            <div class="caution-item">
-                                <div class="caution-icon">!</div>
-                                <div class="caution-text">
-                                    <b>Heating:</b> No heat pump or insulation
-                                    mentioned. Ask the agent and check the
-                                    builder's report / Healthy Homes compliance.
-                                </div>
-                            </div>
-                            <div class="caution-item">
-                                <div class="caution-icon">!</div>
-                                <div class="caution-text">
-                                    <b>Section:</b> 520m² cross-lease — confirm
-                                    the flats plan, boundary fencing on the
-                                    north side, and any shared driveway
-                                    obligations.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 7: Ask the agent -->
-                        <div class="guide-insights-card">
-                            <div class="gic-header">
-                                <div class="guide-avatar-sm">
-                                    <img
-                                        src="icons/icon-guide.svg"
-                                        style="width: 22px; height: 22px"
-                                    />
-                                </div>
-                                <div class="gic-header-title">
-                                    Questions to ask the agent
-                                </div>
-                            </div>
-                            <div class="gic-lead">
-                                Based on this listing, here are the questions
-                                I'd put to Sarah before the open home.
-                            </div>
-                            <div class="ask-list">
-                                <button class="ask-chip">
-                                    Has the vendor received any offers yet?
-                                </button>
-                                <button class="ask-chip">
-                                    Why was the price reduced 13 days ago?
-                                </button>
-                                <button class="ask-chip">
-                                    What's the vendor's price expectation now?
-                                </button>
-                                <button class="ask-chip">
-                                    Is the property in a flood or erosion
-                                    overlay?
-                                </button>
-                                <button class="ask-chip">
-                                    When does the vendor need to settle?
-                                </button>
-                            </div>
-                        </div>
+                    <div class="chat-input-wrap">
+                        <input
+                            type="text"
+                            class="chat-input"
+                            id="chatInput2"
+                            placeholder="Ask a follow-up…"
+                            disabled
+                        />
+                        <button class="chat-send" id="chatSendBtn2" disabled>
+                            →
+                        </button>
                     </div>
                 </div>
 
-                <div class="detail-footer">
-                    <div class="agent-photo"></div>
-                    <div class="detail-footer-agent">
-                        <div class="agent-name">Sarah Chen</div>
-                        <div class="agent-company">Bayleys Mount Roskill</div>
+                <!-- ====== SCREEN 4: PROPERTY DETAIL — GUIDE INSIGHTS ====== -->
+                <div
+                    class="screen"
+                    id="screen-detail"
+                    data-label="4. Property Detail — Guide Insights"
+                >
+                    <div class="detail-scroll">
+                        <div class="detail-hero">
+                            <div class="status-bar">
+                                <div class="time">21:38</div>
+                                <div class="icons">●●● ▲ ◼</div>
+                            </div>
+                            <div class="detail-hero-overlay">
+                                <button
+                                    class="hamburger-btn has-badge"
+                                    aria-label="Menu"
+                                >
+                                    <span></span><span></span><span></span>
+                                </button>
+                                <div class="detail-hero-actions">
+                                    <div class="share-btn">♡</div>
+                                    <div class="share-btn">⤴</div>
+                                </div>
+                            </div>
+                            <div class="detail-hero-bottom">
+                                <div class="hero-match">
+                                    <span class="dot match-high"></span> 89%
+                                    match
+                                </div>
+                                <div class="hero-walk">
+                                    <b>6 min walk</b> to Three Kings Primary ·
+                                    Decile 9
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-info-card">
+                            <div class="detail-price">$820,000</div>
+                            <div class="detail-address">
+                                8 Rimu Road, Mount Roskill, Auckland
+                            </div>
+                            <div class="detail-specs">
+                                <div class="detail-spec">
+                                    <div class="spec-icon">
+                                        <img
+                                            src="icons/icon-bed.png"
+                                            style="
+                                                width: 16px;
+                                                height: 16px;
+                                                object-fit: contain;
+                                                vertical-align: middle;
+                                            "
+                                        />
+                                    </div>
+                                    <span>3 bed</span>
+                                </div>
+                                <div class="detail-spec">
+                                    <div class="spec-icon">
+                                        <img
+                                            src="icons/icon-bath.png"
+                                            style="
+                                                width: 16px;
+                                                height: 16px;
+                                                object-fit: contain;
+                                                vertical-align: middle;
+                                            "
+                                        />
+                                    </div>
+                                    <span>1 bath</span>
+                                </div>
+                                <div class="detail-spec">
+                                    <div class="spec-icon">
+                                        <img
+                                            src="icons/icon-car.png"
+                                            style="
+                                                width: 16px;
+                                                height: 16px;
+                                                object-fit: contain;
+                                                vertical-align: middle;
+                                            "
+                                        />
+                                    </div>
+                                    <span>1 park</span>
+                                </div>
+                                <div class="detail-spec">
+                                    <div class="spec-icon">
+                                        <img
+                                            src="icons/icon-floor.png"
+                                            style="
+                                                width: 16px;
+                                                height: 16px;
+                                                object-fit: contain;
+                                                vertical-align: middle;
+                                            "
+                                        />
+                                    </div>
+                                    <span>95m²</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-stack">
+                            <!-- Card 1: Match breakdown -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Why this is an 89% match
+                                    </div>
+                                    <span class="verdict-pill green"
+                                        >Strong</span
+                                    >
+                                </div>
+                                <div class="match-list">
+                                    <div class="match-row">
+                                        <div class="mark">✓</div>
+                                        <div class="match-row-body">
+                                            3 bedrooms — matches your request
+                                        </div>
+                                    </div>
+                                    <div class="match-row">
+                                        <div class="mark">✓</div>
+                                        <div class="match-row-body">
+                                            $820,000 — <b>$80k under</b> your
+                                            $900k cap
+                                            <span class="match-row-meta"
+                                                >Room for reno or negotiation
+                                                headroom</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="match-row">
+                                        <div class="mark">✓</div>
+                                        <div class="match-row-body">
+                                            25 min to CBD — under your 30 min
+                                            target
+                                        </div>
+                                    </div>
+                                    <div class="match-row">
+                                        <div class="mark">✓</div>
+                                        <div class="match-row-body">
+                                            Three Kings Primary (Decile 9) —
+                                            <b>6 min walk</b>
+                                            <span class="match-row-meta"
+                                                >In zone · 0.5 km · Ministry of
+                                                Education</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="match-row warn">
+                                        <div class="mark">!</div>
+                                        <div class="match-row-body">
+                                            Listing notes
+                                            <b>original 1970s kitchen</b> — may
+                                            need work
+                                            <span class="match-row-meta"
+                                                >Budget for refresh or negotiate
+                                                price</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Price intelligence -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Price intelligence
+                                    </div>
+                                    <span class="verdict-pill green"
+                                        >Well priced</span
+                                    >
+                                </div>
+                                <div class="price-grid">
+                                    <div class="price-cell">
+                                        <div class="price-label">Asking</div>
+                                        <div class="price-value-lg">
+                                            $820,000
+                                        </div>
+                                        <div class="price-delta green">
+                                            ↓ $65k from $885k
+                                        </div>
+                                    </div>
+                                    <div class="price-cell">
+                                        <div class="price-label">
+                                            Suburb median
+                                        </div>
+                                        <div class="price-value-lg">
+                                            $855,000
+                                        </div>
+                                        <div class="price-delta green">
+                                            −4% vs median
+                                        </div>
+                                    </div>
+                                    <div class="price-cell">
+                                        <div class="price-label">
+                                            Council CV (2021)
+                                        </div>
+                                        <div class="price-value-lg">
+                                            $850,000
+                                        </div>
+                                        <div class="price-delta">−4% vs CV</div>
+                                    </div>
+                                    <div class="price-cell">
+                                        <div class="price-label">
+                                            OneRoof Estimate
+                                        </div>
+                                        <div class="price-value-lg">
+                                            $810–865k
+                                        </div>
+                                        <div class="price-delta">
+                                            Within range
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="price-note">
+                                    <b>Reduced from $885k 13 days ago.</b>
+                                    Currently sits 4% under the Mt Roskill
+                                    median and inside OneRoof's estimate range —
+                                    a fair ask for the condition noted.
+                                </div>
+                                <div class="data-sources">
+                                    <strong>Sources:</strong> CoreLogic ·
+                                    OneRoof Estimates · Auckland Council records
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Schools in zone -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Schools in zone
+                                    </div>
+                                    <span class="verdict-pill green"
+                                        >Decile 9 zone</span
+                                    >
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge green">P</div>
+                                    <div class="row-main">
+                                        Three Kings Primary
+                                        <div class="row-meta">
+                                            Decile 9 · 0.5 km · In zone
+                                        </div>
+                                    </div>
+                                    <div class="row-value">
+                                        6 min<span class="row-value-sub"
+                                            >walk</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge blue">I</div>
+                                    <div class="row-main">
+                                        Mt Roskill Intermediate
+                                        <div class="row-meta">
+                                            Decile 8 · 2.1 km · In zone
+                                        </div>
+                                    </div>
+                                    <div class="row-value">
+                                        8 min<span class="row-value-sub"
+                                            >drive</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge">S</div>
+                                    <div class="row-main">
+                                        Mt Roskill Grammar
+                                        <div class="row-meta">
+                                            Decile 7 · 2.8 km · In zone
+                                        </div>
+                                    </div>
+                                    <div class="row-value">
+                                        10 min<span class="row-value-sub"
+                                            >drive</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="data-sources">
+                                    <strong>Source:</strong> Ministry of
+                                    Education school zones, current year
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Commute to CBD -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Commute to CBD
+                                    </div>
+                                    <span class="verdict-pill green"
+                                        >Under 30 min</span
+                                    >
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge">🚗</div>
+                                    <div class="row-main">
+                                        Car — peak (Tue 8 am)
+                                        <div class="row-meta">
+                                            Via SH20 · 14 km
+                                        </div>
+                                    </div>
+                                    <div class="row-value">25 min</div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge">🚗</div>
+                                    <div class="row-main">
+                                        Car — off-peak
+                                        <div class="row-meta">
+                                            Typical Sunday
+                                        </div>
+                                    </div>
+                                    <div class="row-value">18 min</div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge blue">🚌</div>
+                                    <div class="row-main">
+                                        Bus — Route 27 to Britomart
+                                        <div class="row-meta">
+                                            Stop 120 m from property
+                                        </div>
+                                    </div>
+                                    <div class="row-value">35 min</div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge green">🚲</div>
+                                    <div class="row-main">
+                                        Cycle via Dominion Rd
+                                        <div class="row-meta">
+                                            Mostly on-road lane
+                                        </div>
+                                    </div>
+                                    <div class="row-value">28 min</div>
+                                </div>
+                                <div class="data-sources">
+                                    <strong>Source:</strong> Google Maps typical
+                                    Tuesday 8 am; AT for bus route
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Suburb signals -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Mt Roskill signals
+                                    </div>
+                                    <span class="verdict-pill blue"
+                                        >Trending up</span
+                                    >
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge blue">↗</div>
+                                    <div class="row-main">
+                                        Median sale price, 12-mo
+                                        <div class="row-meta">
+                                            Suburb-wide, 3-bed houses
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="row-value"
+                                        style="color: var(--blue)"
+                                    >
+                                        +3.2%
+                                    </div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge green">✓</div>
+                                    <div class="row-main">
+                                        Recent sales within 800 m
+                                        <div class="row-meta">
+                                            Avg 18 days on market
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="row-value"
+                                        style="color: var(--green)"
+                                    >
+                                        8 sold
+                                    </div>
+                                </div>
+                                <div class="insight-row">
+                                    <div class="row-badge">%</div>
+                                    <div class="row-main">
+                                        Gross rental yield
+                                        <div class="row-meta">
+                                            Based on suburb avg rent $720/wk
+                                        </div>
+                                    </div>
+                                    <div class="row-value">~4.1%</div>
+                                </div>
+                                <div class="data-sources">
+                                    <strong>Sources:</strong> OneRoof Sold Data
+                                    · CoreLogic · Tenancy Services
+                                </div>
+                            </div>
+
+                            <!-- Card 6: Things to check -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Things to check before you offer
+                                    </div>
+                                    <span class="verdict-pill orange"
+                                        >3 flags</span
+                                    >
+                                </div>
+                                <div class="caution-item">
+                                    <div class="caution-icon">!</div>
+                                    <div class="caution-text">
+                                        <b>Kitchen:</b> Listing describes it as
+                                        "original 1970s". Budget ~$15–25k for a
+                                        refresh, or use it as negotiation
+                                        leverage.
+                                    </div>
+                                </div>
+                                <div class="caution-item">
+                                    <div class="caution-icon">!</div>
+                                    <div class="caution-text">
+                                        <b>Heating:</b> No heat pump or
+                                        insulation mentioned. Ask the agent and
+                                        check the builder's report / Healthy
+                                        Homes compliance.
+                                    </div>
+                                </div>
+                                <div class="caution-item">
+                                    <div class="caution-icon">!</div>
+                                    <div class="caution-text">
+                                        <b>Section:</b> 520m² cross-lease —
+                                        confirm the flats plan, boundary fencing
+                                        on the north side, and any shared
+                                        driveway obligations.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 7: Ask the agent -->
+                            <div class="guide-insights-card">
+                                <div class="gic-header">
+                                    <div class="guide-avatar-sm">
+                                        <img
+                                            src="icons/icon-guide.svg"
+                                            style="width: 22px; height: 22px"
+                                        />
+                                    </div>
+                                    <div class="gic-header-title">
+                                        Questions to ask the agent
+                                    </div>
+                                </div>
+                                <div class="gic-lead">
+                                    Based on this listing, here are the
+                                    questions I'd put to Sarah before the open
+                                    home.
+                                </div>
+                                <div class="ask-list">
+                                    <button class="ask-chip">
+                                        Has the vendor received any offers yet?
+                                    </button>
+                                    <button class="ask-chip">
+                                        Why was the price reduced 13 days ago?
+                                    </button>
+                                    <button class="ask-chip">
+                                        What's the vendor's price expectation
+                                        now?
+                                    </button>
+                                    <button class="ask-chip">
+                                        Is the property in a flood or erosion
+                                        overlay?
+                                    </button>
+                                    <button class="ask-chip">
+                                        When does the vendor need to settle?
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="detail-enquire">Enquire</button>
+
+                    <div class="detail-footer">
+                        <div class="agent-photo"></div>
+                        <div class="detail-footer-agent">
+                            <div class="agent-name">Sarah Chen</div>
+                            <div class="agent-company">
+                                Bayleys Mount Roskill
+                            </div>
+                        </div>
+                        <button class="detail-enquire">Enquire</button>
+                    </div>
                 </div>
+
+                <!-- ====== SIDE MENU ====== -->
+                <div
+                    class="side-menu-overlay"
+                    id="sideMenuOverlay"
+                    onclick="closeSideMenu()"
+                ></div>
+                <aside
+                    class="side-menu"
+                    id="sideMenu"
+                    aria-hidden="true"
+                    aria-label="Main menu"
+                >
+                    <div class="side-menu-header">
+                        <div class="side-menu-brand">
+                            <svg
+                                width="24"
+                                height="23"
+                                viewBox="0 0 37 36"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M36.6 26.4H31.2V18.8L18.3 7.3L5.4 18.8V26.4H0V16.4L18.3 0L36.6 16.4V26.4ZM0 29.9H36.6V35.3H0V29.9Z"
+                                    fill="#FF8500"
+                                />
+                            </svg>
+                            OneRoof
+                        </div>
+                        <button
+                            class="side-menu-close"
+                            aria-label="Close menu"
+                            onclick="closeSideMenu()"
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <nav class="side-menu-items">
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <img src="icons/icon-filter.png" alt="" />
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Filter Search
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Old Interface
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item has-badge"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <img src="icons/icon-for-you.PNG" alt="" />
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">For You</div>
+                                <div class="side-menu-item-sub">
+                                    Notifications, Updates
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#000"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                    />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">Saved</div>
+                                <div class="side-menu-item-sub">
+                                    Properties, Comparisons, Searches
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <img src="icons/icon-estimates.png" alt="" />
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Estimates
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <img src="icons/icon-news.PNG" alt="" />
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">News</div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <img src="icons/icon-profile.PNG" alt="" />
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    My OneRoof
+                                </div>
+                                <div class="side-menu-item-sub">Profile</div>
+                            </span>
+                        </button>
+                    </nav>
+                </aside>
             </div>
+            <!-- /.frame-inner -->
 
             <!-- Navigation Controls -->
             <div class="screen-counter" id="screenCounter">1 / 1</div>
@@ -4397,9 +4973,46 @@
             // Keyboard navigation (ignored while typing)
             document.addEventListener("keydown", (e) => {
                 if (e.target.matches("input, textarea")) return;
+                if (e.key === "Escape" && isSideMenuOpen()) {
+                    closeSideMenu();
+                    return;
+                }
                 if (e.key === "ArrowRight" || e.key === "ArrowDown")
                     navigate(1);
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp") navigate(-1);
+            });
+
+            // ===== Side menu =====
+            function isSideMenuOpen() {
+                const m = document.getElementById("sideMenu");
+                return m && m.classList.contains("open");
+            }
+
+            function openSideMenu() {
+                document.getElementById("sideMenu").classList.add("open");
+                document
+                    .getElementById("sideMenuOverlay")
+                    .classList.add("open");
+                document
+                    .getElementById("sideMenu")
+                    .setAttribute("aria-hidden", "false");
+            }
+
+            function closeSideMenu() {
+                document.getElementById("sideMenu").classList.remove("open");
+                document
+                    .getElementById("sideMenuOverlay")
+                    .classList.remove("open");
+                document
+                    .getElementById("sideMenu")
+                    .setAttribute("aria-hidden", "true");
+            }
+
+            document.querySelectorAll(".hamburger-btn").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    openSideMenu();
+                });
             });
         </script>
     </body>

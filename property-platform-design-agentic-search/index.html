@@ -3458,6 +3458,70 @@
                 color: var(--text-secondary);
                 margin-top: 2px;
             }
+
+            /* Primary action — "+ New Guided Search" at the top.
+               Orange accent so it reads as the canonical way to start. */
+            .side-menu-item.primary-action {
+                background: var(--orange-light);
+            }
+            .side-menu-item.primary-action:hover {
+                background: #ffe7d2;
+            }
+            .side-menu-item.primary-action .side-menu-item-title {
+                color: var(--orange);
+                font-weight: 700;
+            }
+            .side-menu-item.primary-action .plus-circle {
+                width: 28px;
+                height: 28px;
+                background: var(--orange);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 22px;
+                font-weight: 300;
+                line-height: 1;
+            }
+
+            /* Parent item with nested children — drop the divider so the
+               parent+child read as one grouped block. */
+            .side-menu-item.has-sub {
+                border-bottom: none;
+            }
+
+            /* Nested sub-item under a parent (e.g. Saved → Guided Searches).
+               Indented with a tree-style connector so the hierarchy is unambiguous. */
+            .side-menu-item.sub {
+                padding-left: 58px;
+                position: relative;
+            }
+            .side-menu-item.sub::before {
+                content: "";
+                position: absolute;
+                left: 35px;
+                top: 0;
+                height: 50%;
+                width: 1.5px;
+                background: var(--border);
+            }
+            .side-menu-item.sub::after {
+                content: "";
+                position: absolute;
+                left: 35px;
+                top: 50%;
+                width: 12px;
+                height: 1.5px;
+                background: var(--border);
+            }
+            .side-menu-item.sub .side-menu-item-title {
+                font-size: 14px;
+                font-weight: 500;
+            }
+            .side-menu-item.sub .side-menu-item-sub {
+                font-size: 11.5px;
+            }
         </style>
     </head>
 
@@ -4683,8 +4747,7 @@
                                     >
                                 </div>
                                 <div class="listing-headline">
-                                    Solid Mt Roskill three-bedder — room to
-                                    grow
+                                    Solid Mt Roskill three-bedder — room to grow
                                 </div>
                                 <div class="listing-sale-method">
                                     Priced to sell · $820,000 (reduced from
@@ -4746,8 +4809,12 @@
                                 </div>
                                 <div class="oh-row">
                                     <div class="oh-when">
-                                        <div class="oh-day">Saturday, 26 April</div>
-                                        <div class="oh-time">2:00 – 2:30 pm</div>
+                                        <div class="oh-day">
+                                            Saturday, 26 April
+                                        </div>
+                                        <div class="oh-time">
+                                            2:00 – 2:30 pm
+                                        </div>
                                     </div>
                                     <button class="oh-add" type="button">
                                         Add
@@ -4755,8 +4822,12 @@
                                 </div>
                                 <div class="oh-row">
                                     <div class="oh-when">
-                                        <div class="oh-day">Sunday, 27 April</div>
-                                        <div class="oh-time">2:00 – 2:30 pm</div>
+                                        <div class="oh-day">
+                                            Sunday, 27 April
+                                        </div>
+                                        <div class="oh-time">
+                                            2:00 – 2:30 pm
+                                        </div>
                                     </div>
                                     <button class="oh-add" type="button">
                                         Add
@@ -5547,8 +5618,7 @@
                             <div class="msg-guide-content">
                                 Here's a side-by-side. I've highlighted where
                                 each one wins on the factors you told me matter
-                                — budget, a good school, and a sensible
-                                commute.
+                                — budget, a good school, and a sensible commute.
                             </div>
                         </div>
 
@@ -5561,7 +5631,7 @@
                                 <div
                                     class="cic-mini-image"
                                     style="
-                                        background-image: url('bg-images/property1.png');
+                                        background-image: url(&quot;bg-images/property1.png&quot;);
                                     "
                                 >
                                     <span class="cic-mini-tag">A · 94%</span>
@@ -5581,7 +5651,7 @@
                                 <div
                                     class="cic-mini-image"
                                     style="
-                                        background-image: url('bg-images/property2.png');
+                                        background-image: url(&quot;bg-images/property2.png&quot;);
                                     "
                                 >
                                     <span class="cic-mini-tag">B · 89%</span>
@@ -5597,7 +5667,7 @@
                                 <div
                                     class="cic-mini-image"
                                     style="
-                                        background-image: url('bg-images/property3.jpeg');
+                                        background-image: url(&quot;bg-images/property3.jpeg&quot;);
                                     "
                                 >
                                     <span class="cic-mini-tag">C · 81%</span>
@@ -5630,9 +5700,7 @@
                                     <div class="cic-cell">$865k</div>
                                     <div class="cic-cell winner">
                                         $820k
-                                        <span class="cell-sub"
-                                            >−$45k vs A</span
-                                        >
+                                        <span class="cell-sub">−$45k vs A</span>
                                     </div>
                                     <div class="cic-cell">$890k</div>
                                 </div>
@@ -5681,9 +5749,7 @@
                             </div>
 
                             <div class="cic-row">
-                                <div class="cic-row-label">
-                                    Walk to primary
-                                </div>
+                                <div class="cic-row-label">Walk to primary</div>
                                 <div class="cic-cells">
                                     <div class="cic-cell">
                                         14 min
@@ -5713,8 +5779,8 @@
                                     </div>
                                 </div>
                                 <div class="cic-row-note">
-                                    <b>45 Kauri</b> pushes past your 30-min
-                                    line — worth re-driving at peak before
+                                    <b>45 Kauri</b> pushes past your 30-min line
+                                    — worth re-driving at peak before
                                     committing.
                                 </div>
                             </div>
@@ -5726,21 +5792,15 @@
                                 <div class="cic-cells">
                                     <div class="cic-cell">
                                         +$8k above
-                                        <span class="cell-sub"
-                                            >est. $857k</span
-                                        >
+                                        <span class="cell-sub">est. $857k</span>
                                     </div>
                                     <div class="cic-cell winner">
                                         −$15k below
-                                        <span class="cell-sub"
-                                            >est. $835k</span
-                                        >
+                                        <span class="cell-sub">est. $835k</span>
                                     </div>
                                     <div class="cic-cell">
                                         +$20k above
-                                        <span class="cell-sub"
-                                            >est. $870k</span
-                                        >
+                                        <span class="cell-sub">est. $870k</span>
                                     </div>
                                 </div>
                                 <div class="cic-row-note">
@@ -5766,13 +5826,9 @@
                                     <div class="cic-cell">—</div>
                                     <div class="cic-cell">
                                         Older kitchen
-                                        <span class="cell-sub"
-                                            >~$25–40k</span
-                                        >
+                                        <span class="cell-sub">~$25–40k</span>
                                     </div>
-                                    <div class="cic-cell">
-                                        Commute stretch
-                                    </div>
+                                    <div class="cic-cell">Commute stretch</div>
                                 </div>
                             </div>
                         </div>
@@ -5795,8 +5851,8 @@
                                 If <b>value and schools</b> matter most,
                                 <b>8 Rimu Road</b> is the standout — strongest
                                 zone, 6-min walk to primary, and $15k under its
-                                OneRoof Estimate. Budget ~$25–40k to freshen
-                                the kitchen.
+                                OneRoof Estimate. Budget ~$25–40k to freshen the
+                                kitchen.
                             </p>
                             <p>
                                 If you want <b>move-in-ready</b> and suburb
@@ -5805,18 +5861,14 @@
                                 7% YoY.
                             </p>
                             <p>
-                                <b>45 Kauri St</b> is the weakest for this
-                                brief — the commute nudges past your limit and
-                                it's priced above its estimate. Consider only
-                                if layout or land-size wins you over.
+                                <b>45 Kauri St</b> is the weakest for this brief
+                                — the commute nudges past your limit and it's
+                                priced above its estimate. Consider only if
+                                layout or land-size wins you over.
                             </p>
                             <div class="cic-sources">
-                                <span class="cic-source"
-                                    >OneRoof Estimate</span
-                                >
-                                <span class="cic-source"
-                                    >MoE school zones</span
-                                >
+                                <span class="cic-source">OneRoof Estimate</span>
+                                <span class="cic-source">MoE school zones</span>
                                 <span class="cic-source">Maps</span>
                                 <span class="cic-source"
                                     >OneRoof sold data</span
@@ -5899,6 +5951,24 @@
                     </div>
                     <nav class="side-menu-items">
                         <button
+                            class="side-menu-item primary-action"
+                            onclick="startNewGuidedSearch()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <span class="plus-circle" aria-hidden="true"
+                                    >+</span
+                                >
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    New Guided Search
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Start a fresh conversation with the Guide
+                                </div>
+                            </span>
+                        </button>
+                        <button
                             class="side-menu-item"
                             onclick="closeSideMenu()"
                         >
@@ -5929,7 +5999,7 @@
                             </span>
                         </button>
                         <button
-                            class="side-menu-item"
+                            class="side-menu-item has-sub"
                             onclick="closeSideMenu()"
                         >
                             <span class="side-menu-item-icon">
@@ -5953,7 +6023,21 @@
                             <span class="side-menu-item-text">
                                 <div class="side-menu-item-title">Saved</div>
                                 <div class="side-menu-item-sub">
-                                    Properties, Comparisons, Searches
+                                    Properties, Comparisons
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item sub"
+                            style="cursor: pointer"
+                            onclick="goTo('screen-chat-2')"
+                        >
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Guided Searches
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Resume past conversations
                                 </div>
                             </span>
                         </button>
@@ -6349,8 +6433,7 @@
                 document.getElementById("chatSendBtn3").disabled = true;
                 document.getElementById("stopBtn3").style.display = "flex";
                 const status = document.getElementById("chatStatus3");
-                status.innerHTML =
-                    '<span class="pulse-dot"></span> Thinking…';
+                status.innerHTML = '<span class="pulse-dot"></span> Thinking…';
                 status.classList.remove("idle");
                 const msgs = document.getElementById("chatMessages3");
                 if (msgs) msgs.scrollTop = 0;
@@ -6380,18 +6463,16 @@
 
                 agentTimeouts3.push(
                     setTimeout(() => {
-                        document.getElementById(
-                            "compareIntro3",
-                        ).style.display = "flex";
+                        document.getElementById("compareIntro3").style.display =
+                            "flex";
                         scrollChat3ToBottom();
                     }, 4400),
                 );
 
                 agentTimeouts3.push(
                     setTimeout(() => {
-                        document.getElementById(
-                            "compareStrip3",
-                        ).style.display = "flex";
+                        document.getElementById("compareStrip3").style.display =
+                            "flex";
                         scrollChat3ToBottom();
                     }, 4800),
                 );
@@ -6477,6 +6558,15 @@
             });
 
             // ===== Side menu =====
+            function startNewGuidedSearch() {
+                closeSideMenu();
+                const input = document.querySelector(
+                    "#screen-onboarding .nl-input",
+                );
+                if (input) input.value = "";
+                goTo("screen-onboarding");
+            }
+
             function isSideMenuOpen() {
                 const m = document.getElementById("sideMenu");
                 return m && m.classList.contains("open");

@@ -1156,10 +1156,6 @@
             }
 
             .detail-spec .spec-icon {
-                width: 32px;
-                height: 32px;
-                background: var(--bg);
-                border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -2658,6 +2654,140 @@
                 font-weight: 600;
             }
 
+            /* Listing attribution — sits in the header card, signals the
+               agent owns the listing content that follows. */
+            .listing-attribution {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid var(--border);
+                font-size: 11.5px;
+                color: var(--text-secondary);
+            }
+
+            .listing-attribution .agency-mark {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 1.2px;
+                color: var(--white);
+                background: #000;
+                padding: 4px 8px;
+                border-radius: 3px;
+                line-height: 1;
+            }
+
+            /* Listing description card — the seller's/agent's primary
+               paid-for artefact. Visually distinct from Guide cards:
+               no Guide avatar, neutral header, explicit "Listing"
+               source label. Stays visible alongside Guide content so
+               agents' marketing copy isn't demoted. */
+            .listing-card {
+                background: var(--white);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+
+            .listing-card-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 14px 16px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .listing-card-header .listing-title-label {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            .listing-source-pill {
+                margin-left: auto;
+                font-size: 10.5px;
+                font-weight: 700;
+                padding: 3px 10px;
+                border-radius: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+                background: var(--bg);
+                color: var(--text-secondary);
+            }
+
+            .listing-headline {
+                font-size: 16px;
+                font-weight: 700;
+                color: var(--dark);
+                padding: 14px 16px 4px;
+                line-height: 1.3;
+            }
+
+            .listing-sale-method {
+                padding: 0 16px 12px;
+                font-size: 12.5px;
+                color: var(--orange);
+                font-weight: 600;
+            }
+
+            .listing-desc {
+                padding: 0 16px 14px;
+                font-size: 13px;
+                line-height: 1.55;
+                color: var(--text);
+            }
+
+            .listing-desc p {
+                margin-bottom: 10px;
+            }
+
+            .listing-desc p:last-child {
+                margin-bottom: 0;
+            }
+
+            .listing-card-footer {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 11px 16px;
+                border-top: 1px solid var(--border);
+                background: var(--bg);
+            }
+
+            .listing-card-footer .agency-mark {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 1.2px;
+                color: var(--white);
+                background: #000;
+                padding: 4px 8px;
+                border-radius: 3px;
+                line-height: 1;
+                flex-shrink: 0;
+            }
+
+            .listing-footer-text {
+                font-size: 11.5px;
+                color: var(--text-secondary);
+                flex: 1;
+                min-width: 0;
+                line-height: 1.3;
+            }
+
+            .listing-external-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                padding: 12px 16px;
+                border-top: 1px solid var(--border);
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--orange);
+                cursor: pointer;
+            }
+
             .detail-footer {
                 background: var(--white);
                 border-top: 1px solid var(--border);
@@ -2701,6 +2831,214 @@
             }
 
             .detail-enquire:hover {
+                background: var(--orange-hover);
+            }
+
+            /* Compare button on hero — sits with heart + share */
+            .compare-btn {
+                width: 36px;
+                height: 36px;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 50%;
+                color: var(--text);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                cursor: pointer;
+                backdrop-filter: blur(8px);
+                border: none;
+                font-family: inherit;
+                padding: 0;
+            }
+
+            /* Open Homes — property data, not Guide; deliberately no avatar */
+            .open-homes-card {
+                background: var(--white);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+
+            .oh-header {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 14px 16px 10px;
+            }
+
+            .oh-title {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            .oh-count {
+                font-size: 11px;
+                color: var(--text-tertiary);
+                margin-left: auto;
+            }
+
+            .oh-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                border-top: 1px solid var(--border);
+            }
+
+            .oh-when {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .oh-day {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--text);
+                line-height: 1.2;
+            }
+
+            .oh-time {
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 2px;
+            }
+
+            .oh-add {
+                background: var(--white);
+                border: 1px solid var(--border);
+                color: var(--text);
+                font-family: inherit;
+                font-size: 12px;
+                font-weight: 600;
+                padding: 7px 14px 7px 12px;
+                border-radius: 20px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-shrink: 0;
+                transition: all 0.2s;
+            }
+
+            .oh-add:hover {
+                border-color: var(--orange);
+                color: var(--orange);
+            }
+
+            .oh-add::before {
+                content: "+";
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 1;
+            }
+
+            .oh-planner {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                padding: 12px 16px;
+                border-top: 1px solid var(--border);
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--orange);
+                cursor: pointer;
+                background: var(--bg);
+            }
+
+            /* Agent Contact card — full version above sticky footer */
+            .agent-contact-card {
+                background: var(--white);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+
+            .acc-top {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .acc-photo {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #ddd, #bbb);
+                flex-shrink: 0;
+            }
+
+            .acc-id {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .acc-name {
+                font-size: 15px;
+                font-weight: 700;
+                color: var(--text);
+                line-height: 1.2;
+            }
+
+            .acc-agency {
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 3px;
+                line-height: 1.3;
+            }
+
+            .acc-license {
+                font-size: 10.5px;
+                color: var(--text-tertiary);
+                margin-top: 2px;
+            }
+
+            .acc-actions {
+                display: flex;
+                gap: 8px;
+                padding: 0 16px 16px;
+            }
+
+            .acc-call {
+                flex: 1;
+                background: var(--white);
+                color: var(--text);
+                border: 1px solid var(--text);
+                font-family: inherit;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px 14px;
+                border-radius: 24px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                transition: all 0.2s;
+            }
+
+            .acc-call:hover {
+                border-color: var(--orange);
+                color: var(--orange);
+            }
+
+            .acc-enquire {
+                flex: 1;
+                background: var(--orange);
+                color: white;
+                border: none;
+                font-family: inherit;
+                font-size: 13px;
+                font-weight: 700;
+                padding: 10px 14px;
+                border-radius: 24px;
+                cursor: pointer;
+            }
+
+            .acc-enquire:hover {
                 background: var(--orange-hover);
             }
 
@@ -4062,6 +4400,13 @@
                                 </button>
                                 <div class="detail-hero-actions">
                                     <div class="share-btn">♡</div>
+                                    <button
+                                        class="compare-btn"
+                                        aria-label="Add to comparison"
+                                        title="Add to comparison"
+                                    >
+                                        ⇄
+                                    </button>
                                     <div class="share-btn">⤴</div>
                                 </div>
                             </div>
@@ -4147,9 +4492,112 @@
                                     <span>95m²</span>
                                 </div>
                             </div>
+                            <div class="listing-attribution">
+                                <span class="agency-mark">Bayleys</span>
+                                <span
+                                    >Listed by Sarah Chen · Bayleys Mount
+                                    Roskill</span
+                                >
+                            </div>
                         </div>
 
                         <div class="card-stack">
+                            <!-- Listing description — the agent's paid-for
+                                 primary artefact. Kept visible alongside
+                                 Guide insights so the seller's marketing
+                                 copy isn't demoted by AI synthesis. -->
+                            <div class="listing-card">
+                                <div class="listing-card-header">
+                                    <span class="listing-title-label"
+                                        >About this property</span
+                                    >
+                                    <span class="listing-source-pill"
+                                        >From the listing</span
+                                    >
+                                </div>
+                                <div class="listing-headline">
+                                    Solid Mt Roskill three-bedder — room to
+                                    grow
+                                </div>
+                                <div class="listing-sale-method">
+                                    Priced to sell · $820,000 (reduced from
+                                    $885,000)
+                                </div>
+                                <div class="listing-desc">
+                                    <p>
+                                        Tucked into a quiet pocket of Mount
+                                        Roskill, this tidy three-bedroom home
+                                        offers a genuine foothold on the
+                                        Auckland property ladder. Set back from
+                                        the road on a 520m² cross-lease section,
+                                        it's a home with good bones and
+                                        straightforward living in one of the
+                                        city's most connected suburbs.
+                                    </p>
+                                    <p>
+                                        The layout is practical — three double
+                                        bedrooms, a family bathroom, a sunny
+                                        north-facing lounge flowing to a covered
+                                        deck, and a single internal-access
+                                        garage. The original 1970s kitchen is in
+                                        honest, working order and gives the next
+                                        owner room to put their own stamp on the
+                                        home over time.
+                                    </p>
+                                    <p>
+                                        Three Kings Primary (Decile 9) is a
+                                        six-minute walk, with Mt Roskill
+                                        Intermediate and Grammar also in zone.
+                                        SH20 on-ramps are minutes away — CBD,
+                                        airport and North Shore all within easy
+                                        reach.
+                                    </p>
+                                    <p>
+                                        Our vendors have reduced the price and
+                                        are genuinely motivated. All offers
+                                        presented — inspection recommended.
+                                    </p>
+                                </div>
+                                <div class="listing-card-footer">
+                                    <span class="agency-mark">Bayleys</span>
+                                    <span class="listing-footer-text"
+                                        >Bayleys Real Estate Ltd, Mount Roskill
+                                        · Licensed REAA 2008</span
+                                    >
+                                </div>
+                                <div class="listing-external-link">
+                                    See this listing on bayleys.co.nz →
+                                </div>
+                            </div>
+
+                            <!-- Open Homes — sits above the Guide stack so the
+                                 next viewing is one tap away. Not a Guide card. -->
+                            <div class="open-homes-card">
+                                <div class="oh-header">
+                                    <div class="oh-title">Open Homes</div>
+                                    <div class="oh-count">2 upcoming</div>
+                                </div>
+                                <div class="oh-row">
+                                    <div class="oh-when">
+                                        <div class="oh-day">Saturday, 26 April</div>
+                                        <div class="oh-time">2:00 – 2:30 pm</div>
+                                    </div>
+                                    <button class="oh-add" type="button">
+                                        Add
+                                    </button>
+                                </div>
+                                <div class="oh-row">
+                                    <div class="oh-when">
+                                        <div class="oh-day">Sunday, 27 April</div>
+                                        <div class="oh-time">2:00 – 2:30 pm</div>
+                                    </div>
+                                    <button class="oh-add" type="button">
+                                        Add
+                                    </button>
+                                </div>
+                                <div class="oh-planner">View Planner →</div>
+                            </div>
+
                             <!-- Card 1: Match breakdown -->
                             <div class="guide-insights-card">
                                 <div class="gic-header">
@@ -4555,6 +5003,32 @@
                                     </button>
                                     <button class="ask-chip">
                                         When does the vendor need to settle?
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Agent Contact — full block, sits above the
+                                 sticky footer so the user knows who's on the
+                                 other end before they tap Enquire. -->
+                            <div class="agent-contact-card">
+                                <div class="acc-top">
+                                    <div class="acc-photo"></div>
+                                    <div class="acc-id">
+                                        <div class="acc-name">Sarah Chen</div>
+                                        <div class="acc-agency">
+                                            Bayleys Mount Roskill
+                                        </div>
+                                        <div class="acc-license">
+                                            Licensed REAA 2008
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="acc-actions">
+                                    <button class="acc-call" type="button">
+                                        Call 027 …
+                                    </button>
+                                    <button class="acc-enquire" type="button">
+                                        Enquire
                                     </button>
                                 </div>
                             </div>

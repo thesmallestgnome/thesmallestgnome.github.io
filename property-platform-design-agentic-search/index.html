@@ -167,6 +167,18 @@
                 color: white;
                 backdrop-filter: blur(8px);
             }
+            /* Detail: back button (chevron) sits below the hamburger */
+            #screen-detail .back-btn {
+                position: absolute;
+                top: 94px;
+                left: 16px;
+                z-index: 3;
+                border: none;
+                padding: 0 4px 2px 0;
+                font-family: inherit;
+                font-size: 24px;
+                line-height: 1;
+            }
 
             /* Bottom tab bar */
             .tab-bar {
@@ -380,19 +392,51 @@
                 margin-bottom: 16px;
             }
 
+            .nl-input-field {
+                position: relative;
+                margin-bottom: 16px;
+            }
+
             .nl-input {
                 width: 100%;
                 border: 1px solid var(--text);
                 border-radius: var(--radius);
-                padding: 16px;
+                padding: 16px 16px 36px 16px;
                 font-size: 15px;
                 font-family: inherit;
                 color: var(--text);
                 resize: none;
-                height: 80px;
+                height: 100px;
                 outline: none;
                 transition: border-color 0.2s;
-                margin-bottom: 16px;
+                display: block;
+            }
+
+            .nl-input-field .nl-input {
+                margin-bottom: 0;
+            }
+
+            .nl-input-mic {
+                position: absolute;
+                left: 8px;
+                bottom: 8px;
+                width: 28px;
+                height: 28px;
+                background: transparent;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .nl-input-mic img {
+                width: 22px;
+                height: 22px;
+                object-fit: contain;
+                opacity: 0.65;
             }
 
             .nl-input:focus {
@@ -2144,6 +2188,33 @@
                 opacity: 0.6;
             }
 
+            .chat-mic {
+                width: 40px;
+                height: 40px;
+                border: none;
+                background: transparent;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                padding: 0;
+                transition: background 0.2s;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .chat-mic:hover {
+                background: var(--bg);
+            }
+
+            .chat-mic img {
+                width: 22px;
+                height: 22px;
+                object-fit: contain;
+                opacity: 0.7;
+            }
+
             .chat-send {
                 width: 40px;
                 height: 40px;
@@ -2926,48 +2997,6 @@
                             </div>
                         </div>
 
-                        <div class="intent-tabs">
-                            <div class="intent-tab active">
-                                <img
-                                    src="icons/icon-buying.png"
-                                    style="
-                                        width: 28px;
-                                        height: 28px;
-                                        object-fit: contain;
-                                        vertical-align: middle;
-                                        margin-right: 4px;
-                                        margin-bottom: -3px;
-                                    "
-                                /><span>Buying</span>
-                            </div>
-                            <div class="intent-tab">
-                                <img
-                                    src="icons/icon-renting.png"
-                                    style="
-                                        width: 28px;
-                                        height: 28px;
-                                        object-fit: contain;
-                                        vertical-align: middle;
-                                        margin-right: 4px;
-                                        margin-bottom: -3px;
-                                    "
-                                /><span>Renting</span>
-                            </div>
-                            <div class="intent-tab">
-                                <img
-                                    src="icons/icon-estimates.png"
-                                    style="
-                                        width: 28px;
-                                        height: 28px;
-                                        object-fit: contain;
-                                        vertical-align: middle;
-                                        margin-right: 4px;
-                                        margin-bottom: -3px;
-                                    "
-                                /><span>Estimates</span>
-                            </div>
-                        </div>
-
                         <div class="onboarding-card">
                             <div class="guide-intro">
                                 <div class="guide-avatar">
@@ -2986,10 +3015,22 @@
                             </div>
 
                             <div class="nl-input-area">
-                                <textarea
-                                    class="nl-input"
-                                    placeholder="e.g. 3-bed house under $900k near a good school, 30 min from Auckland CBD..."
-                                ></textarea>
+                                <div class="nl-input-field">
+                                    <textarea
+                                        class="nl-input"
+                                        placeholder="e.g. buy 3-bed house under $900k near a good school, 30 min from Auckland CBD..."
+                                    ></textarea>
+                                    <button
+                                        type="button"
+                                        class="nl-input-mic"
+                                        aria-label="Voice input"
+                                    >
+                                        <img
+                                            src="icons/icon-mic-voice.png"
+                                            alt=""
+                                        />
+                                    </button>
+                                </div>
                                 <button
                                     class="nl-send"
                                     onclick="startAgenticSearch()"
@@ -3058,8 +3099,8 @@
                     <div class="chat-messages" id="chatMessages">
                         <!-- User query bubble -->
                         <div class="msg-user" id="userMsg">
-                            3-bed house under $900k near a good school, 30 min
-                            from CBD
+                            buy 3-bed house under $900k near a good school, 30
+                            min from Auckland CBD
                         </div>
 
                         <!-- Guide reasoning / working steps -->
@@ -3353,6 +3394,13 @@
                     </div>
 
                     <div class="chat-input-wrap">
+                        <button
+                            type="button"
+                            class="chat-mic"
+                            aria-label="Voice input"
+                        >
+                            <img src="icons/icon-mic-voice.png" alt="" />
+                        </button>
                         <input
                             type="text"
                             class="chat-input"
@@ -3413,8 +3461,8 @@
                     <div class="chat-messages" id="chatMessages2">
                         <!-- ===== Turn 1 (completed) ===== -->
                         <div class="msg-user">
-                            3-bed house under $900k near a good school, 30 min
-                            from CBD
+                            buy 3-bed house under $900k near a good school, 30
+                            min from Auckland CBD
                         </div>
 
                         <div class="msg-guide">
@@ -3973,6 +4021,13 @@
                     </div>
 
                     <div class="chat-input-wrap">
+                        <button
+                            type="button"
+                            class="chat-mic"
+                            aria-label="Voice input"
+                        >
+                            <img src="icons/icon-mic-voice.png" alt="" />
+                        </button>
                         <input
                             type="text"
                             class="chat-input"
@@ -4010,6 +4065,13 @@
                                     <div class="share-btn">⤴</div>
                                 </div>
                             </div>
+                            <button
+                                class="back-btn"
+                                aria-label="Back"
+                                onclick="navigate(-1)"
+                            >
+                                ‹
+                            </button>
                             <div class="detail-hero-bottom">
                                 <div class="hero-match">
                                     <span class="dot match-high"></span> 89%
@@ -4717,7 +4779,7 @@
                 );
                 const query =
                     (input && input.value.trim()) ||
-                    "3-bed house under $900k near a good school, 30 min from CBD";
+                    "buy 3-bed house under $900k near a good school, 30 min from Auckland CBD";
                 document.getElementById("userMsg").textContent = query;
                 goTo("screen-chat");
             }

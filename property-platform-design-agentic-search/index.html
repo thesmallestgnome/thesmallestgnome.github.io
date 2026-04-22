@@ -1709,21 +1709,26 @@
             }
 
             .suggestion-chips {
-                display: flex;
+                display: none;
                 flex-wrap: wrap;
                 gap: 6px;
                 padding-left: 36px;
-                opacity: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition:
-                    opacity 0.4s,
-                    max-height 0.4s;
             }
 
             .suggestion-chips.visible {
-                opacity: 1;
-                max-height: 200px;
+                display: flex;
+                animation: chipsReveal 0.4s ease both;
+            }
+
+            @keyframes chipsReveal {
+                from {
+                    opacity: 0;
+                    transform: translateY(-4px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             .suggestion-chip {
@@ -4003,7 +4008,7 @@
                                 class="suggestion-chip"
                                 onclick="goTo('screen-chat-3')"
                             >
-                                Compare these 3
+                                Compare first 3
                             </button>
                             <button class="suggestion-chip">
                                 What about bus routes?

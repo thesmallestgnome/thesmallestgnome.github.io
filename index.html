@@ -1,16 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Experiments</title>
-</head>
-<body>
-	<h1>Experiments</h1>
-	<ul>
-		<li><a href="/property-platform-design-agentic-search">Property platform design challenge - AI agentic search</a></li>
-		<li><a href="/property-platform-design-smart-search">Property platform design challenge - AI smart search</a></li>
-		<li><a href="/knee-monitor">Knee-Monitor case study</a></li>
-		<li><a href="/weekdaycalc-demo">Demo for moment-weekday-calc</a></li>
-	</ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>
+            Mari Kondrateva: Portfolio Case studies, Design Challenges, Project
+            Walkthroughs
+        </title>
+        <style>
+            :root {
+                /* Vibe: Memorable, slightly editorial, ownable. Very few real estate brands use plum — instant recognition.*/
+                --deep-plum-aubergine: #4a2c4a;
+                --butter-yellow: #f2d680; /*— a literal "warm light through the doorway"*/
+                --warm-white: #fffbf2;
+                --color-primary: var(--deep-plum-aubergine);
+                --color-primary-brighter: hsl(300 58% 36% / 1);
+                --color-secondary: var(--butter-yellow);
+                --color-accent: var(--warm-white);
+                --color-bg: var(--warm-white);
+                --colot-bodytext: hsl(300 25% 15% / 1);
+            }
+
+            @font-face {
+                font-family: Figtree italic; /* set name */
+                src: url(fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf); /* url of the font */
+            }
+            @font-face {
+                font-family: Figtree; /* set name */
+                src: url(fonts/Figtree/Figtree-VariableFont_wght.ttf); /* url of the font */
+            }
+
+            html {
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                font-family: Figtree, sans-serif;
+                background-color: var(--color-bg);
+                color: var(--colot-bodytext);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .wrap {
+            }
+
+            h1 {
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: var(--color-primary);
+                font-size: 4rem;
+            }
+
+            ul {
+                padding-inline-start: 0;
+                font-size: 1.2rem;
+            }
+
+            li {
+                color: var(--color-secondary);
+                padding: 0.5rem 0;
+                font-size: 1.5rem;
+
+                a {
+                    color: var(--color-primary);
+                    position: relative;
+                    text-decoration: underline;
+                    transition: text-decoration 0.5s ease-in-out;
+                }
+                a::before {
+                    background: var(--color-secondary);
+                    content: "";
+                    inset: 0;
+                    position: absolute;
+                    transform: scaleX(0);
+                    transform-origin: right;
+                    transition: transform 0.5s ease-in-out;
+                    z-index: -1;
+                }
+                a:hover {
+                    color: var(--color-primary);
+                    text-decoration: none;
+                    transition: text-decoration 0.5s ease-in-out;
+                }
+                a:hover::before {
+                    transform: scaleX(1);
+                    transform-origin: left;
+                }
+            }
+            .uppercase {
+                text-transform: uppercase;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div>
+                <span>Mari Kondrateva.</span>
+                <span class="uppercase">Portfolio</span>
+            </div>
+            <h1>Some works:</h1>
+            <ul>
+                <li>
+                    <a href="/property-platform-design-agentic-search"
+                        >Property platform Design Challenge - AI agentic
+                        search</a>
+                </li>
+                <li>
+                    <a href="/knee-monitor"
+                        >Knee-Monitor - Project Walkthrough</a>
+                </li>
+                <li>
+                    <a href="/weekdaycalc-demo">Demo for moment-weekday-calc</a>
+                </li>
+            </ul>
+        </div>
+    </body>
 </html>

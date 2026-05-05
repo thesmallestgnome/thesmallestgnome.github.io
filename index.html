@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <title>
             Mari Kondrateva: Portfolio Case studies, Design Challenges, Project
             Walkthroughs
@@ -46,6 +46,13 @@
             }
 
             .wrap {
+            }
+
+            .subtitle {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.5rem;
             }
 
             h1 {
@@ -94,12 +101,25 @@
             .uppercase {
                 text-transform: uppercase;
             }
+
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                color: inherit;
+                border-top: 1px solid var(--color-secondary);
+                display: flex;
+                justify-content: space-around;
+                padding: 1rem;
+            }
         </style>
     </head>
     <body>
         <div class="wrap">
-            <div>
-                <span>Mari Kondrateva.</span>
+            <div class="subtitle">
+                <span>Mari Kondrateva</span>
+                <img src="favicon.svg" width="35" height="35" />
                 <span class="uppercase">Portfolio</span>
             </div>
             <h1>Some works:</h1>
@@ -107,16 +127,39 @@
                 <li>
                     <a href="/property-platform-design-agentic-search"
                         >Property platform Design Challenge - AI agentic
-                        search</a>
+                        search</a
+                    >
                 </li>
                 <li>
                     <a href="/knee-monitor"
-                        >Knee-Monitor - Project Walkthrough</a>
+                        >Knee-Monitor - Project Walkthrough</a
+                    >
                 </li>
                 <li>
                     <a href="/weekdaycalc-demo">Demo for moment-weekday-calc</a>
                 </li>
             </ul>
         </div>
+
+        <footer class="footer">
+            <div>
+                <div>Mari Kondrateva</div>
+                <div>Senior Product Designer</div>
+            </div>
+            <div>
+                <div>
+                    LinkedIn:
+                    <a href="https://www.linkedin.com/in/mari-kondrateva/"
+                        >https://www.linkedin.com/in/mari-kondrateva/</a
+                    >
+                </div>
+                <div>
+                    Portfolio:
+                    <a href="https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD"
+                        >https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD</a
+                    >
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

@@ -6,12 +6,12 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
-        <title>OneRoof Guide — Agentic Search Prototype</title>
+        <title>MyDoor Guide — Agentic Search Prototype</title>
         <style>
             @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap");
 
             :root {
-                --orange: #f27b20;
+                --orange: #4a2c4a;
                 --orange-light: #fff3e8;
                 --orange-hover: #e06a10;
                 --dark: #1a1a1a;
@@ -308,6 +308,7 @@
                 color: var(--orange);
                 font-size: 32px;
                 filter: drop-shadow(0 0 10px black);
+                line-height: 0;
             }
 
             .onboarding-card {
@@ -2955,6 +2956,83 @@
             .side-menu-item.sub .side-menu-item-sub {
                 font-size: 11.5px;
             }
+
+            /* ========================================
+     SCRIPT PANEL — narration that accompanies
+     the prototype on wide screens. Sits to the
+     right of the centred device-frame and swaps
+     copy in step with the active screen.
+     On narrow viewports it falls outside the
+     viewport (clipped by body overflow-x) so the
+     prototype layout stays untouched.
+     ======================================== */
+            body {
+                overflow-x: hidden;
+            }
+
+            .script-panel {
+                position: absolute;
+                top: 40px;
+                left: calc(50% + 220px);
+                width: 420px;
+                height: calc(100vh - 80px);
+                max-height: 844px;
+                color: #d8d8d8;
+                font-family:
+                    "DM Sans",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                padding-right: 12px;
+                pointer-events: auto;
+            }
+
+            .script-panel::-webkit-scrollbar {
+                display: none;
+            }
+
+            .script-section {
+                display: none;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .script-section.active {
+                display: block;
+            }
+
+            .script-section p {
+                margin-bottom: 14px;
+            }
+
+            .script-section p:last-child {
+                margin-bottom: 0;
+            }
+
+            .script-section em {
+                color: #ffe1b8;
+                font-style: italic;
+            }
+
+            .script-section .script-title {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                color: #f2941a;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                margin-bottom: 18px;
+                margin-top: 6px;
+                font-style: normal;
+            }
+
+            .script-section .script-title:first-child {
+                margin-top: 0;
+            }
         </style>
     </head>
 
@@ -2981,18 +3059,19 @@
                             <div class="brand">
                                 <span class="icon-house"
                                     ><svg
-                                        width="28"
-                                        height="27"
-                                        viewBox="0 0 37 36"
+                                        width="38"
+                                        height="38"
+                                        viewBox="0 0 117 117"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
-                                            d="M36.6 26.4H31.2V18.8L18.3 7.3L5.4 18.8V26.4H0V16.4L18.3 0L36.6 16.4V26.4ZM0 29.9H36.6V35.3H0V29.9Z"
-                                            fill="#FF8500"
-                                        /></svg
-                                ></span>
-                                OneRoof
+                                            d="M87.5 5C92.1944 5 96 8.80559 96 13.5V104.5C96 109.194 92.1945 113 87.5 113H28.5C23.8056 113 20 109.194 20 104.5V13.5C20 8.80563 23.8055 5 28.5 5H87.5ZM28.5 13C28.2239 13 28 13.2239 28 13.5V104.5L28.0098 104.601C28.0497 104.796 28.2039 104.95 28.3994 104.99L28.5 105H87.5L87.6006 104.99C87.7961 104.95 87.9503 104.796 87.9902 104.601L88 104.5V13.5C88 13.2239 87.7761 13 87.5 13H28.5ZM79 48C79.5523 48 80 48.4477 80 49V63C80 63.5523 79.5523 64 79 64H74C73.4477 64 73 63.5523 73 63V49C73 48.4477 73.4477 48 74 48H79Z"
+                                            fill="#F2D680"
+                                        />
+                                    </svg>
+                                </span>
+                                MyDoor
                             </div>
                         </div>
 
@@ -3005,7 +3084,7 @@
                                     />
                                 </div>
                                 <div class="guide-bubble">
-                                    Hi! I'm your OneRoof Guide. Tell me
+                                    Hi! I'm your MyDoor Guide. Tell me
                                     <b>what you're looking for</b> in your own
                                     words — I'll search across listings,
                                     suburbs, schools and prices to find the best
@@ -3080,7 +3159,7 @@
                                 style="width: 30px; height: 30px"
                             />
                             <div class="chat-title-text">
-                                <div class="chat-title">OneRoof Guide</div>
+                                <div class="chat-title">MyDoor Guide</div>
                                 <div class="chat-status" id="chatStatus">
                                     <span class="pulse-dot"></span> Thinking…
                                 </div>
@@ -3126,7 +3205,7 @@
                                         <div class="step-text">
                                             Searching 46,000+ listings
                                             <span class="step-source"
-                                                >OneRoof</span
+                                                >MyDoor</span
                                             >
                                         </div>
                                     </div>
@@ -3442,7 +3521,7 @@
                                 style="width: 30px; height: 30px"
                             />
                             <div class="chat-title-text">
-                                <div class="chat-title">OneRoof Guide</div>
+                                <div class="chat-title">MyDoor Guide</div>
                                 <div class="chat-status" id="chatStatus2">
                                     <span class="pulse-dot"></span> Thinking…
                                 </div>
@@ -3487,7 +3566,7 @@
                                         <div class="step-text">
                                             Searching 46,000+ listings
                                             <span class="step-source"
-                                                >OneRoof</span
+                                                >MyDoor</span
                                             >
                                         </div>
                                     </div>
@@ -4384,7 +4463,7 @@
                                     </div>
                                     <div class="price-cell">
                                         <div class="price-label">
-                                            OneRoof Estimate
+                                            MyDoor Estimate
                                         </div>
                                         <div class="price-value-lg">
                                             $810–865k
@@ -4397,12 +4476,12 @@
                                 <div class="price-note">
                                     <b>Reduced from $885k 13 days ago.</b>
                                     Currently sits 4% under the Mt Roskill
-                                    median and inside OneRoof's estimate range —
+                                    median and inside MyDoor's estimate range —
                                     a fair ask for the condition noted.
                                 </div>
                                 <div class="data-sources">
-                                    <strong>Sources:</strong> CoreLogic ·
-                                    OneRoof Estimates · Auckland Council records
+                                    <strong>Sources:</strong> CoreLogic · MyDoor
+                                    Estimates · Auckland Council records
                                 </div>
                             </div>
 
@@ -4589,8 +4668,8 @@
                                     <div class="row-value">~4.1%</div>
                                 </div>
                                 <div class="data-sources">
-                                    <strong>Sources:</strong> OneRoof Sold Data
-                                    · CoreLogic · Tenancy Services
+                                    <strong>Sources:</strong> MyDoor Sold Data ·
+                                    CoreLogic · Tenancy Services
                                 </div>
                             </div>
 
@@ -4786,7 +4865,7 @@
                                 </div>
                                 <div class="nudge-sources">
                                     <span class="nudge-source"
-                                        >OneRoof listing</span
+                                        >MyDoor listing</span
                                     >
                                     <span class="nudge-source">MoE zone</span>
                                     <span class="nudge-source"
@@ -4853,7 +4932,7 @@
                                 </div>
                                 <div class="nudge-sources">
                                     <span class="nudge-source"
-                                        >OneRoof listing history</span
+                                        >MyDoor listing history</span
                                     >
                                     <span class="nudge-source"
                                         >CoreLogic estimate · $868k</span
@@ -4933,7 +5012,7 @@
                                 </div>
                                 <div class="nudge-sources">
                                     <span class="nudge-source"
-                                        >OneRoof listings · last 30 days</span
+                                        >MyDoor listings · last 30 days</span
                                     >
                                 </div>
                             </div>
@@ -4970,7 +5049,7 @@
                                 style="width: 30px; height: 30px"
                             />
                             <div class="chat-title-text">
-                                <div class="chat-title">OneRoof Guide</div>
+                                <div class="chat-title">MyDoor Guide</div>
                                 <div class="chat-status" id="chatStatus3">
                                     <span class="pulse-dot"></span> Thinking…
                                 </div>
@@ -5012,7 +5091,7 @@
                                     <div class="working-step" data-step="1">
                                         <div class="step-indicator"></div>
                                         <div class="step-text">
-                                            Fetching OneRoof Estimates
+                                            Fetching MyDoor Estimates
                                             <span class="step-source"
                                                 >CoreLogic</span
                                             >
@@ -5023,7 +5102,7 @@
                                         <div class="step-text">
                                             Pulling recent sold comparables
                                             <span class="step-source"
-                                                >OneRoof</span
+                                                >MyDoor</span
                                             >
                                         </div>
                                     </div>
@@ -5220,7 +5299,7 @@
 
                             <div class="cic-row">
                                 <div class="cic-row-label">
-                                    Price vs OneRoof Estimate
+                                    Price vs MyDoor Estimate
                                 </div>
                                 <div class="cic-cells">
                                     <div class="cic-cell">
@@ -5284,7 +5363,7 @@
                                 If <b>value and schools</b> matter most,
                                 <b>8 Rimu Road</b> is the standout — strongest
                                 zone, 6-min walk to primary, and $15k under its
-                                OneRoof Estimate. Budget ~$25–40k to freshen the
+                                MyDoor Estimate. Budget ~$25–40k to freshen the
                                 kitchen.
                             </p>
                             <p>
@@ -5300,12 +5379,10 @@
                                 layout or land-size wins you over.
                             </p>
                             <div class="cic-sources">
-                                <span class="cic-source">OneRoof Estimate</span>
+                                <span class="cic-source">MyDoor Estimate</span>
                                 <span class="cic-source">MoE school zones</span>
                                 <span class="cic-source">Maps</span>
-                                <span class="cic-source"
-                                    >OneRoof sold data</span
-                                >
+                                <span class="cic-source">MyDoor sold data</span>
                             </div>
                         </div>
 
@@ -5361,18 +5438,19 @@
                     <div class="side-menu-header">
                         <div class="side-menu-brand">
                             <svg
-                                width="24"
-                                height="23"
-                                viewBox="0 0 37 36"
+                                width="38"
+                                height="38"
+                                viewBox="0 0 117 117"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
-                                    d="M36.6 26.4H31.2V18.8L18.3 7.3L5.4 18.8V26.4H0V16.4L18.3 0L36.6 16.4V26.4ZM0 29.9H36.6V35.3H0V29.9Z"
-                                    fill="#FF8500"
+                                    d="M87.5 5C92.1944 5 96 8.80559 96 13.5V104.5C96 109.194 92.1945 113 87.5 113H28.5C23.8056 113 20 109.194 20 104.5V13.5C20 8.80563 23.8055 5 28.5 5H87.5ZM28.5 13C28.2239 13 28 13.2239 28 13.5V104.5L28.0098 104.601C28.0497 104.796 28.2039 104.95 28.3994 104.99L28.5 105H87.5L87.6006 104.99C87.7961 104.95 87.9503 104.796 87.9902 104.601L88 104.5V13.5C88 13.2239 87.7761 13 87.5 13H28.5ZM79 48C79.5523 48 80 48.4477 80 49V63C80 63.5523 79.5523 64 79 64H74C73.4477 64 73 63.5523 73 63V49C73 48.4477 73.4477 48 74 48H79Z"
+                                    fill="#4A2C4A"
                                 />
                             </svg>
-                            OneRoof
+
+                            MyDoor
                         </div>
                         <button
                             class="side-menu-close"
@@ -5507,7 +5585,7 @@
                             </span>
                             <span class="side-menu-item-text">
                                 <div class="side-menu-item-title">
-                                    My OneRoof
+                                    My MyDoor
                                 </div>
                                 <div class="side-menu-item-sub">Profile</div>
                             </span>
@@ -5533,6 +5611,162 @@
                 </button>
             </div>
         </div>
+
+        <aside class="script-panel" id="scriptPanel" aria-label="Narration">
+            <div class="script-section active" data-screen="screen-onboarding">
+                <p>
+                    Before I show you anything, I want you to picture someone.
+                    Her name is Sarah. She's 32. She got mortgage pre-approval
+                    last week, and right now it's Sunday afternoon in Mt Eden.
+                    She's on the couch with her phone in one hand and a flat
+                    white in the other. She wants a three-bedroom place she
+                    can grow into. She wants it near a decent primary, because
+                    she and her partner have a 4 year-old boy. She doesn't
+                    want to commute more than an half an hour. Her cap is
+                    $900K.
+                </p>
+                <p>
+                    Sarah is not in my deck. She's in your App Store reviews.
+                    She's in your saved-search logs. And today, she's the
+                    reason I'm here.
+                </p>
+                <p>
+                    I'm Mari Kondrateva. Ten-plus years of product design —
+                    mobile-first, user-centered, conversion-focused, fintech
+                    and SaaS. The last year hands-on with AI agents at
+                    Galvanized Pukeko. I want to tell you Sarah's story twice.
+                    Once on MyDoorof today. Once on the MyDoorof Guide. The
+                    difference between those two stories <em>is</em> the
+                    design challenge.
+                </p>
+                <p class="script-title">Screen 1 — Onboarding</p>
+                <p>
+                    Sarah opens MyDoor. Same orange. Same tabs. Same listings.
+                    New surface — a chat box in the focus, filters one tap
+                    away below it. The Guide isn't a new product. It's a new
+                    layer on the existing one. The visual language is yours,
+                    lifted directly from your current welcome screen.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-chat">
+                <p class="script-title">Screen 2 — Ask, turn one</p>
+                <p>
+                    Sarah types her sentence.
+                    <em
+                        >"Buy 3-bed near a good primary, around 30 min from
+                        the Auckland CBD, under $900."</em
+                    >
+                    Her query becomes a chat bubble — the pattern she already
+                    knows from ChatGPT, from WhatsApp, from every conversation
+                    app on her phone. According to NZ stats, about 79% of New
+                    Zealand adults already use conversational AI. We aren't
+                    training her on a new mental model.
+                </p>
+                <p>
+                    The Guide streams its working steps inline.
+                    <em
+                        >Understanding your needs. Searching 46,000 listings.
+                        Checking school zones — source: Ministry of Education.
+                        Calculating commute times — source: Maps.
+                        Cross-referencing suburb medians — source:
+                        CoreLogic.</em
+                    >
+                    Each step carries a data-source pill. Two purposes. One —
+                    it builds trust, because Sarah can see exactly what's
+                    being used and where it came from. Two — while she's
+                    reading, the specialist is working in parallel.
+                    Transparency masks latency. Two birds.
+                </p>
+                <p>
+                    Property cards arrive in the thread. Match percentages —
+                    94%, 89% — and a short <em>Why this matches</em> panel
+                    under each.
+                    <em
+                        >Three bed, walkable to Maungawhau School, decile 9.
+                        47-minute commute. Listed 8% under suburb median.</em
+                    >
+                    Every claim sourced. Nothing invented.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-chat-2">
+                <p class="script-title">Screen 3 — Follow-up, turn two</p>
+                <p>
+                    This is the moment chat earns its place over a list view.
+                    Sarah types three words.
+                    <em>"Walk time to a primary?"</em> The Guide doesn't
+                    search again. It re-ranks the existing shortlist
+                    <em>in place</em>, using conversation state. That's the
+                    signature capability — multi-turn refinement without
+                    losing context. A list view can't do this. A filter can't
+                    do this. This is what justifies chat over a smart-filter
+                    variant — and yes, I considered the smart-filter variant
+                    first. I rejected it because the market has moved past it,
+                    and because spending the budget there means underspending
+                    on the agents and the eval harness, which is where the
+                    actual quality comes from.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-chat-3">
+                <p class="script-title">Screen 4 — Compare, turn three</p>
+                <p>
+                    The Guide proactively suggests
+                    <em>"Want me to compare your top three?"</em> Sarah taps
+                    yes. The Guide returns a structured side-by-side card —
+                    bed, bath, school, commute, price-against-median, urgency
+                    signals — and a plain-English verdict bubble underneath.
+                    <em
+                        >"On lifestyle and school zone, A is strongest. On
+                        price and value, B is the better long-term play. C has
+                        the most uncertainty in suburb trend."</em
+                    >
+                    It doesn't decide for her. It frames the decision.
+                    Suggests, never decides — that's the rule that makes
+                    everything else permissible.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-detail">
+                <p class="script-title">Screen 5 — Listing detail</p>
+                <p>
+                    Sarah taps into A. Familiar MyDoor listing surface —
+                    photos, price, agent. New element below — a Guide Insights
+                    card.
+                    <em
+                        >In zone for Maungawhau Primary, decile 9. 47 minutes
+                        to your partner's office at peak. 8% under Mt Eden's
+                        three-year median. Two open homes booked this weekend
+                        — high agent activity.</em
+                    >
+                    Each line is sourced. Nothing invented. This is the Guide
+                    showing up at the moment of decision with the data it's
+                    already gathered, summarised in a glance.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-nudge">
+                <p class="script-title">Screen 6 — For You</p>
+                <p>
+                    Tuesday morning. Sarah's having a coffee break at work.
+                    Her phone in hand.
+                    <em
+                        >"A new property matches your shortlist — same school
+                        zone, same budget."</em
+                    >
+                    That's Learn mode. Proactive, not push-notification carpet
+                    bombing. Below it, a card asking if she'd like the Guide
+                    to start learning her preferences over time — opt-in,
+                    never on by default. Earned autonomy. We don't get to be
+                    proactive until we've earned the right.
+                </p>
+                <p>
+                    That's Sarah's new Sunday. And her new Tuesday. The
+                    journey: ask, refine, evaluate, compare, return.
+                </p>
+            </div>
+        </aside>
 
         <script>
             const screens = [
@@ -6031,6 +6265,31 @@
                     openSideMenu();
                 });
             });
+
+            // ===== Script panel — keep narration in sync with the active screen =====
+            (function () {
+                const panel = document.getElementById("scriptPanel");
+                if (!panel) return;
+                function syncScript() {
+                    const active = document.querySelector(".screen.active");
+                    if (!active) return;
+                    const id = active.id;
+                    panel.querySelectorAll(".script-section").forEach((s) => {
+                        s.classList.toggle(
+                            "active",
+                            s.dataset.screen === id,
+                        );
+                    });
+                    panel.scrollTop = 0;
+                }
+                document.querySelectorAll(".screen").forEach((scr) => {
+                    new MutationObserver(syncScript).observe(scr, {
+                        attributes: true,
+                        attributeFilter: ["class"],
+                    });
+                });
+                syncScript();
+            })();
         </script>
     </body>
 </html>

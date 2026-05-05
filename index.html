@@ -71,33 +71,34 @@
                 color: var(--color-secondary);
                 padding: 0.5rem 0;
                 font-size: 1.5rem;
-
-                a {
-                    color: var(--color-primary);
-                    position: relative;
-                    text-decoration: underline;
-                    transition: text-decoration 0.5s ease-in-out;
-                }
-                a::before {
-                    background: var(--color-secondary);
-                    content: "";
-                    inset: 0;
-                    position: absolute;
-                    transform: scaleX(0);
-                    transform-origin: right;
-                    transition: transform 0.5s ease-in-out;
-                    z-index: -1;
-                }
-                a:hover {
-                    color: var(--color-primary);
-                    text-decoration: none;
-                    transition: text-decoration 0.5s ease-in-out;
-                }
-                a:hover::before {
-                    transform: scaleX(1);
-                    transform-origin: left;
-                }
             }
+
+            a {
+                color: var(--color-primary);
+                position: relative;
+                text-decoration: underline;
+                transition: text-decoration 0.5s ease-in-out;
+            }
+            a::before {
+                background: var(--color-secondary);
+                content: "";
+                inset: 0;
+                position: absolute;
+                transform: scaleX(0);
+                transform-origin: right;
+                transition: transform 0.5s ease-in-out;
+                z-index: -1;
+            }
+            a:hover {
+                color: var(--color-primary);
+                text-decoration: none;
+                transition: text-decoration 0.5s ease-in-out;
+            }
+            a:hover::before {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+
             .uppercase {
                 text-transform: uppercase;
             }
@@ -120,7 +121,11 @@
             <div class="subtitle">
                 <span>Mari Kondrateva</span>
                 <img src="favicon.svg" width="35" height="35" />
-                <span class="uppercase">Portfolio</span>
+                <span class="uppercase">
+                    <a href="https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD"
+                        >Portfolio</a
+                    ></span
+                >
             </div>
             <h1>Some works:</h1>
             <ul>

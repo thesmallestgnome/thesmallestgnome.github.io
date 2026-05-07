@@ -22,12 +22,20 @@
             }
 
             @font-face {
-                font-family: Figtree italic; /* set name */
+                font-family: Figtree italic;
                 src: url(fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf); /* url of the font */
             }
             @font-face {
-                font-family: Figtree; /* set name */
+                font-family: Figtree;
                 src: url(fonts/Figtree/Figtree-VariableFont_wght.ttf); /* url of the font */
+            }
+            @font-face {
+                font-family: Fraunces;
+                src: url(fonts/Fraunces/Fraunces-VariableFont_SOFT-WONK-opsz-wght.ttf); /* url of the font */
+            }
+            @font-face {
+                font-family: Fraunces italic;
+                src: url(fonts/Fraunces/Fraunces-Italic-VariableFont_SOFT-WONK-opsz-wght.ttf); /* url of the font */
             }
 
             html {
@@ -60,6 +68,12 @@
                 text-transform: uppercase;
                 color: var(--color-primary);
                 font-size: 4rem;
+            }
+            em {
+                font-style: normal;
+                font-family: 'Fraunces';
+                font-weight: 400;
+                text-transform: lowercase;
             }
 
             ul {
@@ -103,6 +117,12 @@
                 text-transform: uppercase;
             }
 
+            .descr {
+                font-size: 85%;
+                font-style: italic;
+                padding: 0 8px;
+            }
+
             .footer {
                 position: fixed;
                 left: 0;
@@ -123,22 +143,20 @@
                 <img src="favicon.svg" width="35" height="35" />
                 <span class="uppercase">
                     Senior Product Designer · Auckland
-                    </span>
+                </span>
             </div>
-            <h1 class="hero__statement">
-              I design by  <em>building.</em>
-            </h1>
+            <h1 class="hero__statement">I design by <em>building.</em></h1>
             <ul>
                 <li>
                     <a href="https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD"
                         >Portfolio</a
-                    >
+                    ><span class="descr">Figma link</span>
                 </li>
                 <li>
                     <a href="/property-platform-design-agentic-search"
                         >Property platform Design Challenge - AI agentic
                         search</a
-                    >
+                    ><span class="descr">web-based mobile app prototype</span>
                 </li>
                 <li>
                     <a href="/knee-monitor"

@@ -1,0 +1,3394 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>MyDoor for Sellers — Listing Guide Prototype</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap");
+
+            :root {
+                --plum: #4a2c4a;
+                --plum-light: #fff3e8;
+                --plum-hover: #3a223a;
+                --butter: #f2d680;
+                --dark: #1a1a1a;
+                --text: #333333;
+                --text-secondary: #717171;
+                --text-tertiary: #999999;
+                --bg: #f5f5f5;
+                --white: #ffffff;
+                --border: #e8e8e8;
+                --green: #2da44e;
+                --green-light: #e6f4ea;
+                --blue: #2b7de9;
+                --blue-light: #e8f0fe;
+                --amber: #b8860b;
+                --amber-light: #fff7e0;
+                --red: #d93025;
+                --red-light: #fce8e6;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+                --radius: 12px;
+                --radius-sm: 8px;
+                --radius-lg: 20px;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    "DM Sans",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                background: #1a1a1a;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
+                padding: 24px 0 96px;
+                color: var(--text);
+                overflow-x: hidden;
+            }
+
+            .device-frame {
+                width: 390px;
+                height: 844px;
+                background: var(--bg);
+                border-radius: 44px;
+                position: relative;
+                box-shadow:
+                    0 0 0 3px #333,
+                    0 20px 60px rgba(0, 0, 0, 0.5);
+            }
+
+            .frame-inner {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                border-radius: 44px;
+            }
+
+            .screen {
+                position: absolute;
+                inset: 0;
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                background: var(--bg);
+            }
+            .screen.active {
+                display: flex;
+            }
+
+            /* ---------- Status bar ---------- */
+            .status-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 14px 24px 6px;
+                color: var(--text);
+                flex-shrink: 0;
+            }
+            .status-bar .icons {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+            #screen-welcome .status-bar,
+            #screen-preview .status-bar {
+                color: white;
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            }
+
+            /* ---------- Top app bar ---------- */
+            .app-bar {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 6px 18px 12px;
+                background: var(--white);
+                border-bottom: 1px solid var(--border);
+                flex-shrink: 0;
+            }
+            .hamburger-btn {
+                width: 32px;
+                height: 32px;
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                color: inherit;
+                flex-shrink: 0;
+            }
+            .hamburger-btn span {
+                display: block;
+                width: 18px;
+                height: 2px;
+                background: currentColor;
+                border-radius: 1px;
+            }
+            .app-bar-title {
+                font-size: 15px;
+                font-weight: 700;
+                color: var(--text);
+                flex: 1;
+                min-width: 0;
+            }
+            .app-bar-sub {
+                font-size: 11px;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
+            .app-bar-right {
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--plum);
+                background: var(--plum-light);
+                padding: 5px 10px;
+                border-radius: 12px;
+            }
+
+            /* ---------- Scroll area ---------- */
+            .scroll-content {
+                flex: 1;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .scroll-content::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* =========================================================
+               SCREEN 1 — WELCOME
+               ========================================================= */
+            #screen-welcome {
+                background: linear-gradient(180deg, #2c1810 0%, #1a1a2e 100%);
+                color: white;
+                border-radius: 44px;
+            }
+            .welcome-bg {
+                position: absolute;
+                inset: 0;
+                background: url(bg-images/onboarding-bg-image.jpeg);
+                background-position: 80% 25%;
+            }
+            .welcome-content {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                padding: 16px 24px 24px 24px;
+                justify-content: space-between;
+            }
+            .onboarding-content {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                padding: 16px 24px 24px 24px;
+                justify-content: space-between;
+            }
+
+            .onboarding-logo {
+                text-align: center;
+                text-shadow: 0 0 10px black;
+                text-align: center;
+                text-shadow: 0 0 10px black;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                padding: 0 24px 20px;
+                position: relative;
+                z-index: 2;
+            }
+
+            .onboarding-logo .welcome-text {
+                font-size: 36px;
+                font-weight: 400;
+                letter-spacing: 2px;
+                text-transform: none;
+                opacity: 1;
+                margin-bottom: -8px;
+            }
+
+            .onboarding-logo .brand {
+                font-size: 36px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .onboarding-logo .brand .icon-house {
+                color: var(--orange);
+                font-size: 32px;
+                filter: drop-shadow(0 0 10px black);
+                line-height: 0;
+            }
+
+            .welcome-card {
+                background: var(--white);
+                border-radius: var(--radius-lg);
+                padding: 28px 24px;
+                color: var(--text);
+            }
+            .welcome-eyebrow {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 1.2px;
+                color: var(--plum);
+                text-transform: uppercase;
+                margin-bottom: 8px;
+            }
+            .welcome-headline {
+                font-size: 22px;
+                font-weight: 700;
+                line-height: 1.25;
+                color: var(--text);
+                margin-bottom: 16px;
+            }
+            .welcome-headline em {
+                color: var(--plum);
+                font-style: italic;
+                font-weight: 700;
+            }
+            .guide-intro {
+                display: flex;
+                align-items: flex-start;
+                gap: 11px;
+                margin-bottom: 18px;
+            }
+            .guide-avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: var(--plum);
+                color: var(--butter);
+                font-weight: 700;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .guide-bubble {
+                background: var(--plum-light);
+                border-radius: 4px 14px 14px 14px;
+                padding: 12px 14px;
+                font-size: 13.5px;
+                line-height: 1.5;
+                color: var(--text);
+            }
+            .guide-bubble b {
+                font-weight: 700;
+            }
+
+            .address-input {
+                width: 100%;
+                border: 1px solid var(--text);
+                border-radius: var(--radius);
+                padding: 14px 14px;
+                font-size: 14px;
+                font-family: inherit;
+                color: var(--text);
+                background: var(--white);
+            }
+            .address-input::placeholder {
+                color: var(--text-tertiary);
+            }
+            .primary-cta {
+                width: 100%;
+                background: var(--plum);
+                color: white;
+                border: none;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 700;
+                padding: 14px 16px;
+                border-radius: var(--radius);
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background 0.2s;
+            }
+            .primary-cta:hover {
+                background: var(--plum-hover);
+            }
+
+            .or-divider {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 16px 0;
+                font-size: 12px;
+                color: var(--text-tertiary);
+            }
+            .or-divider::before,
+            .or-divider::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: var(--border);
+            }
+
+            .secondary-row {
+                display: flex;
+                gap: 8px;
+            }
+            .ghost-btn {
+                flex: 1;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 10px 12px;
+                font-family: inherit;
+                font-size: 12.5px;
+                font-weight: 600;
+                color: var(--text);
+                cursor: pointer;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                text-wrap: nowrap;
+            }
+            .ghost-btn small {
+                font-size: 10.5px;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
+            .filter-fallback {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 12px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                border-radius: 30px;
+                font-size: 14px;
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .filter-fallback:hover {
+                border-color: var(--orange);
+                color: var(--orange);
+            }
+
+            /* =========================================================
+               SCREEN 2 — GUIDE FETCHING FACTS (chat)
+               ========================================================= */
+            #screen-conversation-1 .scroll-content,
+            #screen-conversation-2 .scroll-content,
+            #screen-conversation-3 .scroll-content {
+                padding: 14px 16px 24px;
+            }
+
+            .chat-status-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+            .chat-status-text {
+                flex: 1;
+                font-size: 12px;
+                color: var(--text-secondary);
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .pulse-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--plum);
+                animation: pulse 1.4s ease-in-out infinite;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 0.4;
+                    transform: scale(0.85);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            }
+            .stop-btn {
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 4px 10px;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--text-secondary);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .stop-icon {
+                width: 8px;
+                height: 8px;
+                background: var(--text-secondary);
+                border-radius: 1px;
+            }
+
+            .msg-user {
+                background: var(--plum);
+                color: white;
+                border-radius: 14px 14px 4px 14px;
+                padding: 10px 14px;
+                font-size: 13.5px;
+                line-height: 1.45;
+                margin-left: 56px;
+                margin-bottom: 14px;
+            }
+            .msg-guide {
+                display: flex;
+                gap: 11px;
+                margin-bottom: 14px;
+            }
+            .msg-guide-content {
+                flex: 1;
+                min-width: 0;
+            }
+            .msg-lead {
+                font-size: 13.5px;
+                color: var(--text);
+                margin-bottom: 10px;
+                line-height: 1.45;
+            }
+
+            .working-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+            }
+            .working-step {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 12.5px;
+                line-height: 1.4;
+                color: var(--text);
+            }
+            .step-indicator {
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                border: 2px solid var(--border);
+                font-size: 9px;
+                color: white;
+                font-weight: 700;
+            }
+            .working-step.active .step-indicator {
+                border-color: var(--plum);
+                border-top-color: transparent;
+                animation: spin 0.8s linear infinite;
+            }
+            .working-step.done .step-indicator {
+                background: var(--green);
+                border-color: var(--green);
+            }
+            .working-step.done .step-indicator::after {
+                content: "✓";
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .step-text {
+                flex: 1;
+                color: var(--text);
+            }
+            .step-source {
+                display: inline-block;
+                font-size: 10px;
+                font-weight: 600;
+                padding: 1px 7px;
+                border-radius: 10px;
+                background: var(--plum-light);
+                color: var(--plum);
+                margin-left: 6px;
+                vertical-align: middle;
+            }
+
+            .summary-bubble {
+                background: var(--plum-light);
+                border-radius: 4px 14px 14px 14px;
+                padding: 12px 14px;
+                font-size: 13.5px;
+                line-height: 1.5;
+                color: var(--text);
+            }
+            .summary-bubble b {
+                font-weight: 700;
+            }
+            .summary-stats {
+                display: flex;
+                gap: 8px;
+                margin: 10px 0 4px;
+            }
+            .stat-pill {
+                flex: 1;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 8px 10px;
+                text-align: center;
+            }
+            .stat-pill .num {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--plum);
+                line-height: 1;
+            }
+            .stat-pill .lbl {
+                font-size: 10.5px;
+                color: var(--text-secondary);
+                margin-top: 3px;
+            }
+
+            .footer-cta {
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+                background: var(--white);
+                border-top: 1px solid var(--border);
+                flex-shrink: 0;
+            }
+
+            /* Chat-style reply bar — text input + mic + arrow-send.
+               Mirrors the searcher prototype's screen-2 input pattern. */
+            .chat-input-wrap {
+                padding: 10px 14px calc(24px + env(safe-area-inset-bottom));
+                background: var(--white);
+                border-top: 1px solid var(--border);
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                flex-shrink: 0;
+            }
+            .chat-input {
+                flex: 1;
+                border: 1px solid var(--border);
+                border-radius: 24px;
+                padding: 11px 16px;
+                font-size: 13px;
+                font-family: inherit;
+                outline: none;
+                color: var(--text);
+                background: var(--bg);
+                transition: all 0.2s;
+            }
+            .chat-input:focus {
+                border-color: var(--plum);
+                background: var(--white);
+            }
+            .chat-input::placeholder {
+                color: var(--text-tertiary);
+            }
+            .chat-mic,
+            .chat-attach {
+                width: 40px;
+                height: 40px;
+                border: none;
+                background: transparent;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                padding: 0;
+                font-size: 18px;
+                transition: background 0.2s;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .chat-mic:hover,
+            .chat-attach:hover {
+                background: var(--bg);
+            }
+            .chat-send {
+                width: 40px;
+                height: 40px;
+                border: none;
+                background: var(--plum);
+                color: white;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                font-weight: 600;
+                font-family: inherit;
+                flex-shrink: 0;
+                transition: background 0.2s;
+            }
+            .chat-send:hover {
+                background: var(--plum-hover);
+            }
+
+            /* Suggestion chips appearing under the Guide's question —
+               quick replies that mirror the conversational pattern. */
+            .suggestion-chips {
+                display: none;
+                flex-wrap: wrap;
+                gap: 6px;
+                padding-left: 43px;
+                margin-bottom: 14px;
+            }
+            .suggestion-chips.visible {
+                display: flex;
+                animation: chipsReveal 0.4s ease both;
+            }
+            @keyframes chipsReveal {
+                from {
+                    opacity: 0;
+                    transform: translateY(-4px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .suggestion-chip {
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 7px 12px;
+                font-size: 12px;
+                color: var(--text);
+                cursor: pointer;
+                font-family: inherit;
+                transition: all 0.2s;
+            }
+            .suggestion-chip:hover {
+                border-color: var(--plum);
+                color: var(--plum);
+            }
+
+            /* Form / photos / coverage panels embedded inside a Guide
+               chat bubble. Strip the outer-screen margins that no longer
+               apply once the content lives inside a message column. */
+            .msg-guide-content .section {
+                margin: 14px 0 0;
+            }
+            .msg-guide-content .section:first-child {
+                margin-top: 0;
+            }
+            .msg-guide-content .needs-you-banner {
+                margin: 0 0 12px;
+            }
+            .msg-guide-content .progress-row {
+                margin: 8px 0 14px;
+            }
+            .msg-guide-content .photos-strip {
+                padding: 0;
+                background: transparent;
+                border-bottom: none;
+                margin-top: 8px;
+            }
+            .msg-guide-content .photos-meta {
+                padding: 8px 0 0;
+                background: transparent;
+            }
+            .msg-guide-content .description-card {
+                margin-top: 14px;
+            }
+            .msg-guide-content .coverage {
+                margin-top: 14px;
+            }
+
+            /* Sticky chips row that sits directly above the input wrap on
+               non-chat screens (review, photos, preview). Single horizontal
+               row, scrolls if it overflows. */
+            .chips-bar {
+                padding: 10px 14px 0;
+                background: var(--white);
+                border-top: 1px solid var(--border);
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 6px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                flex-shrink: 0;
+            }
+            .chips-bar::-webkit-scrollbar {
+                display: none;
+            }
+            .chips-bar .suggestion-chip {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .chips-bar + .chat-input-wrap {
+                border-top: none;
+                padding-top: 8px;
+            }
+
+            /* =========================================================
+               SCREEN 3 — REVIEW FACTS (the form, pre-filled)
+               ========================================================= */
+            .review-header {
+                padding: 16px 18px 14px;
+                background: var(--white);
+                border-bottom: 1px solid var(--border);
+            }
+            .review-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--text);
+                line-height: 1.2;
+            }
+            .review-sub {
+                font-size: 12.5px;
+                color: var(--text-secondary);
+                margin-top: 4px;
+            }
+            .progress-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: 12px;
+            }
+            .progress-track {
+                flex: 1;
+                height: 6px;
+                background: var(--bg);
+                border-radius: 3px;
+                overflow: hidden;
+            }
+            .progress-fill {
+                height: 100%;
+                background: var(--plum);
+                width: 85%;
+                border-radius: 3px;
+            }
+            .progress-pct {
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--plum);
+            }
+
+            .needs-you-banner {
+                margin: 14px 16px 0;
+                padding: 12px 14px;
+                background: var(--amber-light);
+                border: 1px solid #f0e2b4;
+                border-radius: var(--radius);
+                font-size: 12.5px;
+                color: #6b5400;
+                line-height: 1.45;
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .needs-you-banner b {
+                font-weight: 700;
+                color: var(--text);
+            }
+            .needs-you-icon {
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: var(--butter);
+                color: var(--text);
+                font-size: 12px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: -1px;
+            }
+
+            .section {
+                margin: 18px 16px 0;
+            }
+            .section-title {
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-tertiary);
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                margin-bottom: 8px;
+                padding-left: 4px;
+            }
+            .fact-card {
+                background: var(--white);
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                overflow: hidden;
+            }
+            .fact-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 14px;
+                border-bottom: 1px solid var(--border);
+            }
+            .fact-row:last-child {
+                border-bottom: none;
+            }
+            .fact-row.needs {
+                background: #fffaf0;
+            }
+            .fact-label {
+                font-size: 12.5px;
+                color: var(--text-secondary);
+                width: 95px;
+                flex-shrink: 0;
+            }
+            .fact-value-wrap {
+                flex: 1;
+                min-width: 0;
+            }
+            .fact-value {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text);
+                line-height: 1.3;
+            }
+            .fact-source {
+                font-size: 10.5px;
+                color: var(--text-tertiary);
+                margin-top: 2px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .fact-source .src-pill {
+                background: var(--plum-light);
+                color: var(--plum);
+                font-weight: 600;
+                padding: 1px 6px;
+                border-radius: 8px;
+                font-size: 9.5px;
+            }
+            .fact-edit {
+                background: transparent;
+                border: none;
+                color: var(--plum);
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                padding: 6px 4px;
+            }
+            .fact-needs-tag {
+                font-size: 10.5px;
+                font-weight: 700;
+                color: #6b5400;
+                background: var(--butter);
+                padding: 2px 7px;
+                border-radius: 8px;
+                margin-left: auto;
+                text-transform: uppercase;
+                letter-spacing: 0.4px;
+            }
+
+            .chip-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 6px;
+            }
+            .chip {
+                font-size: 12px;
+                font-weight: 600;
+                padding: 6px 10px;
+                border-radius: 16px;
+                background: var(--white);
+                border: 1px solid var(--border);
+                color: var(--text);
+                cursor: pointer;
+            }
+            .chip.active {
+                background: var(--plum);
+                color: white;
+                border-color: var(--plum);
+            }
+
+            .stepper {
+                display: inline-flex;
+                align-items: center;
+                gap: 0;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                overflow: hidden;
+                background: var(--white);
+                margin-top: 4px;
+            }
+            .stepper button {
+                width: 30px;
+                height: 30px;
+                border: none;
+                background: var(--white);
+                color: var(--text);
+                font-size: 16px;
+                font-weight: 700;
+                cursor: pointer;
+            }
+            .stepper-val {
+                min-width: 32px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--text);
+            }
+
+            /* =========================================================
+               SCREEN 4 — PHOTOS & AI DESCRIPTION
+               ========================================================= */
+            .photos-strip {
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                padding: 14px 16px 12px;
+                background: var(--white);
+                border-bottom: 1px solid var(--border);
+            }
+            .photos-strip::-webkit-scrollbar {
+                display: none;
+            }
+            .photo-tile {
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+                flex-shrink: 0;
+                background:
+                    #c8b6a0 url("bg-images/thumbnail-1.png") center/cover
+                        no-repeat;
+                position: relative;
+                overflow: hidden;
+            }
+            .photo-tile:nth-child(2) {
+                background:
+                    #a8b7c8 url("bg-images/thumbnail-2.jpeg") center/cover
+                        no-repeat;
+            }
+            .photo-tile:nth-child(3) {
+                background:
+                    #c8a89a url("bg-images/thumbnail-3.jpeg") center/cover
+                        no-repeat;
+            }
+            .photo-tile:nth-child(4) {
+                background:
+                    #b8c8a0 url("bg-images/thumbnail-4.jpeg") center/cover
+                        no-repeat;
+            }
+            .photo-tile:nth-child(5) {
+                background:
+                    #c8b8d0 url("bg-images/thumbnail-5.jpeg") center/cover
+                        no-repeat;
+            }
+            .photo-tile:nth-child(6) {
+                background:
+                    #d0c4a4 url("bg-images/thumbnail-6.jpeg") center/cover
+                        no-repeat;
+            }
+            .photo-tile.cover::before {
+                content: "Cover";
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                background: var(--plum);
+                color: var(--butter);
+                font-size: 9px;
+                font-weight: 700;
+                padding: 1px 5px;
+                border-radius: 6px;
+                letter-spacing: 0.3px;
+            }
+            .photo-tile.add {
+                background: var(--bg);
+                border: 1.5px dashed var(--text-tertiary);
+                color: var(--text-secondary);
+                font-size: 22px;
+                font-weight: 400;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .photos-meta {
+                font-size: 11px;
+                color: var(--text-secondary);
+                padding: 0 16px 12px;
+                background: var(--white);
+            }
+
+            .draft-section {
+                padding: 18px 16px 0;
+            }
+            .draft-bubble {
+                display: flex;
+                gap: 11px;
+                margin-bottom: 14px;
+            }
+
+            .description-card {
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 14px;
+                font-size: 13px;
+                line-height: 1.6;
+                color: var(--text);
+            }
+            .description-card .highlight {
+                background: var(--plum-light);
+                color: var(--plum);
+                padding: 1px 4px;
+                border-radius: 3px;
+                font-weight: 600;
+            }
+            .desc-actions {
+                display: flex;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            .desc-action {
+                font-size: 11.5px;
+                font-weight: 600;
+                color: var(--plum);
+                background: var(--plum-light);
+                border: none;
+                padding: 6px 10px;
+                border-radius: 14px;
+                cursor: pointer;
+            }
+            .desc-action.ghost {
+                background: var(--white);
+                border: 1px solid var(--border);
+                color: var(--text-secondary);
+            }
+
+            .coverage {
+                margin-top: 18px;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+            }
+            .coverage-head {
+                padding: 12px 14px;
+                font-size: 12.5px;
+                font-weight: 700;
+                color: var(--text);
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .coverage-head small {
+                font-weight: 500;
+                color: var(--text-secondary);
+                font-size: 11px;
+                margin-left: auto;
+            }
+            .coverage-row {
+                display: flex;
+                gap: 11px;
+                padding: 11px 14px;
+                font-size: 12.5px;
+                line-height: 1.4;
+                border-bottom: 1px solid var(--border);
+                align-items: flex-start;
+            }
+            .coverage-row:last-child {
+                border-bottom: none;
+            }
+            .cov-mark {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                font-size: 11px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 1px;
+            }
+            .cov-mark.ok {
+                background: var(--green-light);
+                color: var(--green);
+            }
+            .cov-mark.gap {
+                background: var(--amber-light);
+                color: var(--amber);
+            }
+            .cov-body {
+                flex: 1;
+                color: var(--text);
+            }
+            .cov-meta {
+                display: block;
+                font-size: 11px;
+                color: var(--text-secondary);
+                margin-top: 2px;
+                line-height: 1.4;
+            }
+            .cov-add {
+                margin-top: 6px;
+                font-size: 11.5px;
+                font-weight: 600;
+                color: var(--plum);
+                background: var(--white);
+                border: 1px solid var(--plum);
+                padding: 4px 10px;
+                border-radius: 14px;
+                cursor: pointer;
+            }
+
+            /* =========================================================
+               SCREEN 5 — BUYER PREVIEW
+               ========================================================= */
+            #screen-preview {
+                background: var(--bg);
+            }
+            #screen-preview .status-bar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 3;
+                padding: 14px 24px 0;
+            }
+            .preview-banner {
+                position: absolute;
+                top: 44px;
+                left: 14px;
+                right: 14px;
+                z-index: 3;
+                background: rgba(74, 44, 74, 0.92);
+                color: white;
+                padding: 8px 12px;
+                border-radius: 12px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                backdrop-filter: blur(8px);
+            }
+            .preview-banner b {
+                font-weight: 700;
+            }
+            .preview-banner .close-x {
+                margin-left: auto;
+                font-size: 14px;
+                opacity: 0.8;
+                cursor: pointer;
+            }
+
+            .preview-hero {
+                height: 280px;
+                position: relative;
+                background-size: cover;
+                background-position: center;
+                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.5) 100%), url(bg-images/property2.png);
+            }
+            .hero-match-pill {
+                position: absolute;
+                bottom: 22px;
+                left: 16px;
+                background: rgba(0, 0, 0, 0.65);
+                color: white;
+                padding: 5px 11px;
+                border-radius: 16px;
+                font-size: 11.5px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                backdrop-filter: blur(8px);
+            }
+            .hero-match-pill .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #4ade80;
+            }
+
+            .preview-info {
+                background: var(--white);
+                margin-top: -20px;
+                padding: 18px 18px 14px;
+                border-bottom: 1px solid var(--border);
+                position: relative;
+                z-index: 2;
+                border-radius: 20px 20px 0 0;
+            }
+            .preview-price {
+                font-size: 22px;
+                font-weight: 700;
+                color: var(--text);
+            }
+            .preview-addr {
+                font-size: 13px;
+                color: var(--text-secondary);
+                margin-top: 4px;
+            }
+            .preview-specs {
+                display: flex;
+                gap: 16px;
+                margin-top: 10px;
+                font-size: 13px;
+                color: var(--text);
+                font-weight: 600;
+            }
+            .preview-specs span small {
+                color: var(--text-secondary);
+                font-weight: 400;
+                margin-left: 2px;
+            }
+
+            .gic-card {
+                margin: 14px 16px 0;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+            }
+            .gic-head {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 14px;
+                border-bottom: 1px solid var(--border);
+            }
+            .gic-title {
+                font-size: 13.5px;
+                font-weight: 700;
+                color: var(--text);
+            }
+            .gic-sub {
+                font-size: 11px;
+                color: var(--text-secondary);
+            }
+            .gic-pill {
+                margin-left: auto;
+                background: var(--green-light);
+                color: var(--green);
+                font-size: 10.5px;
+                font-weight: 700;
+                padding: 3px 9px;
+                border-radius: 10px;
+                letter-spacing: 0.3px;
+                text-transform: uppercase;
+            }
+            .gic-lead {
+                padding: 12px 14px;
+                background: var(--plum-light);
+                font-size: 13px;
+                line-height: 1.5;
+                color: var(--text);
+                border-bottom: 1px solid var(--border);
+            }
+            .gic-lead b {
+                font-weight: 700;
+            }
+            .gic-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 11px;
+                padding: 10px 14px;
+                font-size: 12.5px;
+                line-height: 1.4;
+                border-bottom: 1px solid var(--border);
+            }
+            .gic-row:last-child {
+                border-bottom: none;
+            }
+            .gic-mark {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--green);
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 1px;
+            }
+
+            .publish-bar {
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+                background: var(--white);
+                border-top: 1px solid var(--border);
+                display: flex;
+                gap: 10px;
+                flex-shrink: 0;
+            }
+            .publish-bar .ghost-btn {
+                flex: 0 0 auto;
+                background: var(--white);
+                border: 1px solid var(--border);
+                color: var(--text);
+                font-weight: 600;
+                font-size: 13px;
+                padding: 12px 16px;
+                cursor: pointer;
+                border-radius: var(--radius);
+            }
+            .publish-bar .primary-cta {
+                flex: 1;
+                margin-top: 0;
+                padding: 12px 16px;
+            }
+
+            /* =========================================================
+               PROTOTYPE NAVIGATION (mirrors searcher prototype)
+               ========================================================= */
+            .screen-counter-w-label {
+                display: flex;
+                position: absolute;
+                bottom: -64px;
+                left: 0;
+                z-index: 20;
+                backdrop-filter: blur(8px);
+            }
+
+            .screen-label {
+                background: rgba(0, 0, 0, 0.75);
+                color: white;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-size: 11px;
+                font-weight: 500;
+                white-space: nowrap;
+                z-index: 20;
+                pointer-events: none;
+                backdrop-filter: blur(8px);
+            }
+            .nav-hint {
+                position: absolute;
+                bottom: -67px;
+                right: 0;
+                display: flex;
+                gap: 6px;
+                z-index: 20;
+            }
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--plum);
+                color: white;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: var(--shadow-md);
+                transition: background 0.2s;
+            }
+            .nav-btn:hover {
+                background: var(--plum-hover);
+            }
+            .nav-btn:disabled {
+                opacity: 0.3;
+                pointer-events: none;
+            }
+            .screen-counter {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.85);
+                background: rgba(0, 0, 0, 0.55);
+                padding: 6px 12px;
+                border-radius: 20px;
+                z-index: 20;
+                backdrop-filter: blur(8px);
+            }
+
+            /* =========================================================
+               SCRIPT PANEL — narration that accompanies the prototype
+               on wide screens. Sits to the right of the centred device
+               frame and swaps copy in step with the active screen.
+               Ported from the searcher prototype; plum/butter palette.
+               ========================================================= */
+            .script-panel {
+                position: absolute;
+                top: 40px;
+                left: calc(50% + 220px);
+                width: 420px;
+                height: calc(100vh - 80px);
+                max-height: 844px;
+                color: #d8d8d8;
+                font-family:
+                    "DM Sans",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                padding-right: 12px;
+                pointer-events: auto;
+            }
+            .script-panel::-webkit-scrollbar {
+                display: none;
+            }
+            .script-section {
+                display: none;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+            .script-section.active {
+                display: block;
+            }
+            .script-section p {
+                margin-bottom: 14px;
+            }
+            .script-section p:last-child {
+                margin-bottom: 0;
+            }
+            .script-section em {
+                color: #ffe1b8;
+                font-style: italic;
+            }
+            .script-section .script-title {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--butter);
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                margin-bottom: 18px;
+                margin-top: 6px;
+                font-style: normal;
+            }
+            .script-section .script-title:first-child {
+                margin-top: 0;
+            }
+
+            @media (max-width: 1100px) {
+                .script-panel {
+                    display: none;
+                }
+            }
+
+            /* =========================================================
+               SIDE MENU — slides in from the left, summoned by any
+               hamburger-btn. Ported from the searcher prototype.
+               ========================================================= */
+            .side-menu-overlay {
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+                z-index: 100;
+                border-radius: 44px;
+            }
+            .side-menu-overlay.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .side-menu {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 300px;
+                background: var(--white);
+                transform: translateX(-100%);
+                transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+                z-index: 101;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 2px 0 24px rgba(0, 0, 0, 0.15);
+                border-radius: 44px 0 0 44px;
+            }
+            .side-menu.open {
+                transform: translateX(0);
+            }
+            .side-menu-header {
+                padding: 52px 22px 18px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border-bottom: 1px solid var(--border);
+                flex-shrink: 0;
+            }
+            .side-menu-brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 20px;
+                font-weight: 700;
+                color: var(--text);
+            }
+            .side-menu-close {
+                margin-left: auto;
+                width: 32px;
+                height: 32px;
+                border: none;
+                background: transparent;
+                font-size: 22px;
+                line-height: 1;
+                color: var(--text-secondary);
+                cursor: pointer;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .side-menu-close:hover {
+                background: var(--bg);
+                color: var(--text);
+            }
+            .side-menu-items {
+                flex: 1;
+                overflow-y: auto;
+                padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .side-menu-items::-webkit-scrollbar {
+                display: none;
+            }
+            .side-menu-item {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                width: 100%;
+                text-align: left;
+                padding: 14px 22px;
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid var(--border);
+                cursor: pointer;
+                font-family: inherit;
+                -webkit-tap-highlight-color: transparent;
+                transition: background 0.15s;
+            }
+            .side-menu-item:hover {
+                background: var(--bg);
+            }
+            .side-menu-item:active {
+                background: var(--plum-light);
+            }
+            .side-menu-item-icon {
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                position: relative;
+                color: var(--text);
+            }
+            .side-menu-item-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+            .side-menu-item.has-badge .side-menu-item-text {
+                position: relative;
+            }
+            .side-menu-item.has-badge .side-menu-item-text::after {
+                content: "";
+                position: absolute;
+                top: calc(50% - 5px);
+                right: 0;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--plum);
+                box-shadow: 0 0 0 2px var(--white);
+            }
+            .side-menu-item-text {
+                flex: 1;
+                min-width: 0;
+            }
+            .side-menu-item-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--text);
+            }
+            .side-menu-item-sub {
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 2px;
+            }
+            .side-menu-item.primary-action {
+                background: var(--plum-light);
+            }
+            .side-menu-item.primary-action:hover {
+                background: #ffe7d2;
+            }
+            .side-menu-item.primary-action .side-menu-item-title {
+                color: var(--plum);
+                font-weight: 700;
+            }
+            .side-menu-item.primary-action .plus-circle {
+                width: 28px;
+                height: 28px;
+                background: var(--plum);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 22px;
+                font-weight: 300;
+                line-height: 1;
+            }
+
+            /* Bright numeric badge — used when external activity wants
+               the seller's attention (new viewings, new enquiries). The
+               passive .has-badge dot stays for "you have stuff here"
+               states like Drafts. */
+            .side-menu-item-count {
+                flex-shrink: 0;
+                min-width: 22px;
+                height: 22px;
+                border-radius: 11px;
+                background: var(--butter);
+                color: var(--text);
+                font-size: 11px;
+                font-weight: 700;
+                padding: 0 7px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Welcome screen: hamburger floats over the dark gradient,
+               sitting just below the status bar. */
+            #screen-welcome > .hamburger-btn {
+                position: absolute;
+                top: 52px;
+                left: 18px;
+                z-index: 30;
+                color: white;
+                filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+            }
+
+            /* Preview screen: hamburger nests inside the preview-banner
+               so menu access lives in the same row as the Mirror-view
+               message. */
+            .preview-banner .hamburger-btn {
+                width: 24px;
+                height: 24px;
+                color: white;
+                flex-shrink: 0;
+            }
+            .preview-banner .hamburger-btn span {
+                width: 14px;
+                background: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <aside class="script-panel" id="scriptPanel" aria-label="Narration">
+            <div
+                class="script-section active"
+                data-screen="screen-welcome"
+            >
+                <p>
+                    Mark wants to sell his place in Albany. Right now in MyDoor
+                    that means ~80 form fields and a blank
+                    <em>Description</em> textarea between him and a live
+                    listing. He's sat on his couch for an hour and got as far
+                    as <em>"Property type."</em>
+                </p>
+                <p>
+                    Mark is not in your competitor's pitch deck. He's in your
+                    churn cohort. He starts a listing, runs into the form, and
+                    goes back to ringing an agent instead. Today, he's the
+                    reason I'm here.
+                </p>
+                <p>
+                    Same Guide character from the buyer side — same plum
+                    brand, same chat surface, same data-source pills — now
+                    applied to the listing flow. One address field instead of
+                    eighty.
+                </p>
+                <p class="script-title">Screen 1 — Welcome</p>
+                <p>
+                    Mark opens MyDoor for Sellers. The Guide leads with one
+                    ask: paste your address. Underneath are two quieter escape
+                    hatches — <em>snap a rates bill</em>, or
+                    <em>talk it through</em> — and a "skip the Guide" link
+                    for the power users who'd rather fill the long form
+                    themselves. We're not removing the form, we're demoting
+                    it.
+                </p>
+            </div>
+
+            <div
+                class="script-section"
+                data-screen="screen-conversation-1"
+            >
+                <p class="script-title">Screen 2 — Fact fetch, turn one</p>
+                <p>
+                    Mark sends his address. The Guide streams its working
+                    steps inline.
+                    <em
+                        >Matching LINZ title. Land area from the LINZ survey.
+                        Rateable value from Auckland Council. Year built and
+                        floor area from the council's building consent
+                        record. Suburb median from CoreLogic. School zones
+                        from the Ministry of Education.</em
+                    >
+                    Each step carries a data-source pill. Same transparency
+                    pattern as the buyer-side prototype, same two birds —
+                    trust on one hand, latency-masking on the other. Mark
+                    reads while the specialist works.
+                </p>
+                <p>
+                    Five seconds in, the Guide reports back.
+                    <em
+                        >"I've got 23 of the 27 facts the listing needs.
+                        There are 4 things only you can tell me."</em
+                    >
+                    ~80 form fields just collapsed to four questions. Above
+                    the input there's a row of quick-reply chips — Review
+                    the facts, What's still missing, Edit the address —
+                    so Mark doesn't have to know what to type next.
+                </p>
+            </div>
+
+            <div
+                class="script-section"
+                data-screen="screen-conversation-2"
+            >
+                <p class="script-title">Screen 3 — Review, turn two</p>
+                <p>
+                    The Guide returns the form pre-filled — as a chat bubble,
+                    not a new page. Every confirmed line carries its source
+                    pill: <em>LINZ</em> for the title and land area,
+                    <em>Auckland Council</em> for the rateable value,
+                    <em>Council BCO</em> for the build data. Nothing
+                    invented.
+                </p>
+                <p>
+                    The four rows in butter yellow are tagged
+                    <em>"You"</em> — material chip, beds and baths
+                    steppers, sale-type chip. Two taps each. This is the
+                    payoff of the public-record pre-fill: the seller only
+                    answers what the council and the registry can't.
+                </p>
+                <p>
+                    The chat input is still at the bottom of the screen.
+                    Mark can break out of the form at any moment —
+                    <em>"Why this rateable value?"</em> — and the Guide
+                    picks the conversation up from there. The form is
+                    inside the chat, not the other way round.
+                </p>
+            </div>
+
+            <div
+                class="script-section"
+                data-screen="screen-conversation-3"
+            >
+                <p class="script-title">Screen 4 — Photos &amp; draft</p>
+                <p>
+                    Mark taps the camera button next to the mic, drops six
+                    photos. The Guide drafts the listing description from
+                    them and the facts already confirmed. The highlighted
+                    spans are the sourced claims —
+                    <em>3,198 m², 2008, weatherboard, 168 m²,
+                    north-facing (detected in photos 2 &amp; 4)</em>. The
+                    description is the one section a seller has to write
+                    from scratch, and the one section that actually sells
+                    the property. The Guide hands Mark a starting point he
+                    can edit, not a blank page.
+                </p>
+                <p>
+                    Underneath: a coverage check. Two ticks (bedrooms,
+                    bathrooms, aspect &amp; sun) and two flags with
+                    reasoning. <em>School zone not mentioned — 73% of
+                    buyers searching Albany filter by school zone. Albany
+                    Primary &amp; Albany Senior High are in-zone.</em>
+                    Each flag has an "+ Add" button so Mark can accept
+                    the suggestion in one tap. Suggests, never decides —
+                    same rule as the buyer side.
+                </p>
+            </div>
+
+            <div class="script-section" data-screen="screen-preview">
+                <p class="script-title">Screen 5 — Buyer preview</p>
+                <p>
+                    The closing move: Mark sees his listing the way Sarah
+                    will see it. Hero image, price, address, specs — and
+                    a Guide Insights card that mirrors the buyer side's
+                    transparency, summarised in a glance.
+                    <em
+                        >91% match for buyers like Sarah. In zone for
+                        Albany Primary and Albany Senior High — source:
+                        Ministry of Education. Priced near suburb median
+                        ($1.29M) — sits in 89% of Albany buyers' budgets —
+                        source: CoreLogic. Large section (3,198 m²) — top
+                        quartile for Albany — source: LINZ.</em
+                    >
+                </p>
+                <p>
+                    Closes the loop with the buyer-side prototype. Same
+                    Guide, same sourced claims, same character on both
+                    sides of the marketplace. Mark hits publish.
+                </p>
+            </div>
+        </aside>
+
+        <div class="device-frame" id="app">
+            <div class="frame-inner">
+                <!-- ====== SCREEN 1 — WELCOME ====== -->
+                <div
+                    class="screen active"
+                    id="screen-welcome"
+                    data-label="1. Welcome — Meet your Listing Guide"
+                >
+                    <div class="welcome-bg"></div>
+                    <button class="hamburger-btn" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="welcome-content">
+                        <div class="status-bar">
+                            <div>13:12</div>
+                            <div class="icons">●●● ▲ ◼</div>
+                        </div>
+                        <div class="onboarding-logo">
+                            <div class="welcome-text">Welcome to</div>
+                            <div class="brand">
+                                <span class="icon-house"
+                                    ><svg
+                                        width="38"
+                                        height="38"
+                                        viewBox="0 0 117 117"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M87.5 5C92.1944 5 96 8.80559 96 13.5V104.5C96 109.194 92.1945 113 87.5 113H28.5C23.8056 113 20 109.194 20 104.5V13.5C20 8.80563 23.8055 5 28.5 5H87.5ZM28.5 13C28.2239 13 28 13.2239 28 13.5V104.5L28.0098 104.601C28.0497 104.796 28.2039 104.95 28.3994 104.99L28.5 105H87.5L87.6006 104.99C87.7961 104.95 87.9503 104.796 87.9902 104.601L88 104.5V13.5C88 13.2239 87.7761 13 87.5 13H28.5ZM79 48C79.5523 48 80 48.4477 80 49V63C80 63.5523 79.5523 64 79 64H74C73.4477 64 73 63.5523 73 63V49C73 48.4477 73.4477 48 74 48H79Z"
+                                            fill="#F2D680"
+                                        />
+                                    </svg>
+                                </span>
+                                MyDoor
+                            </div>
+                        </div>
+
+                        <div class="welcome-card">
+                            <div class="welcome-eyebrow">List a property</div>
+                            <div class="welcome-headline">
+                                You bring the place.
+                                </br><em>I'll bring the paperwork.</em>
+                            </div>
+                            <div class="guide-intro">
+                                <div class="guide-avatar">G</div>
+                                <div class="guide-bubble">
+                                    Hi! I'm your <b>Listing Guide</b>. Drop your
+                                    address below — I'll pull what's already on
+                                    record from LINZ and the council, then we'll
+                                    only spend time on what they don't know.
+                                </div>
+                            </div>
+
+                            <input
+                                class="address-input"
+                                placeholder="Property address, e.g. 6/8 Munroe Lane, Albany"
+                                value="6/8 Munroe Lane, Albany, Auckland 0632"
+                            />
+                            <button class="primary-cta" onclick="navigate(1)">
+                                Start with this address →
+                            </button>
+
+                            <div class="or-divider">or</div>
+                            <div class="secondary-row">
+                                <button class="ghost-btn">
+                                    📷 Snap rates bill
+                                    <small>I'll read it for you</small>
+                                </button>
+                                <button class="ghost-btn">
+                                    🎙 Talk me through it
+                                    <small>Voice the basics</small>
+                                </button>
+                            </div>
+                            <div class="or-divider">or</div>
+
+
+                            <div class="filter-fallback">
+                                Fill the form yourself, skip the Guide →
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== SCREEN 2 — CONVERSATION (fact fetch) ====== -->
+                <div
+                    class="screen"
+                    id="screen-conversation-1"
+                    data-label="2. Conversation — Guide pulls public records"
+                >
+                    <div class="status-bar">
+                        <div>13:12</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+                    <div class="app-bar">
+                        <button class="hamburger-btn">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div>
+                            <div class="app-bar-title">New listing</div>
+                            <div class="app-bar-sub">Draft · auto-saved</div>
+                        </div>
+                        <div class="app-bar-right">Step 1 of 3</div>
+                    </div>
+                    <div class="scroll-content">
+                        <div class="chat-status-row">
+                            <div class="chat-status-text" id="fetchStatus">
+                                <span class="pulse-dot"></span> Gathering public
+                                records…
+                            </div>
+                            <button class="stop-btn">
+                                <span class="stop-icon"></span> Stop
+                            </button>
+                        </div>
+
+                        <div class="msg-user">
+                            6/8 Munroe Lane, Albany, Auckland 0632
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Found the property. Pulling everything
+                                    that's already on record so you don't have
+                                    to type it.
+                                </div>
+                                <div class="working-list" id="workingList">
+                                    <div class="working-step" data-step="0">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Matching LINZ title — 403570, Fee
+                                            Simple Lot 5
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="1">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Land area — 3,198 m²
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="2">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Rateable value — $720,000
+                                            <span class="step-source"
+                                                >Auckland Council</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="3">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Year built — 2008, floor area 168 m²
+                                            <span class="step-source"
+                                                >Council BCO</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="4">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Suburb median &amp; trend
+                                            <span class="step-source"
+                                                >CoreLogic</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step" data-step="5">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Nearest schools &amp; zoning
+                                            <span class="step-source">MoE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="msg-guide"
+                            id="fetchSummary"
+                            style="display: none"
+                        >
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="summary-bubble">
+                                    I've got <b>23 of the 27 facts</b> the
+                                    listing needs. There are
+                                    <b>4 things only you can tell me</b>:
+                                    building material, bedrooms, bathrooms, and
+                                    your sale type. Want to review what I found
+                                    first?
+                                </div>
+                                <div class="summary-stats">
+                                    <div class="stat-pill">
+                                        <div class="num">23</div>
+                                        <div class="lbl">auto-filled</div>
+                                    </div>
+                                    <div class="stat-pill">
+                                        <div class="num">4</div>
+                                        <div class="lbl">need you</div>
+                                    </div>
+                                    <div class="stat-pill">
+                                        <div class="num">85%</div>
+                                        <div class="lbl">done</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="height: 14px"></div>
+                    </div>
+
+                    <div class="chips-bar">
+                        <button class="suggestion-chip" onclick="navigate(1)">
+                            Review the facts
+                        </button>
+                        <button class="suggestion-chip">
+                            What's still missing?
+                        </button>
+                        <button class="suggestion-chip">
+                            Edit the address
+                        </button>
+                    </div>
+                    <div class="chat-input-wrap">
+                        <button class="chat-mic" aria-label="Voice input">
+                            🎙
+                        </button>
+                        <input
+                            class="chat-input"
+                            placeholder="Reply to the Guide…"
+                        />
+                        <button
+                            class="chat-send"
+                            aria-label="Send"
+                            onclick="navigate(1)"
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ====== SCREEN 3 — CONVERSATION (review the facts) ====== -->
+                <div
+                    class="screen"
+                    id="screen-conversation-2"
+                    data-label="3. Conversation — Review the facts"
+                >
+                    <div class="status-bar">
+                        <div>13:13</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+                    <div class="app-bar">
+                        <button class="hamburger-btn">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div>
+                            <div class="app-bar-title">New listing</div>
+                            <div class="app-bar-sub">Draft · auto-saved</div>
+                        </div>
+                        <div class="app-bar-right">Step 2 of 3</div>
+                    </div>
+                    <div class="scroll-content">
+                        <div class="chat-status-row">
+                            <div class="chat-status-text">
+                                Done · 23 of 27 facts collected
+                            </div>
+                        </div>
+
+                        <div class="msg-user">
+                            6/8 Munroe Lane, Albany, Auckland 0632
+                        </div>
+
+                        <!-- Turn 1: fact fetch (frozen as done) -->
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Found the property. Pulled everything that's
+                                    already on record so you don't have to type
+                                    it.
+                                </div>
+                                <div class="working-list">
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Matching LINZ title — 403570, Fee
+                                            Simple Lot 5
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Land area — 3,198 m²
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Rateable value — $720,000
+                                            <span class="step-source"
+                                                >Auckland Council</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Year built — 2008, floor area 168
+                                            m²
+                                            <span class="step-source"
+                                                >Council BCO</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Suburb median &amp; trend
+                                            <span class="step-source"
+                                                >CoreLogic</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Nearest schools &amp; zoning
+                                            <span class="step-source"
+                                                >MoE</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="summary-bubble">
+                                    I've got <b>23 of the 27 facts</b> the
+                                    listing needs. There are
+                                    <b>4 things only you can tell me</b>:
+                                    building material, bedrooms, bathrooms, and
+                                    your sale type. Want to review what I found
+                                    first?
+                                </div>
+                                <div class="summary-stats">
+                                    <div class="stat-pill">
+                                        <div class="num">23</div>
+                                        <div class="lbl">auto-filled</div>
+                                    </div>
+                                    <div class="stat-pill">
+                                        <div class="num">4</div>
+                                        <div class="lbl">need you</div>
+                                    </div>
+                                    <div class="stat-pill">
+                                        <div class="num">85%</div>
+                                        <div class="lbl">done</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Turn 2: user asks for review, Guide returns the form -->
+                        <div class="msg-user">
+                            Yes — let's review what you found.
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Here's everything I have. Tap any line to
+                                    edit. The 4 rows in butter yellow are the
+                                    ones only you can answer — material,
+                                    bedrooms, bathrooms, and sale type.
+                                </div>
+
+                                <div class="progress-row">
+                                    <div class="progress-track">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <div class="progress-pct">23 / 27</div>
+                                </div>
+
+                                <div class="needs-you-banner">
+                                    <div class="needs-you-icon">!</div>
+                                    <div>
+                                        <b>4 things still need you.</b> Flagged
+                                        in butter yellow below — they're things
+                                        only the owner knows.
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-title">
+                                        Title &amp; land
+                                    </div>
+                                    <div class="fact-card">
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Address
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    6/8 Munroe Lane, Albany,
+                                                    Auckland 0632
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >LINZ</span
+                                                    >
+                                                    confirmed
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                LINZ title
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    403570 · Fee Simple Lot 5
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >LINZ</span
+                                                    >
+                                                    Deposited Plan 401412
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Land area
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    3,198 m²
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >LINZ</span
+                                                    >
+                                                    survey
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Rateable value
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    $720,000
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >Auckland Council</span
+                                                    >
+                                                    2024–2025 revaluation
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-title">Dwelling</div>
+                                    <div class="fact-card">
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Year built
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    2008
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >Council BCO</span
+                                                    >
+                                                    CCC issued 4 Mar 2009
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Floor area
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    168 m²
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >Council BCO</span
+                                                    >
+                                                    consented build
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="fact-row needs">
+                                            <div class="fact-label">
+                                                Material
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="chip-row">
+                                                    <span class="chip"
+                                                        >Brick</span
+                                                    >
+                                                    <span class="chip active"
+                                                        >Weatherboard</span
+                                                    >
+                                                    <span class="chip"
+                                                        >Concrete</span
+                                                    >
+                                                    <span class="chip"
+                                                        >Mixed</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <span class="fact-needs-tag"
+                                                >You</span
+                                            >
+                                        </div>
+                                        <div class="fact-row needs">
+                                            <div class="fact-label">
+                                                Bedrooms
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="stepper">
+                                                    <button>−</button>
+                                                    <span class="stepper-val"
+                                                        >4</span
+                                                    >
+                                                    <button>+</button>
+                                                </div>
+                                            </div>
+                                            <span class="fact-needs-tag"
+                                                >You</span
+                                            >
+                                        </div>
+                                        <div class="fact-row needs">
+                                            <div class="fact-label">
+                                                Bathrooms
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="stepper">
+                                                    <button>−</button>
+                                                    <span class="stepper-val"
+                                                        >2</span
+                                                    >
+                                                    <button>+</button>
+                                                </div>
+                                            </div>
+                                            <span class="fact-needs-tag"
+                                                >You</span
+                                            >
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Garaging
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    2 internal-access
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >Council BCO</span
+                                                    >
+                                                    consented plan
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-title">Sale</div>
+                                    <div class="fact-card">
+                                        <div class="fact-row needs">
+                                            <div class="fact-label">
+                                                Sale type
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="chip-row">
+                                                    <span class="chip"
+                                                        >Auction</span
+                                                    >
+                                                    <span class="chip active"
+                                                        >Price by
+                                                        negotiation</span
+                                                    >
+                                                    <span class="chip"
+                                                        >Asking price</span
+                                                    >
+                                                    <span class="chip"
+                                                        >Tender</span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <span class="fact-needs-tag"
+                                                >You</span
+                                            >
+                                        </div>
+                                        <div class="fact-row">
+                                            <div class="fact-label">
+                                                Suburb median
+                                            </div>
+                                            <div class="fact-value-wrap">
+                                                <div class="fact-value">
+                                                    $1,285,000 · trending +3.6%
+                                                    YoY
+                                                </div>
+                                                <div class="fact-source">
+                                                    <span class="src-pill"
+                                                        >CoreLogic</span
+                                                    >
+                                                    12-month rolling
+                                                </div>
+                                            </div>
+                                            <button class="fact-edit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="height: 14px"></div>
+                    </div>
+
+                    <div class="chips-bar">
+                        <button class="suggestion-chip" onclick="navigate(1)">
+                            Looks right — next: photos
+                        </button>
+                        <button class="suggestion-chip">
+                            Help me with what's missing
+                        </button>
+                        <button class="suggestion-chip">
+                            Why this rateable value?
+                        </button>
+                    </div>
+                    <div class="chat-input-wrap">
+                        <button
+                            class="chat-attach"
+                            aria-label="Attach photos"
+                            onclick="navigate(1)"
+                        >
+                            📷
+                        </button>
+                        <button class="chat-mic" aria-label="Voice input">
+                            🎙
+                        </button>
+                        <input
+                            class="chat-input"
+                            placeholder="Reply to the Guide…"
+                        />
+                        <button
+                            class="chat-send"
+                            aria-label="Send"
+                            onclick="navigate(1)"
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ====== SCREEN 4 — CONVERSATION (photos & description) ====== -->
+                <div
+                    class="screen"
+                    id="screen-conversation-3"
+                    data-label="4. Conversation — Photos & description"
+                >
+                    <div class="status-bar">
+                        <div>13:14</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+                    <div class="app-bar">
+                        <button class="hamburger-btn">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div>
+                            <div class="app-bar-title">New listing</div>
+                            <div class="app-bar-sub">Draft · auto-saved</div>
+                        </div>
+                        <div class="app-bar-right">Step 3 of 3</div>
+                    </div>
+                    <div class="scroll-content">
+                        <div class="chat-status-row">
+                            <div class="chat-status-text">
+                                Listing draft ready
+                            </div>
+                        </div>
+
+                        <div class="msg-user">
+                            6/8 Munroe Lane, Albany, Auckland 0632
+                        </div>
+
+                        <!-- Turn 1: fact fetch (frozen as done) -->
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Found the property. Pulled everything that's
+                                    already on record so you don't have to type
+                                    it.
+                                </div>
+                                <div class="working-list">
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Matching LINZ title — 403570, Fee
+                                            Simple Lot 5
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Land area — 3,198 m²
+                                            <span class="step-source"
+                                                >LINZ</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Rateable value — $720,000
+                                            <span class="step-source"
+                                                >Auckland Council</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Year built — 2008, floor area 168
+                                            m²
+                                            <span class="step-source"
+                                                >Council BCO</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Suburb median &amp; trend
+                                            <span class="step-source"
+                                                >CoreLogic</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="working-step done">
+                                        <div class="step-indicator"></div>
+                                        <div class="step-text">
+                                            Nearest schools &amp; zoning
+                                            <span class="step-source"
+                                                >MoE</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="summary-bubble">
+                                    I've got <b>23 of the 27 facts</b> the
+                                    listing needs. There are
+                                    <b>4 things only you can tell me</b>:
+                                    building material, bedrooms, bathrooms, and
+                                    your sale type.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Turn 2: review the facts (collapsed recap) -->
+                        <div class="msg-user">
+                            Yes — let's review what you found.
+                        </div>
+
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="summary-bubble">
+                                    All <b>27 facts confirmed.</b> You filled
+                                    in the four — <b>weatherboard</b>,
+                                    <b>4 bedrooms</b>, <b>2 bathrooms</b>,
+                                    sale by <b>price by negotiation</b>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Turn 3: photos -->
+                        <div class="msg-user">
+                            Looks right — let's add photos.
+                        </div>
+
+                        <!-- ===== Photos + description, also a Guide bubble ===== -->
+                        <div class="msg-guide">
+                            <div class="guide-avatar">G</div>
+                            <div class="msg-guide-content">
+                                <div class="msg-lead">
+                                    Photos look great. I drafted a description
+                                    from them and the facts above — read it like
+                                    a buyer would.
+                                </div>
+
+                                <div class="photos-strip">
+                                    <div class="photo-tile cover"></div>
+                                    <div class="photo-tile"></div>
+                                    <div class="photo-tile"></div>
+                                    <div class="photo-tile"></div>
+                                    <div class="photo-tile"></div>
+                                    <div class="photo-tile"></div>
+                                    <div class="photo-tile add">+</div>
+                                </div>
+                                <div class="photos-meta">
+                                    6 photos · drag to reorder · cover photo
+                                    locked
+                                </div>
+
+                                <div class="description-card">
+                                    Sitting on a generous
+                                    <span class="highlight">3,198 m²</span>
+                                    section in Albany, this
+                                    <span class="highlight">2008</span>
+                                    <span class="highlight">weatherboard</span>
+                                    home offers
+                                    <span class="highlight">168 m²</span> of
+                                    comfortable family living. Four bedrooms and
+                                    two bathrooms are arranged across a single
+                                    level, with a
+                                    <span class="highlight">north-facing</span>
+                                    lounge that catches sun through the day
+                                    <em>(detected in photos 2 &amp; 4)</em>. A
+                                    double internal-access garage, established
+                                    gardens, and a flat rear lawn round out a
+                                    property ready for the next family to make
+                                    its own.
+                                    <div class="desc-actions">
+                                        <button class="desc-action">
+                                            ✎ Edit the draft
+                                        </button>
+                                        <button class="desc-action ghost">
+                                            ↻ Try a different tone
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="coverage">
+                                    <div class="coverage-head">
+                                        Coverage check
+                                        <small
+                                            >buyers in your suburb filter
+                                            by…</small
+                                        >
+                                    </div>
+                                    <div class="coverage-row">
+                                        <div class="cov-mark ok">✓</div>
+                                        <div class="cov-body">
+                                            Bedrooms, bathrooms, garaging
+                                            <span class="cov-meta"
+                                                >mentioned · matches the facts
+                                                you confirmed</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="coverage-row">
+                                        <div class="cov-mark ok">✓</div>
+                                        <div class="cov-body">
+                                            Aspect &amp; sun
+                                            <span class="cov-meta"
+                                                >mentioned · detected from
+                                                photos</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="coverage-row">
+                                        <div class="cov-mark gap">!</div>
+                                        <div class="cov-body">
+                                            School zone not mentioned
+                                            <span class="cov-meta"
+                                                >73% of buyers searching Albany
+                                                filter by school zone. Albany
+                                                Primary &amp; Albany Senior High
+                                                are in-zone.</span
+                                            >
+                                            <button class="cov-add">
+                                                + Add school zones
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="coverage-row">
+                                        <div class="cov-mark gap">!</div>
+                                        <div class="cov-body">
+                                            Heating not mentioned
+                                            <span class="cov-meta"
+                                                >Buyers ask about heating on 4
+                                                in 5 Auckland listings. Worth
+                                                noting if you have a heat pump
+                                                or fireplace.</span
+                                            >
+                                            <button class="cov-add">
+                                                + Add a line
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="height: 14px"></div>
+                    </div>
+
+                    <div class="chips-bar">
+                        <button class="suggestion-chip" onclick="navigate(1)">
+                            See how buyers will see it
+                        </button>
+                        <button class="suggestion-chip">
+                            Add the school zones
+                        </button>
+                        <button class="suggestion-chip">
+                            Try a different tone
+                        </button>
+                        <button class="suggestion-chip">
+                            Edit the address
+                        </button>
+                    </div>
+                    <div class="chat-input-wrap">
+                        <button class="chat-mic" aria-label="Voice input">
+                            🎙
+                        </button>
+                        <input
+                            class="chat-input"
+                            placeholder="Reply to the Guide…"
+                        />
+                        <button
+                            class="chat-send"
+                            aria-label="Send"
+                            onclick="navigate(1)"
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ====== (Screens 3 & 4 merged into the conversation above) ====== -->
+                <!-- ====== SCREEN 5 — BUYER PREVIEW ====== -->
+                <div
+                    class="screen"
+                    id="screen-preview"
+                    data-label="5. Buyer preview — close the loop"
+                >
+                    <div class="status-bar">
+                        <div>13:14</div>
+                        <div class="icons">●●● ▲ ◼</div>
+                    </div>
+                    <div class="preview-banner">
+                        <button class="hamburger-btn" aria-label="Menu">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <div>
+                            <b>Mirror view.</b> This is what a buyer like Sarah
+                            will see in MyDoor.
+                        </div>
+                        <span class="close-x">✕</span>
+                    </div>
+
+                    <div class="scroll-content">
+                        <div class="preview-hero">
+                            <div class="hero-match-pill">
+                                <span class="dot"></span> 91% match for Sarah's
+                                saved search
+                            </div>
+                        </div>
+
+                        <div class="preview-info">
+                            <div class="preview-price">
+                                Price by negotiation
+                            </div>
+                            <div class="preview-addr">
+                                6/8 Munroe Lane, Albany, Auckland 0632
+                            </div>
+                            <div class="preview-specs">
+                                <span>4 <small>bed</small></span>
+                                <span>2 <small>bath</small></span>
+                                <span>2 <small>car</small></span>
+                                <span>168 <small>m² floor</small></span>
+                                <span>3,198 <small>m² land</small></span>
+                            </div>
+                        </div>
+
+                        <div class="gic-card">
+                            <div class="gic-head">
+                                <div class="guide-avatar">G</div>
+                                <div>
+                                    <div class="gic-title">Guide Insights</div>
+                                    <div class="gic-sub">
+                                        How buyers will read your listing
+                                    </div>
+                                </div>
+                                <div class="gic-pill">Strong</div>
+                            </div>
+                            <div class="gic-lead">
+                                Your listing reads as a
+                                <b>91% match</b> for buyers like Sarah — family,
+                                three-bed-plus, school-zone-led. Strong on land,
+                                aspect and family configuration.
+                            </div>
+                            <div class="gic-row">
+                                <div class="gic-mark">✓</div>
+                                <div>
+                                    In zone for
+                                    <b>Albany Primary</b> and
+                                    <b>Albany Senior High</b>
+                                    <span class="cov-meta"
+                                        >source: Ministry of Education</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="gic-row">
+                                <div class="gic-mark">✓</div>
+                                <div>
+                                    Priced near suburb median ($1.29M) — sits in
+                                    89% of Albany buyers' budgets
+                                    <span class="cov-meta"
+                                        >source: CoreLogic</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="gic-row">
+                                <div class="gic-mark">✓</div>
+                                <div>
+                                    Large section (3,198 m²) — top quartile for
+                                    Albany
+                                    <span class="cov-meta">source: LINZ</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="height: 18px"></div>
+                    </div>
+
+                    <div class="chips-bar">
+                        <button
+                            class="suggestion-chip"
+                            onclick="
+                                alert(
+                                    'Listing published — handoff to viewings &amp; add-ons. Demo ends here.',
+                                )
+                            "
+                        >
+                            Publish listing
+                        </button>
+                        <button class="suggestion-chip" onclick="navigate(-1)">
+                            Keep editing
+                        </button>
+                        <button class="suggestion-chip">Tweak the price</button>
+                    </div>
+                    <div class="chat-input-wrap">
+                        <button class="chat-mic" aria-label="Voice input">
+                            🎙
+                        </button>
+                        <input
+                            class="chat-input"
+                            placeholder="Reply to the Guide…"
+                        />
+
+                        <button
+                            class="chat-send"
+                            aria-label="Send"
+                            onclick="
+                                alert(
+                                    'Listing published — handoff to viewings &amp; add-ons. Demo ends here.',
+                                )
+                            "
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ====== SIDE MENU ====== -->
+                <div
+                    class="side-menu-overlay"
+                    id="sideMenuOverlay"
+                    onclick="closeSideMenu()"
+                ></div>
+                <aside
+                    class="side-menu"
+                    id="sideMenu"
+                    aria-hidden="true"
+                    aria-label="Main menu"
+                >
+                    <div class="side-menu-header">
+                        <div class="side-menu-brand">
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 117 117"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M87.5 5C92.1944 5 96 8.80559 96 13.5V104.5C96 109.194 92.1945 113 87.5 113H28.5C23.8056 113 20 109.194 20 104.5V13.5C20 8.80563 23.8055 5 28.5 5H87.5ZM28.5 13C28.2239 13 28 13.2239 28 13.5V104.5L28.0098 104.601C28.0497 104.796 28.2039 104.95 28.3994 104.99L28.5 105H87.5L87.6006 104.99C87.7961 104.95 87.9503 104.796 87.9902 104.601L88 104.5V13.5C88 13.2239 87.7761 13 87.5 13H28.5ZM79 48C79.5523 48 80 48.4477 80 49V63C80 63.5523 79.5523 64 79 64H74C73.4477 64 73 63.5523 73 63V49C73 48.4477 73.4477 48 74 48H79Z"
+                                    fill="#4A2C4A"
+                                />
+                            </svg>
+                            MyDoor
+                        </div>
+                        <button
+                            class="side-menu-close"
+                            aria-label="Close menu"
+                            onclick="closeSideMenu()"
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <nav class="side-menu-items">
+                        <button
+                            class="side-menu-item primary-action"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <span
+                                    class="plus-circle"
+                                    aria-hidden="true"
+                                    >+</span
+                                >
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    New listing
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Start a fresh draft with the Guide
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="3"
+                                        width="7"
+                                        height="9"
+                                        rx="1"
+                                    />
+                                    <rect
+                                        x="14"
+                                        y="3"
+                                        width="7"
+                                        height="5"
+                                        rx="1"
+                                    />
+                                    <rect
+                                        x="14"
+                                        y="12"
+                                        width="7"
+                                        height="9"
+                                        rx="1"
+                                    />
+                                    <rect
+                                        x="3"
+                                        y="16"
+                                        width="7"
+                                        height="5"
+                                        rx="1"
+                                    />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Dashboard
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Your listings, viewings, enquiries
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item has-badge"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                                    />
+                                    <path d="M14 2v6h6" />
+                                    <path d="M9 13h6" />
+                                    <path d="M9 17h4" />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Drafts
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    1 in progress · auto-saved
+                                </div>
+                            </span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="5"
+                                        width="18"
+                                        height="16"
+                                        rx="2"
+                                    />
+                                    <path d="M3 9h18" />
+                                    <path d="M8 3v4" />
+                                    <path d="M16 3v4" />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Scheduled views
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    3 new requests today
+                                </div>
+                            </span>
+                            <span class="side-menu-item-count">3</span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                                    />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    Enquiry conversations
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    2 buyers waiting for a reply
+                                </div>
+                            </span>
+                            <span class="side-menu-item-count">2</span>
+                        </button>
+                        <button
+                            class="side-menu-item"
+                            onclick="closeSideMenu()"
+                        >
+                            <span class="side-menu-item-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <circle cx="12" cy="8" r="4" />
+                                    <path
+                                        d="M4 21v-1a8 8 0 0 1 16 0v1"
+                                    />
+                                </svg>
+                            </span>
+                            <span class="side-menu-item-text">
+                                <div class="side-menu-item-title">
+                                    MyDoor Profile
+                                </div>
+                                <div class="side-menu-item-sub">
+                                    Account, billing, agent
+                                </div>
+                            </span>
+                        </button>
+                    </nav>
+                </aside>
+            </div>
+
+            <!-- Navigation controls (mirror searcher prototype) -->
+            <div class="screen-counter-w-label">
+                <div class="screen-counter" id="screenCounter">1 / 5</div>
+                <div class="screen-label" id="screenLabel">
+                    1. Welcome — Meet your Listing Guide
+                </div>
+            </div>
+            <div class="nav-hint">
+                <button
+                    class="nav-btn"
+                    id="prevBtn"
+                    onclick="navigate(-1)"
+                    disabled
+                >
+                    ←
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigate(1)">
+                    →
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const screens = [
+                "screen-welcome",
+                "screen-conversation-1",
+                "screen-conversation-2",
+                "screen-conversation-3",
+                "screen-preview",
+            ];
+            let currentScreen = 0;
+            let fetchTimeouts = [];
+
+            function show(idx) {
+                document
+                    .querySelectorAll(".screen")
+                    .forEach((s) => s.classList.remove("active"));
+                const el = document.getElementById(screens[idx]);
+                el.classList.add("active");
+                currentScreen = idx;
+                document.getElementById("screenLabel").textContent =
+                    el.dataset.label;
+                document.getElementById("screenCounter").textContent =
+                    `${idx + 1} / ${screens.length}`;
+                document.getElementById("prevBtn").disabled = idx === 0;
+                document.getElementById("nextBtn").disabled =
+                    idx === screens.length - 1;
+                if (screens[idx] === "screen-conversation-1") {
+                    runFetchAnimation();
+                } else if (
+                    screens[idx] === "screen-conversation-2" ||
+                    screens[idx] === "screen-conversation-3"
+                ) {
+                    const scrollEl = el.querySelector(".scroll-content");
+                    if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+                }
+            }
+
+            function navigate(dir) {
+                const next = currentScreen + dir;
+                if (next >= 0 && next < screens.length) show(next);
+            }
+
+            function runFetchAnimation() {
+                fetchTimeouts.forEach(clearTimeout);
+                fetchTimeouts = [];
+                const steps = document.querySelectorAll(
+                    "#workingList .working-step",
+                );
+                steps.forEach((s) => s.classList.remove("active", "done"));
+                document.getElementById("fetchSummary").style.display = "none";
+                const status = document.getElementById("fetchStatus");
+                status.innerHTML =
+                    '<span class="pulse-dot"></span> Gathering public records…';
+
+                const stepStart = [200, 900, 1700, 2500, 3400, 4300];
+                const stepDur = 700;
+                steps.forEach((step, i) => {
+                    fetchTimeouts.push(
+                        setTimeout(
+                            () => step.classList.add("active"),
+                            stepStart[i],
+                        ),
+                    );
+                    fetchTimeouts.push(
+                        setTimeout(() => {
+                            step.classList.remove("active");
+                            step.classList.add("done");
+                        }, stepStart[i] + stepDur),
+                    );
+                });
+                fetchTimeouts.push(
+                    setTimeout(() => {
+                        document.getElementById("fetchSummary").style.display =
+                            "flex";
+                        status.innerHTML = "Done · 23 of 27 facts collected";
+                    }, 5300),
+                );
+            }
+
+            function openSideMenu() {
+                document.getElementById("sideMenu").classList.add("open");
+                document
+                    .getElementById("sideMenuOverlay")
+                    .classList.add("open");
+                document
+                    .getElementById("sideMenu")
+                    .setAttribute("aria-hidden", "false");
+            }
+
+            function closeSideMenu() {
+                document.getElementById("sideMenu").classList.remove("open");
+                document
+                    .getElementById("sideMenuOverlay")
+                    .classList.remove("open");
+                document
+                    .getElementById("sideMenu")
+                    .setAttribute("aria-hidden", "true");
+            }
+
+            document.querySelectorAll(".hamburger-btn").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    openSideMenu();
+                });
+            });
+
+            // ===== Script panel — keep narration in sync with the active screen =====
+            (function () {
+                const panel = document.getElementById("scriptPanel");
+                if (!panel) return;
+                function syncScript() {
+                    const active = document.querySelector(".screen.active");
+                    if (!active) return;
+                    const id = active.id;
+                    panel.querySelectorAll(".script-section").forEach((s) => {
+                        s.classList.toggle(
+                            "active",
+                            s.dataset.screen === id,
+                        );
+                    });
+                    panel.scrollTop = 0;
+                }
+                document.querySelectorAll(".screen").forEach((scr) => {
+                    new MutationObserver(syncScript).observe(scr, {
+                        attributes: true,
+                        attributeFilter: ["class"],
+                    });
+                });
+                syncScript();
+            })();
+        </script>
+    </body>
+</html>

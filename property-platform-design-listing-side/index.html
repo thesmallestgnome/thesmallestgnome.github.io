@@ -64,7 +64,36 @@
                 color: var(--text);
                 overflow-x: hidden;
             }
-
+            .back-link {
+                color: #fffbf2;
+                position: absolute;
+                top: 0;
+                left: -100px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .back-link:hover {
+                color: #f2d680;
+            }
+            .back-arrow {
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                border-left: 3px solid #fffbf2;
+                border-bottom: 3px solid #fffbf2;
+                transform: rotate(45deg); /* Points Left */
+                transition: transform 0.3s ease;
+                cursor: pointer;
+            }
+            .back-link:hover .back-arrow {
+                border-color: #f2d680;
+                transform: rotate(45deg) scale(1.2);
+            }
+            .back-link img {
+                filter: invert(1) sepia(0%) saturate(0%) hue-rotate(1deg)
+                    brightness(100%) contrast(100%);
+            }
             .device-frame {
                 width: 390px;
                 height: 844px;
@@ -1876,6 +1905,10 @@
         </aside>
 
         <div class="device-frame" id="app">
+        <a href="/" class="back-link">
+            <img src="favicon.svg" width="35" height="35" color="#fffbf2" />
+            <span class="back-arrow"></span>
+        </a>
             <div class="frame-inner">
                 <!-- ====== SCREEN 1 — WELCOME ====== -->
                 <div

@@ -64,6 +64,49 @@
                 justify-content: center;
                 align-items: center;
                 overflow-wrap: break-word;
+
+                /* Interactive gradient background.
+                   JS updates --blob{n}-x / --blob{n}-y each frame.
+                   --blob-alpha dims the blobs when they gather near the cursor. */
+                --blob1-x: 100%;
+                --blob1-y: 0%;
+                --blob2-x: 0%;
+                --blob2-y: 100%;
+                --blob3-x: 100%;
+                --blob3-y: 100%;
+                --blob-alpha: 1;
+                background-image:
+                    radial-gradient(
+                        circle 780px at var(--blob1-x) var(--blob1-y),
+                        rgb(242 214 128 / calc(0.55 * var(--blob-alpha))) 0%,
+                        rgb(242 214 128 / calc(0.22 * var(--blob-alpha))) 30%,
+                        rgb(242 214 128 / 0) 70%
+                    ),
+                    radial-gradient(
+                        circle 720px at var(--blob2-x) var(--blob2-y),
+                        rgb(249 232 185 / calc(0.6 * var(--blob-alpha))) 0%,
+                        rgb(249 232 185 / calc(0.22 * var(--blob-alpha))) 32%,
+                        rgb(249 232 185 / 0) 70%
+                    ),
+                    radial-gradient(
+                        circle 760px at var(--blob3-x) var(--blob3-y),
+                        rgb(245 205 120 / calc(0.5 * var(--blob-alpha))) 0%,
+                        rgb(245 205 120 / calc(0.2 * var(--blob-alpha))) 35%,
+                        rgb(245 205 120 / 0) 72%
+                    );
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                body {
+                    --blob1-x: 100%;
+                    --blob1-y: 0%;
+                    --blob2-x: 0%;
+                    --blob2-y: 100%;
+                    --blob3-x: 100%;
+                    --blob3-y: 100%;
+                }
             }
 
             .wrap {
@@ -156,7 +199,16 @@
                 .descr {
                     padding: 0;
                     font-weight: 200;
+                    color: var(--color-secondary);
+                    opacity: 1;
+                    transition: all 0.5s ease-in-out;
                 }
+            }
+
+            li:hover .descr {
+                color: var(--color-primary);
+                opacity: 0.65;
+                transition: all 0.5s ease-in-out;
             }
 
             a {
@@ -304,5 +356,111 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            (function () {
+                const reduce = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches;
+                if (reduce) return;
+
+                const body = document.body;
+
+                // Slight offsets so the blobs don't fully overlap when gathered
+                // near the cursor — each one stays subtly visible.
+                const offsets = [
+                    { x: 0, y: 0 },
+                    { x: -90, y: 60 },
+                    { x: 80, y: -50 },
+                ];
+
+                let w = window.innerWidth;
+                let h = window.innerHeight;
+
+                function restingFor(i) {
+                    if (i === 0) return { x: w, y: 0 }; // top-right
+                    if (i === 1) return { x: 0, y: h }; // bottom-left
+                    return { x: w, y: h }; // bottom-right
+                }
+
+                const blobs = [0, 1, 2].map((i) => {
+                    const r = restingFor(i);
+                    return { x: r.x, y: r.y, tx: r.x, ty: r.y };
+                });
+
+                let mouseActive = false;
+
+                function setTargetsToResting() {
+                    blobs.forEach((b, i) => {
+                        const r = restingFor(i);
+                        b.tx = r.x;
+                        b.ty = r.y;
+                    });
+                }
+
+                function setTargetsToCursor(mx, my) {
+                    blobs.forEach((b, i) => {
+                        b.tx = mx + offsets[i].x;
+                        b.ty = my + offsets[i].y;
+                    });
+                }
+
+                window.addEventListener("resize", () => {
+                    w = window.innerWidth;
+                    h = window.innerHeight;
+                    if (!mouseActive) setTargetsToResting();
+                });
+
+                window.addEventListener("mousemove", (e) => {
+                    mouseActive = true;
+                    setTargetsToCursor(e.clientX, e.clientY);
+                });
+
+                // mouseleave on documentElement fires when the cursor exits the viewport
+                document.documentElement.addEventListener("mouseleave", () => {
+                    mouseActive = false;
+                    setTargetsToResting();
+                });
+                document.documentElement.addEventListener("mouseenter", (e) => {
+                    mouseActive = true;
+                    setTargetsToCursor(e.clientX, e.clientY);
+                });
+
+                // Initial paint
+                blobs.forEach((b, i) => {
+                    body.style.setProperty(`--blob${i + 1}-x`, `${b.x}px`);
+                    body.style.setProperty(`--blob${i + 1}-y`, `${b.y}px`);
+                });
+
+                const lerp = 0.08; // weighty trailing feel
+                const alphaLerp = 0.06; // slightly slower than position for a soft fade
+                const IDLE_ALPHA = 1;
+                const ACTIVE_ALPHA = 0.5; // dim when gathered near the cursor
+                let alpha = IDLE_ALPHA;
+
+                function tick() {
+                    for (let i = 0; i < blobs.length; i++) {
+                        const b = blobs[i];
+                        b.x += (b.tx - b.x) * lerp;
+                        b.y += (b.ty - b.y) * lerp;
+                        body.style.setProperty(
+                            `--blob${i + 1}-x`,
+                            `${b.x.toFixed(1)}px`
+                        );
+                        body.style.setProperty(
+                            `--blob${i + 1}-y`,
+                            `${b.y.toFixed(1)}px`
+                        );
+                    }
+                    const targetAlpha = mouseActive
+                        ? ACTIVE_ALPHA
+                        : IDLE_ALPHA;
+                    alpha += (targetAlpha - alpha) * alphaLerp;
+                    body.style.setProperty("--blob-alpha", alpha.toFixed(3));
+                    requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            })();
+        </script>
     </body>
 </html>

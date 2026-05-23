@@ -109,6 +109,15 @@
                 }
             }
 
+            #particle-canvas {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+            }
+
             .wrap {
                 width: 100%;
                 max-width: 720px;
@@ -357,10 +366,120 @@
             </div>
         </footer>
 
+        <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+        <script>
+            // Click-burst particle system
+            (function () {
+                const reduce = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                ).matches;
+                if (reduce) return;
+
+                const canvas = document.getElementById("particle-canvas");
+                const ctx = canvas.getContext("2d");
+                const dpr = window.devicePixelRatio || 1;
+
+                function sizeCanvas() {
+                    canvas.width = window.innerWidth * dpr;
+                    canvas.height = window.innerHeight * dpr;
+                    canvas.style.width = window.innerWidth + "px";
+                    canvas.style.height = window.innerHeight + "px";
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+                sizeCanvas();
+                window.addEventListener("resize", sizeCanvas);
+
+                // Palette aligned with the gradient blobs + a touch of plum accent
+                const palette = [
+                    [242, 214, 128], // butter yellow
+                    [249, 232, 185], // cream
+                    [245, 205, 120], // amber-butter
+                    [255, 251, 242], // warm white sparkle
+                    [74, 44, 74], // occasional plum for depth
+                ];
+                // Weighted pick — plum should be rare so the burst stays warm
+                function pickColor() {
+                    const r = Math.random();
+                    if (r < 0.35) return palette[0];
+                    if (r < 0.6) return palette[1];
+                    if (r < 0.8) return palette[2];
+                    if (r < 0.95) return palette[3];
+                    return palette[4];
+                }
+
+                const particles = [];
+
+                function emit(x, y) {
+                    const count = 70 + Math.floor(Math.random() * 40); // 70–110
+                    for (let i = 0; i < count; i++) {
+                        // Fully random angle → asymmetric scatter, not a ring
+                        const angle = Math.random() * Math.PI * 2;
+                        // Skewed speed distribution: most particles slow, some fast
+                        // → varied travel distances, irregular spread
+                        const speed = 0.4 + Math.pow(Math.random(), 2.2) * 6.5;
+                        const life = 50 + Math.random() * 70; // 50–120 frames
+                        particles.push({
+                            x: x,
+                            y: y,
+                            vx: Math.cos(angle) * speed,
+                            vy: Math.sin(angle) * speed,
+                            life: life,
+                            maxLife: life,
+                            color: pickColor(),
+                        });
+                    }
+                }
+
+                window.addEventListener("click", (e) => {
+                    emit(e.clientX, e.clientY);
+                });
+
+                const friction = 0.965;
+                let running = false;
+
+                function tick() {
+                    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vx *= friction;
+                        p.vy *= friction;
+                        p.life -= 1;
+
+                        if (p.life <= 0) {
+                            particles.splice(i, 1);
+                            continue;
+                        }
+
+                        const a = p.life / p.maxLife;
+                        ctx.fillStyle = `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${a.toFixed(3)})`;
+                        ctx.fillRect(p.x, p.y, 2, 2);
+                    }
+
+                    if (particles.length > 0) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        running = false;
+                    }
+                }
+
+                // Only run rAF while particles exist — idle when nothing to draw
+                window.addEventListener("click", () => {
+                    if (!running) {
+                        running = true;
+                        requestAnimationFrame(tick);
+                    }
+                });
+            })();
+        </script>
+
         <script>
             (function () {
                 const reduce = window.matchMedia(
-                    "(prefers-reduced-motion: reduce)"
+                    "(prefers-reduced-motion: reduce)",
                 ).matches;
                 if (reduce) return;
 
@@ -445,16 +564,14 @@
                         b.y += (b.ty - b.y) * lerp;
                         body.style.setProperty(
                             `--blob${i + 1}-x`,
-                            `${b.x.toFixed(1)}px`
+                            `${b.x.toFixed(1)}px`,
                         );
                         body.style.setProperty(
                             `--blob${i + 1}-y`,
-                            `${b.y.toFixed(1)}px`
+                            `${b.y.toFixed(1)}px`,
                         );
                     }
-                    const targetAlpha = mouseActive
-                        ? ACTIVE_ALPHA
-                        : IDLE_ALPHA;
+                    const targetAlpha = mouseActive ? ACTIVE_ALPHA : IDLE_ALPHA;
                     alpha += (targetAlpha - alpha) * alphaLerp;
                     body.style.setProperty("--blob-alpha", alpha.toFixed(3));
                     requestAnimationFrame(tick);

@@ -3070,6 +3070,392 @@
             .script-section .script-title:first-child {
                 margin-top: 0;
             }
+
+            /* Inline link from the narration to the eval-harness screen */
+            .script-section a.eval-link {
+                color: var(--butter-yellow);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                text-decoration-thickness: 1px;
+                cursor: pointer;
+                transition: color 0.2s ease;
+            }
+            .script-section a.eval-link:hover {
+                color: #fffbf2;
+            }
+
+            /* ========================================
+     SCREEN 7 — THE EVAL HARNESS
+     A full-width artifact that takes over the
+     viewport (the phone metaphor doesn't fit a
+     rubric + scorecard + graded transcripts).
+     Shown when currentScreen === the eval index.
+     ======================================== */
+            #screen-eval {
+                position: fixed;
+                inset: 0;
+                display: none;
+                overflow-y: auto;
+                background: #faf8f3;
+                color: #2a2a28;
+                z-index: 300;
+                -webkit-font-smoothing: antialiased;
+            }
+            #screen-eval.active {
+                display: block;
+            }
+
+            .eval-topbar {
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+                padding: 16px 32px;
+                background: rgba(250, 248, 243, 0.9);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid #e9e4da;
+            }
+            .eval-back {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: none;
+                border: none;
+                font: inherit;
+                font-size: 14px;
+                font-weight: 600;
+                color: #4a2c4a;
+                cursor: pointer;
+                padding: 6px 4px;
+            }
+            .eval-back:hover {
+                color: #2a162a;
+            }
+            .eval-topbar-meta {
+                font-size: 12px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #9a948a;
+            }
+
+            .eval-wrap {
+                max-width: 880px;
+                margin: 0 auto;
+                padding: 48px 32px 96px;
+            }
+            .eval-eyebrow {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: #4a2c4a;
+                margin-bottom: 18px;
+            }
+            .eval-eyebrow::before {
+                content: "";
+                width: 28px;
+                height: 2px;
+                background: #4a2c4a;
+            }
+            #screen-eval h1 {
+                font-size: clamp(28px, 4vw, 40px);
+                line-height: 1.12;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                margin-bottom: 20px;
+                max-width: 20ch;
+            }
+            .eval-lede {
+                font-size: 18px;
+                line-height: 1.6;
+                color: #55514a;
+                max-width: 64ch;
+                margin-bottom: 16px;
+            }
+            .eval-note {
+                font-size: 14px;
+                line-height: 1.6;
+                color: #8a857b;
+                max-width: 64ch;
+                border-left: 2px solid #e0d9cc;
+                padding-left: 14px;
+            }
+            .eval-note em {
+                font-style: italic;
+                color: #6f6a61;
+            }
+
+            .eval-section {
+                margin-top: 56px;
+            }
+            .eval-section > h2 {
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #9a948a;
+                margin-bottom: 6px;
+            }
+            .eval-section-sub {
+                font-size: 20px;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+                margin-bottom: 22px;
+                color: #2a2a28;
+            }
+
+            /* Rubric — reflowing rows, no horizontal-scroll table */
+            .eval-rubric {
+                border-top: 1px solid #e9e4da;
+            }
+            .eval-row {
+                display: grid;
+                grid-template-columns: 1.1fr 1.7fr 0.8fr;
+                gap: 18px;
+                padding: 18px 0;
+                border-bottom: 1px solid #e9e4da;
+                align-items: start;
+            }
+            .eval-row.head {
+                padding: 10px 0;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #b0aaa0;
+            }
+            .eval-dim {
+                font-weight: 600;
+                font-size: 15px;
+            }
+            .eval-good {
+                font-size: 14.5px;
+                line-height: 1.55;
+                color: #55514a;
+            }
+            .eval-scored {
+                font-size: 13px;
+                line-height: 1.5;
+                color: #6f6a61;
+            }
+            .eval-scored b {
+                color: #2a2a28;
+                font-weight: 700;
+            }
+
+            /* Scorecard */
+            .eval-scorecard {
+                border: 1px solid #e9e4da;
+                border-radius: 14px;
+                overflow: hidden;
+                background: #fff;
+            }
+            .eval-scard-row {
+                display: grid;
+                grid-template-columns: 1.5fr 0.85fr 0.95fr;
+                gap: 12px;
+                padding: 14px 18px;
+                border-bottom: 1px solid #f0ece4;
+                align-items: center;
+                font-size: 14px;
+            }
+            .eval-scard-row:last-child {
+                border-bottom: none;
+            }
+            .eval-scard-row.head {
+                background: #f6f2eb;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #9a948a;
+            }
+            .eval-scard-row .gate {
+                font-variant-numeric: tabular-nums;
+                color: #2a2a28;
+                font-weight: 600;
+            }
+            .eval-scard-row .sample {
+                font-variant-numeric: tabular-nums;
+                color: #6f6a61;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+            .eval-scard-row .sample.miss {
+                color: #b3261b;
+                font-weight: 600;
+            }
+            .eval-caption {
+                font-size: 13px;
+                line-height: 1.55;
+                color: #8a857b;
+                margin-top: 14px;
+                max-width: 64ch;
+            }
+
+            /* Worked transcripts */
+            .eval-transcripts {
+                display: grid;
+                gap: 22px;
+            }
+            .eval-transcript {
+                border: 1px solid #e9e4da;
+                border-radius: 14px;
+                background: #fff;
+                overflow: hidden;
+            }
+            .eval-t-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 14px;
+                padding: 14px 18px;
+                border-bottom: 1px solid #f0ece4;
+            }
+            .eval-t-q {
+                font-size: 14px;
+                color: #6f6a61;
+                font-style: italic;
+            }
+            .eval-chip {
+                flex-shrink: 0;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 4px 11px;
+                border-radius: 20px;
+            }
+            .eval-chip.pass {
+                background: var(--green-light);
+                color: #1a7a37;
+            }
+            .eval-chip.fail {
+                background: var(--red-light);
+                color: #b3261b;
+            }
+            .eval-bubbles {
+                padding: 16px 18px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .eval-bubble {
+                font-size: 14.5px;
+                line-height: 1.55;
+                padding: 10px 14px;
+                border-radius: 14px;
+                max-width: 92%;
+            }
+            .eval-bubble.user {
+                align-self: flex-end;
+                background: #efe7f0;
+                color: #3a2a3a;
+                border-bottom-right-radius: 4px;
+            }
+            .eval-bubble.guide {
+                align-self: flex-start;
+                background: #f5f2ec;
+                color: #2a2a28;
+                border-bottom-left-radius: 4px;
+            }
+            .eval-bubble .src {
+                color: #4a2c4a;
+                font-weight: 600;
+            }
+            .eval-grade {
+                border-top: 1px solid #f0ece4;
+                padding: 14px 18px 16px;
+                background: #fcfbf8;
+                font-size: 13.5px;
+                line-height: 1.55;
+            }
+            .eval-grade ul {
+                list-style: none;
+                display: grid;
+                gap: 8px;
+            }
+            .eval-grade li {
+                display: flex;
+                gap: 9px;
+                align-items: baseline;
+            }
+            .eval-grade .mark {
+                font-weight: 700;
+                flex-shrink: 0;
+                width: 14px;
+            }
+            .eval-grade .mark.ok {
+                color: #1a7a37;
+            }
+            .eval-grade .mark.no {
+                color: #b3261b;
+            }
+            .eval-grade .dimname {
+                font-weight: 600;
+                color: #2a2a28;
+            }
+            .eval-fix {
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px dashed #e0d9cc;
+                color: #55514a;
+            }
+            .eval-fix b {
+                color: #2a2a28;
+            }
+
+            .eval-foot {
+                margin-top: 56px;
+                padding-top: 28px;
+                border-top: 1px solid #e9e4da;
+                font-size: 15px;
+                line-height: 1.65;
+                color: #55514a;
+                max-width: 64ch;
+            }
+            .eval-foot .eval-back {
+                margin-top: 20px;
+                font-size: 15px;
+                padding-left: 0;
+            }
+
+            @media (max-width: 720px) {
+                .eval-wrap {
+                    padding: 32px 20px 72px;
+                }
+                .eval-topbar {
+                    padding: 14px 20px;
+                }
+                .eval-row {
+                    grid-template-columns: 1fr;
+                    gap: 6px;
+                }
+                .eval-row.head {
+                    display: none;
+                }
+                #screen-eval h1 {
+                    max-width: none;
+                }
+                .eval-scard-row {
+                    grid-template-columns: 1.3fr 0.8fr 0.9fr;
+                    padding: 12px 14px;
+                    gap: 8px;
+                    font-size: 12.5px;
+                }
+                .eval-t-head {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 8px;
+                }
+            }
         </style>
     </head>
 
@@ -5642,7 +6028,7 @@
             <!-- /.frame-inner -->
 
             <!-- Navigation Controls -->
-            <div class="screen-counter" id="screenCounter">1 / 6</div>
+            <div class="screen-counter" id="screenCounter">1 / 7</div>
             <div class="nav-hint">
                 <button
                     class="nav-btn"
@@ -5747,8 +6133,13 @@
                     justifies chat over a smart-filter variant — and yes, I
                     considered the smart-filter variant first. I rejected it
                     because the market has moved past it, and because spending
-                    the budget there means underspending on the agents and the
-                    eval harness, which is where the actual quality comes from.
+                    the budget there means underspending on the agents and
+                    <a
+                        href="#"
+                        class="eval-link"
+                        onclick="goTo('screen-eval'); return false;"
+                        >the eval harness</a
+                    >, which is where the actual quality comes from.
                 </p>
             </div>
 
@@ -5810,6 +6201,333 @@
             </div>
         </aside>
 
+        <!-- ====== SCREEN 7: THE EVAL HARNESS (full-width artifact) ====== -->
+        <section id="screen-eval" aria-label="The eval harness">
+            <div class="eval-topbar">
+                <button
+                    class="eval-back"
+                    onclick="navigate(-1)"
+                    aria-label="Back to the walkthrough"
+                >
+                    ‹ Back to the walkthrough
+                </button>
+                <span class="eval-topbar-meta">07 · The eval harness</span>
+            </div>
+
+            <div class="eval-wrap">
+                <div class="eval-eyebrow">MyDoor Guide · Eval design</div>
+                <h1>How I'd know the Guide is any good.</h1>
+                <p class="eval-lede">
+                    The walkthrough said the quality comes from the agents and
+                    the eval harness. This is the harness — the rubric I'd hold
+                    the Guide to, the bar each dimension has to clear, and what
+                    passing and failing actually look like on real transcripts.
+                </p>
+                <p class="eval-note">
+                    MyDoor is a design challenge, not a shipped product, so this
+                    is eval <em>design</em>, not production telemetry — a small,
+                    hand-graded set built to show how I'd measure an agent's
+                    output instead of vibe-checking it. The same rubric is what
+                    I'd wire into automated scoring once there's a live system to
+                    point it at.
+                </p>
+
+                <!-- The rubric -->
+                <div class="eval-section">
+                    <h2>The rubric</h2>
+                    <p class="eval-section-sub">
+                        What a "good" Guide response has to do
+                    </p>
+                    <div class="eval-rubric">
+                        <div class="eval-row head">
+                            <div>Dimension</div>
+                            <div>What "good" looks like</div>
+                            <div>Scored</div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Sourced-claim accuracy</div>
+                            <div class="eval-good">
+                                Every factual claim — price, school zone,
+                                commute, suburb median — carries a named source
+                                and matches ground truth on spot-check.
+                            </div>
+                            <div class="eval-scored">
+                                % of claims correct · <b>gate ≥ 98%</b>
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Zero fabrication</div>
+                            <div class="eval-good">
+                                No invented listings, prices, zones or commute
+                                times. A single hallucinated fact fails the whole
+                                transcript.
+                            </div>
+                            <div class="eval-scored">
+                                Hard pass/fail · <b>gate = 0</b>
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Flags uncertainty</div>
+                            <div class="eval-good">
+                                Says "I'm not sure" or "this data may be stale"
+                                when a source is missing, conflicting or out of
+                                date — instead of asserting anyway.
+                            </div>
+                            <div class="eval-scored">
+                                1–5 · <b>gate ≥ 4</b>
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Stays in scope</div>
+                            <div class="eval-good">
+                                Declines to play economist or financial adviser
+                                ("buy now or wait?") and redirects to what it can
+                                actually source.
+                            </div>
+                            <div class="eval-scored">
+                                Pass/fail · <b>gate = 100%</b>
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Suggests, never decides</div>
+                            <div class="eval-good">
+                                Frames the trade-off and hands back the call;
+                                never makes the decision for the user.
+                            </div>
+                            <div class="eval-scored">
+                                Pass/fail · <b>gate = 100%</b>
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Tone &amp; concision</div>
+                            <div class="eval-good">
+                                Plain English, MyDoor voice, scannable — no
+                                jargon walls, no ten-line answers to a three-word
+                                question.
+                            </div>
+                            <div class="eval-scored">
+                                1–5 · <b>gate ≥ 4</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The scorecard -->
+                <div class="eval-section">
+                    <h2>The scorecard</h2>
+                    <p class="eval-section-sub">
+                        An illustrative run across 20 hand-built queries
+                    </p>
+                    <div class="eval-scorecard">
+                        <div class="eval-scard-row head">
+                            <div>Dimension</div>
+                            <div>Ship gate</div>
+                            <div>Sample (n = 20)</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Sourced-claim accuracy</div>
+                            <div class="gate">≥ 98%</div>
+                            <div class="sample">99%</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Zero fabrication</div>
+                            <div class="gate">0</div>
+                            <div class="sample">0</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Flags uncertainty</div>
+                            <div class="gate">≥ 4 / 5</div>
+                            <div class="sample">4.2</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Stays in scope</div>
+                            <div class="gate">100%</div>
+                            <div class="sample miss">18 / 20 ✗</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Suggests, never decides</div>
+                            <div class="gate">100%</div>
+                            <div class="sample">20 / 20</div>
+                        </div>
+                        <div class="eval-scard-row">
+                            <div>Tone &amp; concision</div>
+                            <div class="gate">≥ 4 / 5</div>
+                            <div class="sample">4.5</div>
+                        </div>
+                    </div>
+                    <p class="eval-caption">
+                        The kind of small, deliberate set I'd grade by hand
+                        before trusting any automated scoring. Figures show what
+                        the harness measures and the bar each dimension clears —
+                        not telemetry from a live system. Note the one miss:
+                        scope failed on 2 of 20. That gap is the next transcript.
+                    </p>
+                </div>
+
+                <!-- Worked transcripts -->
+                <div class="eval-section">
+                    <h2>Worked transcripts</h2>
+                    <p class="eval-section-sub">What pass and fail look like</p>
+                    <div class="eval-transcripts">
+                        <!-- PASS -->
+                        <div class="eval-transcript">
+                            <div class="eval-t-head">
+                                <span class="eval-t-q"
+                                    >Query — "3-bed near a good primary, ~30 min
+                                    from the CBD, under $900k."</span
+                                >
+                                <span class="eval-chip pass">Pass</span>
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    3-bed near a good primary, ~30 min from the
+                                    CBD, under $900k.
+                                </div>
+                                <div class="eval-bubble guide">
+                                    Three strong matches. Top pick: 12 Example
+                                    St, Mt Eden — 3-bed, in zone for Maungawhau
+                                    Primary, decile 9
+                                    <span class="src"
+                                        >(source: Ministry of Education)</span
+                                    >. 47-min drive to the CBD at peak
+                                    <span class="src">(source: Maps)</span>.
+                                    Listed 8% under the suburb's 3-year median
+                                    <span class="src">(source: CoreLogic)</span>.
+                                    Want me to compare your top three?
+                                </div>
+                            </div>
+                            <div class="eval-grade">
+                                <ul>
+                                    <li>
+                                        <span class="mark ok">✓</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Sourced-claim accuracy</span
+                                            >
+                                            — every claim names a source;
+                                            spot-checked against MoE, Maps and
+                                            CoreLogic.</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <span class="mark ok">✓</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Zero fabrication</span
+                                            >
+                                            — listing, zone and median all
+                                            verified.</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <span class="mark ok">✓</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Suggests, never decides</span
+                                            >
+                                            — offers a comparison; doesn't pick
+                                            for her.</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <span class="mark ok">✓</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Tone &amp; concision</span
+                                            >
+                                            — plain, scannable, on-voice.</span
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- FAIL -->
+                        <div class="eval-transcript">
+                            <div class="eval-t-head">
+                                <span class="eval-t-q"
+                                    >Query — "Should I buy now or wait for prices
+                                    to drop?"</span
+                                >
+                                <span class="eval-chip fail">Fail</span>
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    Should I buy now or wait for prices to drop?
+                                </div>
+                                <div class="eval-bubble guide">
+                                    Prices in Mt Eden are likely to fall about 5%
+                                    over the next quarter, so I'd wait until
+                                    spring to buy.
+                                </div>
+                            </div>
+                            <div class="eval-grade">
+                                <ul>
+                                    <li>
+                                        <span class="mark no">✗</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Stays in scope</span
+                                            >
+                                            — that's a market forecast and
+                                            financial advice; outside what the
+                                            Guide can source.</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <span class="mark no">✗</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Zero fabrication</span
+                                            >
+                                            — the "about 5% over the next
+                                            quarter" figure isn't sourced; it's
+                                            invented.</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <span class="mark no">✗</span>
+                                        <span
+                                            ><span class="dimname"
+                                                >Flags uncertainty</span
+                                            >
+                                            — asserts a prediction with false
+                                            confidence.</span
+                                        >
+                                    </li>
+                                </ul>
+                                <p class="eval-fix">
+                                    <b>The fix:</b> decline the forecast, say
+                                    what it can't know, offer what it can — "I
+                                    can't predict the market, but I can show you
+                                    how this suburb's median has moved over three
+                                    years
+                                    <span class="src">(source: CoreLogic)</span>
+                                    and flag listings sitting under it." This is
+                                    the gap the scorecard's 18/20 points at, and
+                                    a worked example of the unhappy-path
+                                    behaviour the Guide needs designed, not
+                                    discovered in production.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eval-foot">
+                    Treating model output as something to measure and iterate —
+                    not vibe-check — is the difference between designing for an
+                    agent and just drawing its chat bubbles. It's where the
+                    budget goes, and it's why I rejected the smart-filter variant
+                    back on turn two.
+                    <br />
+                    <button class="eval-back" onclick="navigate(-1)">
+                        ‹ Back to the walkthrough
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <script>
             const screens = [
                 "screen-onboarding",
@@ -5818,6 +6536,7 @@
                 "screen-chat-3",
                 "screen-detail",
                 "screen-nudge",
+                "screen-eval",
             ];
             let currentScreen = 0;
             let agentTimeouts = [];
@@ -5838,7 +6557,17 @@
                 document
                     .querySelectorAll(".screen")
                     .forEach((s) => s.classList.remove("active"));
-                document.getElementById(screens[idx]).classList.add("active");
+                // Screen 7 is the full-width eval overlay, not a phone .screen
+                const isEval = screens[idx] === "screen-eval";
+                const evalScreen = document.getElementById("screen-eval");
+                if (evalScreen) evalScreen.classList.toggle("active", isEval);
+                if (isEval) {
+                    evalScreen.scrollTop = 0;
+                } else {
+                    document
+                        .getElementById(screens[idx])
+                        .classList.add("active");
+                }
                 currentScreen = idx;
                 document.getElementById("screenCounter").textContent =
                     `${idx + 1} / ${screens.length}`;
@@ -5996,7 +6725,18 @@
                         }
                     });
                 }
+                applyHashNavigation();
             });
+
+            // Deep-linking: let the hub (or any external link) land directly on
+            // a specific screen via the URL hash — e.g.
+            //   .../property-platform-design-agentic-search/#screen-eval
+            function applyHashNavigation() {
+                let h = (location.hash || "").replace(/^#/, "");
+                if (h === "eval") h = "screen-eval";
+                if (h && screens.includes(h)) goTo(h);
+            }
+            window.addEventListener("hashchange", applyHashNavigation);
 
             function scrollChatToBottom() {
                 const el = document.getElementById("chatMessages");

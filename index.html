@@ -76,24 +76,25 @@
                 --blob3-x: 100%;
                 --blob3-y: 100%;
                 --blob-alpha: 1;
+
                 background-image:
                     radial-gradient(
                         circle 780px at var(--blob1-x) var(--blob1-y),
-                        rgb(242 214 128 / calc(0.55 * var(--blob-alpha))) 0%,
-                        rgb(242 214 128 / calc(0.22 * var(--blob-alpha))) 30%,
-                        rgb(242 214 128 / 0) 70%
+                        rgb(255 193 153 / calc(0.55 * var(--blob-alpha))) 0%,
+                        rgb(255 193 153 / calc(0.22 * var(--blob-alpha))) 30%,
+                        rgb(255 193 153 / 0) 70%
                     ),
                     radial-gradient(
                         circle 720px at var(--blob2-x) var(--blob2-y),
-                        rgb(249 232 185 / calc(0.6 * var(--blob-alpha))) 0%,
-                        rgb(249 232 185 / calc(0.22 * var(--blob-alpha))) 32%,
-                        rgb(249 232 185 / 0) 70%
+                        rgb(252 207 231 / calc(0.6 * var(--blob-alpha))) 0%,
+                        rgb(252 207 231 / calc(0.22 * var(--blob-alpha))) 32%,
+                        rgb(252 207 231 / 0) 70%
                     ),
                     radial-gradient(
                         circle 760px at var(--blob3-x) var(--blob3-y),
-                        rgb(245 205 120 / calc(0.5 * var(--blob-alpha))) 0%,
-                        rgb(245 205 120 / calc(0.2 * var(--blob-alpha))) 35%,
-                        rgb(245 205 120 / 0) 72%
+                        rgb(255 107 240 / calc(0.5 * var(--blob-alpha))) 0%,
+                        rgb(255 107 240 / calc(0.2 * var(--blob-alpha))) 35%,
+                        rgb(255 107 240 / 0) 72%
                     );
                 background-attachment: fixed;
                 background-repeat: no-repeat;
@@ -184,19 +185,20 @@
                     background 0.4s ease;
             }
             .card:hover {
-                border-color: var(--color-secondary);
+                border-color: #fff;
                 background: hsl(40 100% 98% / 0.75);
             }
 
             .card__title {
                 margin: 0;
-                font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+                font-size: clamp(1.15rem, 1.65vw, 1.5rem);
                 font-weight: 600;
                 line-height: 1.2;
                 color: var(--color-primary);
+                word-wrap: normal;
             }
             .card__sub {
-                margin: 0.35rem 0 0;
+                margin: 0.4rem 0 1.1rem;
                 font-size: 1rem;
                 font-weight: 300;
                 color: hsl(300 12% 42%);
@@ -208,7 +210,12 @@
                 font-weight: 400;
                 color: var(--color-text-highlight-sec);
             }
-
+            .card__links__wrap {
+                display: flex;
+                gap: 1rem;
+                justify-content: space-between;
+                align-items: baseline;
+            }
             .card__links {
                 list-style: none;
                 padding: 0;
@@ -258,12 +265,12 @@
                 display: block;
                 position: absolute;
                 right: 0;
-        }
+            }
             .illustr-report {
                 width: calc(35% + 3rem);
                 transform: rotate(-12deg);
                 right: 0;
-                bottom: -115px;
+                bottom: -90px;
             }
             .illustr-icons {
                 width: calc(20% + 3rem);
@@ -278,6 +285,18 @@
                 .work {
                     grid-template-columns: repeat(2, 1fr);
                 }
+                .illustr-report {
+                    width: calc(15% + 3rem);
+                    transform: rotate(-12deg);
+                    right: 0px;
+                    bottom: -70px;
+                }
+                .illustr-icons {
+                    width: calc(10% + 3rem);
+                    transform: rotate(0deg);
+                    right: 15px;
+                    bottom: 9px;
+                }
             }
             /* Mobile: single column; the featured card stops spanning. */
             @media (max-width: 600px) {
@@ -286,6 +305,12 @@
                 }
                 .card--featured {
                     grid-column: auto;
+                }
+                .illustr-report {
+                    width: calc(15% + 3rem);
+                    transform: rotate(-12deg);
+                    right: 0;
+                    bottom: -100px;
                 }
             }
 
@@ -321,7 +346,7 @@
             }
 
             .descr {
-                font-size: 85%;
+                font-size: clamp(0.8rem, 2.4vw, 0.9rem);
                 font-style: italic;
                 color: var(--color-text-highlight-sec);
             }
@@ -399,39 +424,53 @@
                         challenge, built end to end.
                     </p>
                     <p class="card__build">
-                        A functional prototype, hand-coded in Claude Code &amp; Zed — not Figma.
+                        A functional prototype, hand-coded in Claude Code &amp;
+                        Zed — not Figma.
                     </p>
-                    <ul class="card__links">
-                        <li>
-                            <a href="/property-platform-design-listing-side"
-                                >AI listing guide</a
-                            ><span class="descr">The seller side</span>
-                        </li>
-                        <li>
-                            <a href="/property-platform-design-agentic-search"
-                                >AI agentic search</a
-                            ><span class="descr">The buyer side</span>
-                            <a
-                                class="sub-link"
-                                href="/property-platform-design-agentic-search/#screen-spec"
-                                >↳ The behaviour spec</a
-                            ><span class="descr">How the AI decides
-                            what to say</span>
-                            <a
-                                class="sub-link"
-                                href="/property-platform-design-agentic-search/#screen-eval"
-                                >↳ The eval harness</a
-                            ><span class="descr">How to measure the
-                            AI agent</span>
-                            <a
-                                class="sub-link"
-                                href="/property-platform-design-agentic-search/#screen-fail"
-                                >↳ The failure gallery</a
-                            ><span class="descr">How it behaves when
-                            it's wrong</span>
-                        </li>
-
-                    </ul>
+                    <div class="card__links__wrap">
+                        <ul class="card__links">
+                            <li>
+                                <a href="/property-platform-design-listing-side"
+                                    >AI listing guide</a
+                                ><span class="descr">The seller side</span>
+                            </li>
+                            <li>
+                                <a
+                                    href="/property-platform-design-agentic-search"
+                                    >AI agentic search</a
+                                ><span class="descr">The buyer side</span>
+                            </li>
+                        </ul>
+                        <ul class="card__links">
+                            <li>
+                                <a
+                                    class="sub-link"
+                                    href="/property-platform-design-agentic-search/#screen-spec"
+                                    >↳ The behaviour spec</a
+                                ><span class="descr"
+                                    >How the AI decides what to say</span
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="sub-link"
+                                    href="/property-platform-design-agentic-search/#screen-eval"
+                                    >↳ The eval harness</a
+                                ><span class="descr"
+                                    >How to measure the AI agent</span
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="sub-link"
+                                    href="/property-platform-design-agentic-search/#screen-fail"
+                                    >↳ The failure gallery</a
+                                ><span class="descr"
+                                    >How it behaves when it's wrong</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
                 </article>
 
                 <article class="card card--metric card--illustrated">
@@ -445,7 +484,8 @@
                             href="/case-study-knee-monitor-re-alignment"
                             >Ensuring data accuracy</a
                         ><span class="descr"
-                            >Knee Monitor · <br />a re-alignment case study</span
+                            >Knee Monitor · <br />a re-alignment case
+                            study</span
                         >
                     </div>
                     <img
@@ -461,9 +501,8 @@
                         Knee Monitor for physiotherapists
                     </h2>
                     <p class="card__sub">
-                        Mobile app + 4 wearable sensors
-                        |
-                        Observe problems in context, don't rely solely on verbal feedback
+                        Mobile app + 4 wearable sensors | Observe problems in
+                        context, don't rely solely on verbal feedback
                     </p>
                     <div class="card-link">
                         <a class="card__cta" href="/knee-monitor"
@@ -527,11 +566,11 @@
 
                 // Palette aligned with the gradient blobs + a touch of plum accent
                 const palette = [
-                    [242, 214, 128], // butter yellow
-                    [249, 232, 185], // cream
-                    [245, 205, 120], // amber-butter
+                    [255, 193, 153], // butter yellow
+                    [252, 228, 207], // cream
+                    [248, 196, 150], // amber-butter
                     [255, 251, 242], // warm white sparkle
-                    [74, 44, 74], // occasional plum for depth
+                    [179, 18, 179], // occasional plum for depth
                 ];
                 // Weighted pick — plum should be rare so the burst stays warm
                 function pickColor() {

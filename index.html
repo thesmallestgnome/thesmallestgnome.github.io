@@ -160,6 +160,27 @@
                 text-transform: lowercase;
             }
 
+            /* Section label above the work grid — short rule + tracked
+               uppercase, editorial register, in a muted plum. */
+            .eyebrow {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin: 0 0 1.25rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: hsl(300 12% 48%);
+            }
+            .eyebrow::before {
+                content: "";
+                width: 24px;
+                height: 1px;
+                background: var(--color-primary);
+                opacity: 0.45;
+            }
+
             .work {
                 display: grid;
                 /* 4-col base: the featured Property card spans half the row
@@ -415,6 +436,8 @@
                     financial and technical products taught me to trust mine.
                 </p>
             </header>
+
+            <p class="eyebrow">Selected work</p>
 
             <div class="work">
                 <article class="card card--featured">

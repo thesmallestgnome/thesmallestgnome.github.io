@@ -161,12 +161,17 @@
 
             .work {
                 display: grid;
-                /* Smart 3-up: fits three across when there's room, then
-                   collapses to 2 → 1 as the container narrows. */
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                /* 4-col base: the featured Property card spans half the row
+                   (2 cols), the two supporting cards take a quarter each.
+                   Collapses to 2-up, then 1-up, as the container narrows. */
+                grid-template-columns: repeat(4, 1fr);
                 gap: 1rem;
                 margin: 0 0 2.5rem;
                 align-items: stretch;
+            }
+            /* Property platform leads at half-width; the rest are quarters. */
+            .card--featured {
+                grid-column: span 2;
             }
 
             .card {
@@ -267,9 +272,20 @@
                 bottom: 10px;
             }
 
+            /* Tablet: drop to 2-up — the featured card becomes a full-width
+               lead, the two quarter cards sit half-and-half beneath it. */
+            @media (max-width: 720px) {
+                .work {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            /* Mobile: single column; the featured card stops spanning. */
             @media (max-width: 600px) {
                 .work {
                     grid-template-columns: 1fr;
+                }
+                .card--featured {
+                    grid-column: auto;
                 }
             }
 

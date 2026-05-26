@@ -19,7 +19,7 @@
                 --color-secondary: var(--butter-yellow);
                 --color-accent: var(--warm-white);
                 --color-bg: var(--warm-white);
-                --colot-bodytext: hsl(300 25% 15% / 1);
+                --color-bodytext: hsl(300 25% 15% / 1);
                 --color-text-highlight-sec: hsl(45deg 100% 28.8%);
             }
 
@@ -57,7 +57,7 @@
             body {
                 font-family: Figtree, sans-serif;
                 background-color: var(--color-bg);
-                color: var(--colot-bodytext);
+                color: var(--color-bodytext);
                 margin: 0;
                 min-height: 100vh;
                 padding: 32px 24px 140px;
@@ -196,6 +196,13 @@
                 font-weight: 300;
                 color: hsl(300 12% 42%);
             }
+            /* Build credit that cashes in "I design by building" */
+            .card__build {
+                margin: 0.55rem 0 0;
+                font-size: 0.82rem;
+                font-weight: 400;
+                color: var(--color-text-highlight-sec);
+            }
 
             .card__links {
                 list-style: none;
@@ -224,7 +231,7 @@
                 font-size: 1rem;
                 line-height: 1.4;
                 max-width: 24ch;
-                color: var(--colot-bodytext);
+                color: var(--color-bodytext);
             }
             .card__cta {
                 font-size: clamp(1.05rem, 3vw, 1.2rem);
@@ -375,6 +382,9 @@
                         Two sides of one business model: a 2026 design
                         challenge, built end to end.
                     </p>
+                    <p class="card__build">
+                        A functional prototype, hand-coded in Claude Code &amp; Zed — not Figma.
+                    </p>
                     <ul class="card__links">
                         <li>
                             <a href="/property-platform-design-listing-side"
@@ -387,10 +397,22 @@
                             ><span class="descr">The buyer side</span>
                             <a
                                 class="sub-link"
+                                href="/property-platform-design-agentic-search/#screen-spec"
+                                >↳ The behaviour spec</a
+                            ><span class="descr">How the AI decides
+                            what to say</span>
+                            <a
+                                class="sub-link"
                                 href="/property-platform-design-agentic-search/#screen-eval"
                                 >↳ The eval harness</a
                             ><span class="descr">How to measure the
                             AI agent</span>
+                            <a
+                                class="sub-link"
+                                href="/property-platform-design-agentic-search/#screen-fail"
+                                >↳ The failure gallery</a
+                            ><span class="descr">How it behaves when
+                            it's wrong</span>
                         </li>
 
                     </ul>
@@ -407,7 +429,7 @@
                             href="/case-study-knee-monitor-re-alignment"
                             >Ensuring data accuracy</a
                         ><span class="descr"
-                            >Knee Monitor · </br>a re-alignment case study</span
+                            >Knee Monitor · <br />a re-alignment case study</span
                         >
                     </div>
                     <img

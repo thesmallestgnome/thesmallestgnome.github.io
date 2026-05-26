@@ -3084,6 +3084,38 @@
                 color: #fffbf2;
             }
 
+            /* "How this was built" placard — pinned above the per-screen
+               narration so it's visible on every walkthrough screen. Honest
+               framing: a hand-coded prototype, scripted responses, not a
+               live agent. */
+            .build-note {
+                border: 1px solid rgba(242, 214, 128, 0.35);
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 13px 15px;
+                margin-bottom: 26px;
+                font-size: 12.5px;
+                line-height: 1.62;
+                color: #c4c4be;
+            }
+            .build-note-label {
+                display: block;
+                font-size: 10.5px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: var(--butter-yellow);
+                margin-bottom: 6px;
+            }
+            .build-note a {
+                color: var(--butter-yellow);
+                text-decoration: underline;
+                text-underline-offset: 2px;
+            }
+            .build-note a:hover {
+                color: #fffbf2;
+            }
+
             /* ========================================
      SCREEN 7 — THE EVAL HARNESS
      A full-width artifact that takes over the
@@ -3091,7 +3123,9 @@
      rubric + scorecard + graded transcripts).
      Shown when currentScreen === the eval index.
      ======================================== */
-            #screen-eval {
+            #screen-eval,
+            #screen-fail,
+            #screen-spec {
                 position: fixed;
                 inset: 0;
                 display: none;
@@ -3101,7 +3135,9 @@
                 z-index: 300;
                 -webkit-font-smoothing: antialiased;
             }
-            #screen-eval.active {
+            #screen-eval.active,
+            #screen-fail.active,
+            #screen-spec.active {
                 display: block;
             }
 
@@ -3163,7 +3199,9 @@
                 height: 2px;
                 background: #4a2c4a;
             }
-            #screen-eval h1 {
+            #screen-eval h1,
+            #screen-fail h1,
+            #screen-spec h1 {
                 font-size: clamp(28px, 4vw, 40px);
                 line-height: 1.12;
                 font-weight: 700;
@@ -3299,6 +3337,17 @@
                 margin-top: 14px;
                 max-width: 64ch;
             }
+            /* Readable body paragraph inside an eval section (intros, asides) */
+            .eval-prose {
+                font-size: 15px;
+                line-height: 1.6;
+                color: #55514a;
+                max-width: 64ch;
+                margin: 0 0 22px;
+            }
+            .eval-prose b {
+                color: #2a2a28;
+            }
 
             /* Worked transcripts */
             .eval-transcripts {
@@ -3426,6 +3475,329 @@
                 font-size: 15px;
                 padding-left: 0;
             }
+            /* Forward link from the eval harness into the failure gallery */
+            .eval-foot a.fail-link,
+            .eval-note a.fail-link {
+                color: #4a2c4a;
+                font-weight: 600;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                cursor: pointer;
+            }
+
+            /* ========================================
+     THE FAILURE GALLERY
+     Sibling full-width artifact to the eval
+     harness — the designed unhappy-path states
+     (zero results, out of scope, conflicting
+     data, can't-verify). Reuses the eval overlay
+     chrome (#screen-fail above) and chat bubbles.
+     ======================================== */
+            .fail-gallery {
+                display: grid;
+                gap: 22px;
+            }
+            .fail-case {
+                border: 1px solid #e9e4da;
+                border-radius: 14px;
+                background: #fff;
+                overflow: hidden;
+            }
+            .fail-case-head {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 18px;
+                border-bottom: 1px solid #f0ece4;
+            }
+            .fail-tag {
+                flex-shrink: 0;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 4px 11px;
+                border-radius: 20px;
+                background: #fbe7c2;
+                color: #856017;
+            }
+            .fail-trigger {
+                font-size: 13.5px;
+                color: #6f6a61;
+            }
+            .fail-note {
+                border-top: 1px solid #f0ece4;
+                padding: 14px 18px 16px;
+                background: #fcfbf8;
+            }
+            .fail-note-label {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #9a948a;
+                margin-bottom: 6px;
+            }
+            .fail-note p {
+                font-size: 13.5px;
+                line-height: 1.6;
+                color: #55514a;
+                margin: 0;
+            }
+            .fail-note b {
+                color: #2a2a28;
+            }
+
+            /* ========================================
+     THE BEHAVIOUR SPEC
+     Sibling full-width artifact to the eval
+     harness and failure gallery — the source
+     document the screens render: persona &
+     voice, the system prompt, the response
+     contract, the decision tree, the guardrails.
+     Reuses the eval overlay chrome (#screen-spec
+     grouped with #screen-eval/#screen-fail above).
+     ======================================== */
+
+            /* Persona & voice — do / don't */
+            .spec-voice {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .spec-voice-col {
+                border: 1px solid #e9e4da;
+                border-radius: 14px;
+                background: #fff;
+                overflow: hidden;
+            }
+            .spec-voice-head {
+                padding: 12px 16px;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                border-bottom: 1px solid #f0ece4;
+            }
+            .spec-voice-col.do .spec-voice-head {
+                background: var(--green-light);
+                color: #1a7a37;
+            }
+            .spec-voice-col.dont .spec-voice-head {
+                background: var(--red-light);
+                color: #b3261b;
+            }
+            .spec-voice-col ul {
+                list-style: none;
+                margin: 0;
+                padding: 10px 16px 16px;
+                display: grid;
+                gap: 9px;
+            }
+            .spec-voice-col li {
+                display: flex;
+                gap: 9px;
+                align-items: baseline;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #55514a;
+            }
+            .spec-voice-col li::before {
+                flex-shrink: 0;
+                font-weight: 700;
+                width: 12px;
+            }
+            .spec-voice-col.do li::before {
+                content: "✓";
+                color: #1a7a37;
+            }
+            .spec-voice-col.dont li::before {
+                content: "✗";
+                color: #b3261b;
+            }
+
+            /* The system prompt — set dark so it reads as the config
+               layer beneath the UI, not another chat bubble */
+            .spec-prompt {
+                border-radius: 14px;
+                overflow: hidden;
+                border: 1px solid #2a1f2a;
+                background: #241a24;
+            }
+            .spec-prompt-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 11px 16px;
+                background: #1c141c;
+                border-bottom: 1px solid #3a2c3a;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #c9a9c9;
+            }
+            .spec-prompt-head .dots {
+                display: flex;
+                gap: 6px;
+            }
+            .spec-prompt-head .dots i {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #4a2c4a;
+            }
+            .spec-prompt pre {
+                margin: 0;
+                padding: 18px 18px 20px;
+                font-family: "SF Mono", "JetBrains Mono", ui-monospace,
+                    Menlo, Consolas, monospace;
+                font-size: 13px;
+                line-height: 1.7;
+                color: #e7dce7;
+                white-space: pre-wrap;
+                word-break: break-word;
+                overflow-x: auto;
+            }
+            .spec-prompt pre .c {
+                color: #9a7d9a;
+            }
+            .spec-prompt pre .k {
+                color: var(--butter-yellow);
+                font-weight: 600;
+            }
+            .spec-cap {
+                font-size: 13px;
+                line-height: 1.55;
+                color: #8a857b;
+                margin-top: 14px;
+                max-width: 64ch;
+            }
+
+            /* The response contract — formatting rules */
+            .spec-contract {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border-top: 1px solid #e9e4da;
+            }
+            .spec-contract li {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 18px;
+                padding: 15px 0;
+                border-bottom: 1px solid #e9e4da;
+                align-items: start;
+            }
+            .spec-contract .label {
+                font-weight: 600;
+                font-size: 15px;
+                color: #2a2a28;
+            }
+            .spec-contract .rule {
+                font-size: 14.5px;
+                line-height: 1.55;
+                color: #55514a;
+            }
+
+            /* The decision tree — route each incoming turn */
+            .spec-tree {
+                display: grid;
+                gap: 10px;
+            }
+            .spec-branch {
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 16px;
+                align-items: start;
+                border: 1px solid #e9e4da;
+                border-radius: 12px;
+                background: #fff;
+                padding: 14px 16px;
+            }
+            .spec-route {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: #4a2c4a;
+                background: #f1e7f1;
+                border-radius: 8px;
+                padding: 7px 10px;
+                text-align: center;
+            }
+            .spec-branch .when {
+                font-size: 14.5px;
+                line-height: 1.55;
+                color: #2a2a28;
+            }
+            .spec-branch .when b {
+                font-weight: 600;
+            }
+            .spec-branch .when .then {
+                display: block;
+                margin-top: 4px;
+                font-size: 13.5px;
+                color: #6f6a61;
+            }
+            .spec-branch .when .then .src {
+                color: #4a2c4a;
+                font-weight: 600;
+            }
+
+            /* Guardrails — non-negotiables, cross-referenced to where
+               each one is measured (eval) and shown (failure gallery) */
+            .spec-guards {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .spec-guard {
+                border: 1px solid #e9e4da;
+                border-radius: 14px;
+                background: #fff;
+                padding: 16px 18px;
+                display: flex;
+                flex-direction: column;
+            }
+            .spec-guard h3 {
+                font-size: 15px;
+                font-weight: 700;
+                margin: 0 0 7px;
+                color: #2a2a28;
+            }
+            .spec-guard p {
+                font-size: 13.5px;
+                line-height: 1.6;
+                color: #55514a;
+                margin: 0 0 14px;
+            }
+            .spec-xref {
+                margin-top: auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .spec-xref a {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                text-decoration: none;
+                border: 1px solid #e0d9cc;
+                border-radius: 20px;
+                padding: 4px 11px;
+                color: #6f6a61;
+                cursor: pointer;
+                transition:
+                    color 0.2s ease,
+                    border-color 0.2s ease;
+            }
+            .spec-xref a:hover {
+                border-color: #4a2c4a;
+                color: #4a2c4a;
+            }
 
             @media (max-width: 720px) {
                 .eval-wrap {
@@ -3434,6 +3806,11 @@
                 .eval-topbar {
                     padding: 14px 20px;
                 }
+                /* Drop the centre screen-number label so the back + forward
+                   links sit cleanly at the edges on narrow screens */
+                .eval-topbar-meta {
+                    display: none;
+                }
                 .eval-row {
                     grid-template-columns: 1fr;
                     gap: 6px;
@@ -3441,7 +3818,9 @@
                 .eval-row.head {
                     display: none;
                 }
-                #screen-eval h1 {
+                #screen-eval h1,
+                #screen-fail h1,
+                #screen-spec h1 {
                     max-width: none;
                 }
                 .eval-scard-row {
@@ -3454,6 +3833,22 @@
                     flex-direction: column;
                     align-items: flex-start;
                     gap: 8px;
+                }
+                .fail-case-head {
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                .spec-voice,
+                .spec-guards {
+                    grid-template-columns: 1fr;
+                }
+                .spec-contract li,
+                .spec-branch {
+                    grid-template-columns: 1fr;
+                    gap: 6px;
+                }
+                .spec-route {
+                    justify-self: start;
                 }
             }
         </style>
@@ -6028,7 +6423,7 @@
             <!-- /.frame-inner -->
 
             <!-- Navigation Controls -->
-            <div class="screen-counter" id="screenCounter">1 / 7</div>
+            <div class="screen-counter" id="screenCounter">1 / 9</div>
             <div class="nav-hint">
                 <button
                     class="nav-btn"
@@ -6045,6 +6440,23 @@
         </div>
 
         <aside class="script-panel" id="scriptPanel" aria-label="Narration">
+            <div class="build-note">
+                <span class="build-note-label">How this was built</span>
+                A functional prototype, hand-coded in Claude Code and Zed — not
+                a Figma click-through. It's deployed and running in your browser
+                right now. The Guide's replies are authored, not live model
+                output: this challenge was about the interaction design and the
+                <a href="#" onclick="goTo('screen-spec'); return false;"
+                    >behaviour rules</a
+                >, not standing up a backend. For real, shipped
+                agent work against live models, see
+                <a
+                    href="https://gaunt-sloth-assistant.github.io/"
+                    target="_blank"
+                    rel="noopener"
+                    >Gaunt Sloth</a
+                >.
+            </div>
             <div class="script-section active" data-screen="screen-onboarding">
                 <p>
                     Before I show you anything, I want you to picture someone.
@@ -6053,8 +6465,8 @@
                     She's on the couch with her phone in one hand and a flat
                     white in the other. She wants a three-bedroom place she can
                     grow into. She wants it near a decent primary, because she
-                    and her partner have a 4 year-old boy. She doesn't want to
-                    commute more than an half an hour. Her cap is $900K.
+                    and her partner have a 4-year-old boy. She doesn't want to
+                    commute more than half an hour. Her cap is $900K.
                 </p>
                 <p>
                     Sarah is not in my deck. She's in your App Store reviews.
@@ -6066,7 +6478,7 @@
                     mobile-first, user-centered, conversion-focused, fintech and
                     SaaS. The last year hands-on with AI agents at Galvanized
                     Pukeko. I want to tell you Sarah's story twice. Once on
-                    MyDoorof today. Once on the MyDoorof Guide. The difference
+                    MyDoor today. Once on the MyDoor Guide. The difference
                     between those two stories <em>is</em> the design challenge.
                 </p>
                 <p class="script-title">Screen 1 — Onboarding</p>
@@ -6158,7 +6570,13 @@
                     >
                     It doesn't decide for her. It frames the decision. Suggests,
                     never decides — that's the rule that makes everything else
-                    permissible.
+                    permissible. It's the headline guardrail in
+                    <a
+                        href="#"
+                        class="eval-link"
+                        onclick="goTo('screen-spec'); return false;"
+                        >the behaviour spec</a
+                    >.
                 </p>
             </div>
 
@@ -6201,17 +6619,442 @@
             </div>
         </aside>
 
-        <!-- ====== SCREEN 7: THE EVAL HARNESS (full-width artifact) ====== -->
-        <section id="screen-eval" aria-label="The eval harness">
+        <!-- ====== SCREEN 7: THE BEHAVIOUR SPEC (full-width artifact) ====== -->
+        <section id="screen-spec" aria-label="The behaviour spec">
             <div class="eval-topbar">
                 <button
                     class="eval-back"
-                    onclick="navigate(-1)"
+                    onclick="goTo('screen-nudge')"
                     aria-label="Back to the walkthrough"
                 >
                     ‹ Back to the walkthrough
                 </button>
-                <span class="eval-topbar-meta">07 · The eval harness</span>
+                <span class="eval-topbar-meta">07 · The behaviour spec</span>
+                <button
+                    class="eval-back eval-fwd"
+                    onclick="goTo('screen-eval')"
+                    aria-label="Next: the eval harness"
+                >
+                    The eval harness ›
+                </button>
+            </div>
+
+            <div class="eval-wrap">
+                <div class="eval-eyebrow">MyDoor Guide · Behaviour spec</div>
+                <h1>How the Guide decides what to say — and what it won't.</h1>
+                <p class="eval-lede">
+                    Every screen in the walkthrough is the Guide's interface.
+                    This is the layer underneath — the behaviour the screens
+                    render. Before I drew a single bubble I wrote down who the
+                    Guide is, what it's allowed to state as fact, how it routes
+                    a question, and the lines it won't cross. In 2026 that
+                    document <em>is</em> the design work; the UI is what's left
+                    once the behaviour is decided.
+                </p>
+                <p class="eval-note">
+                    MyDoor is a design challenge and the Guide's replies are
+                    authored, not live model output — so this is the spec I'd
+                    hand an engineer to build against and the
+                    <a
+                        href="#"
+                        class="fail-link"
+                        onclick="goTo('screen-eval'); return false;"
+                        >eval harness</a
+                    >
+                    to score, not a dump from a running system. It's the source
+                    the harness <em>measures</em> and the
+                    <a
+                        href="#"
+                        class="fail-link"
+                        onclick="goTo('screen-fail'); return false;"
+                        >failure gallery</a
+                    >
+                    <em>demonstrates</em>.
+                </p>
+
+                <!-- Persona & voice -->
+                <div class="eval-section">
+                    <h2>Persona &amp; voice</h2>
+                    <p class="eval-section-sub">
+                        Who the Guide is when it opens its mouth
+                    </p>
+                    <p class="eval-caption" style="margin-bottom: 22px">
+                        A local property specialist who's already done the
+                        legwork — not a salesperson, not a financial adviser,
+                        not a generic chatbot. It has opinions about fit and
+                        none about whether you should buy.
+                    </p>
+                    <div class="spec-voice">
+                        <div class="spec-voice-col do">
+                            <div class="spec-voice-head">It does</div>
+                            <ul>
+                                <li>
+                                    Speak plain NZ English — scannable, no
+                                    jargon walls
+                                </li>
+                                <li>Name a source for every fact it states</li>
+                                <li>
+                                    Match the question's size — three words in,
+                                    don't write ten lines
+                                </li>
+                                <li>
+                                    Say "I'm not sure" out loud when the data's
+                                    thin
+                                </li>
+                                <li>Frame the trade-off and hand the call back</li>
+                            </ul>
+                        </div>
+                        <div class="spec-voice-col dont">
+                            <div class="spec-voice-head">It doesn't</div>
+                            <ul>
+                                <li>
+                                    Hype a listing or talk in agent-speak
+                                    ("stunning", "must-see")
+                                </li>
+                                <li>State anything it can't source</li>
+                                <li>
+                                    Forecast the market or give financial advice
+                                </li>
+                                <li>Pretend to certainty it doesn't have</li>
+                                <li>Tell the user which house to buy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The system prompt -->
+                <div class="eval-section">
+                    <h2>The system prompt</h2>
+                    <p class="eval-section-sub">
+                        The behaviour, written for the model
+                    </p>
+                    <div class="spec-prompt">
+                        <div class="spec-prompt-head">
+                            <span>System prompt · the Guide</span>
+                            <span class="dots"><i></i><i></i><i></i></span>
+                        </div>
+                        <pre><span class="c"># ROLE</span>
+You are the MyDoor Guide — a local property specialist helping
+someone find a home. Not a salesperson. Not a financial adviser.
+You've done the legwork: you can search 46,000 live listings and
+the data sources connected to them.
+
+<span class="c"># SOURCES — the only things you may state as fact</span>
+  listings, prices, status  → <span class="k">MyDoor listings</span>
+  school zones &amp; deciles    → <span class="k">Ministry of Education</span>
+  commute &amp; walk times      → <span class="k">Maps</span>
+  suburb medians &amp; trends   → <span class="k">CoreLogic</span>
+Every factual claim names its source inline. No source → no claim.
+
+<span class="c"># HARD RULES</span>
+<span class="k">1. SUGGEST, NEVER DECIDE.</span> Frame the trade-off, hand back
+   the call. Never tell the user which house to buy.
+<span class="k">2. NEVER INVENT.</span> No fabricated listings, prices, zones or
+   times. "I don't know" is a valid — often correct — answer.
+<span class="k">3. STAY IN SCOPE.</span> Don't forecast the market or advise on
+   finance. Decline, then offer what you can source.
+<span class="k">4. FLAG UNCERTAINTY.</span> If a source is missing, stale or
+   conflicting, say so and lower confidence out loud.
+<span class="k">5. EARNED AUTONOMY.</span> Proactive nudges only after the user
+   opts in. Never on by default.
+
+<span class="c"># RESPONSE SHAPE</span>
+Lead with the answer, then the why, then one next step. Offer at
+most one comparison or action — don't bury them in options.</pre>
+                    </div>
+                    <p class="spec-cap">
+                        The persona, the sourcing rule and the guardrails below
+                        all live here first. Tuning this prompt — deciding the
+                        exact line between "decline" and "answer", or what
+                        "flag uncertainty" sounds like in MyDoor's voice — is
+                        design work, not engineering overflow. It's also the
+                        artifact most design portfolios never show.
+                    </p>
+                </div>
+
+                <!-- The response contract -->
+                <div class="eval-section">
+                    <h2>The response contract</h2>
+                    <p class="eval-section-sub">
+                        What every answer has to do, structurally
+                    </p>
+                    <ul class="spec-contract">
+                        <li>
+                            <div class="label">Sourced or unsaid</div>
+                            <div class="rule">
+                                Every factual claim carries a named source pill.
+                                No source, no claim — this is the rule the
+                                data-source pills in the walkthrough exist to
+                                enforce.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">Answer first</div>
+                            <div class="rule">
+                                Lead with the answer, then the why, then one
+                                next step. The user shouldn't have to read a
+                                paragraph to find out whether the place is in
+                                zone.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">Honest match scores</div>
+                            <div class="rule">
+                                A match percentage appears only when it's
+                                computed from real signals against the user's
+                                stated constraints — never a decorative number
+                                to look confident.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">One ask at a time</div>
+                            <div class="rule">
+                                Offer at most one comparison or next action per
+                                turn. Multi-turn refinement only works if each
+                                turn is small enough to answer in one tap.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">Right-sized</div>
+                            <div class="rule">
+                                Match the question. "Walk time to a primary?"
+                                gets a re-ranked list, not an essay. Concision
+                                is a trust signal, not a shortcut.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- The decision tree -->
+                <div class="eval-section">
+                    <h2>The decision tree</h2>
+                    <p class="eval-section-sub">
+                        How the Guide routes an incoming turn
+                    </p>
+                    <div class="spec-tree">
+                        <div class="spec-branch">
+                            <div class="spec-route">Answer</div>
+                            <div class="when">
+                                A clear question it can answer from a source.
+                                <span class="then"
+                                    >Give the answer, name every source, offer
+                                    one next step. The happy path.</span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">Clarify</div>
+                            <div class="when">
+                                The ask is ambiguous or missing a constraint.
+                                <span class="then"
+                                    >Ask one sharp question — don't guess the
+                                    missing budget or suburb and run
+                                    anyway.</span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">No match</div>
+                            <div class="when">
+                                Nothing satisfies every constraint.
+                                <span class="then"
+                                    >Name the binding constraint, quantify it,
+                                    offer two honest ways to relax it.
+                                    <span class="src"
+                                        >→ failure gallery: No results</span
+                                    ></span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">Decline</div>
+                            <div class="when">
+                                Out of scope — a market forecast or financial
+                                call.
+                                <span class="then"
+                                    >Say what it can't know, redirect to what it
+                                    can source.
+                                    <span class="src"
+                                        >→ failure gallery: Out of scope</span
+                                    ></span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">Flag</div>
+                            <div class="when">
+                                Sources are stale or disagree.
+                                <span class="then"
+                                    >Surface the conflict, trust the
+                                    authoritative source, lower confidence out
+                                    loud.
+                                    <span class="src"
+                                        >→ failure gallery: Conflicting
+                                        sources</span
+                                    ></span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">Refuse</div>
+                            <div class="when">
+                                The data to answer doesn't exist yet.
+                                <span class="then"
+                                    >Refuse to guess; point to where the answer
+                                    will live. A wrong school zone costs someone
+                                    a house.
+                                    <span class="src"
+                                        >→ failure gallery: Can't verify</span
+                                    ></span
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-branch">
+                            <div class="spec-route">Hand off</div>
+                            <div class="when">
+                                A transaction, an offer, or contact with a real
+                                agent.
+                                <span class="then"
+                                    >Step back and connect the human. The Guide
+                                    informs the decision; it never acts on the
+                                    user's behalf.</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guardrails -->
+                <div class="eval-section">
+                    <h2>Guardrails</h2>
+                    <p class="eval-section-sub">
+                        The four lines the Guide doesn't cross
+                    </p>
+                    <div class="spec-guards">
+                        <div class="spec-guard">
+                            <h3>Suggests, never decides</h3>
+                            <p>
+                                It frames the trade-off and hands the call back.
+                                The compare view ends in "A is strongest on
+                                schools, B on value" — never "buy B." This is
+                                the rule that makes proactive behaviour
+                                permissible at all.
+                            </p>
+                            <div class="spec-xref">
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-eval'); return false;"
+                                    >Measured ↗ eval harness</a
+                                >
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-fail'); return false;"
+                                    >Shown ↗ failure gallery</a
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-guard">
+                            <h3>Never invents</h3>
+                            <p>
+                                No fabricated listing, price, zone or commute
+                                time. Where a happy-path bot would invent a
+                                plausible decile, this one says "I can't confirm
+                                that yet." "I don't know" is a valid answer — and
+                                the hardest one to get a model to give.
+                            </p>
+                            <div class="spec-xref">
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-eval'); return false;"
+                                    >Gated at zero ↗ eval harness</a
+                                >
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-fail'); return false;"
+                                    >Shown ↗ can't verify</a
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-guard">
+                            <h3>Stays in scope</h3>
+                            <p>
+                                It searches and explains property; it doesn't
+                                play economist or financial adviser. "Buy now or
+                                wait?" gets a decline and a redirect to
+                                suburb-median history it can actually source.
+                            </p>
+                            <div class="spec-xref">
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-eval'); return false;"
+                                    >Measured ↗ eval harness</a
+                                >
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-fail'); return false;"
+                                    >Shown ↗ out of scope</a
+                                >
+                            </div>
+                        </div>
+                        <div class="spec-guard">
+                            <h3>Earned autonomy</h3>
+                            <p>
+                                Proactive nudges are opt-in, never on by
+                                default. The Guide doesn't get to act on its own
+                                until the user has handed it that permission —
+                                and can take it back. Trust is a budget you
+                                spend down, not a default you assume.
+                            </p>
+                            <div class="spec-xref">
+                                <a
+                                    href="#"
+                                    onclick="goTo('screen-nudge'); return false;"
+                                    >Shown ↗ For You (screen 6)</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eval-foot">
+                    The screens are the part anyone can see. This is the part
+                    most designers never write down — and it's where an AI
+                    product's behaviour is actually decided. Drawing the chat
+                    bubble is interface; specifying when the Guide answers,
+                    declines, or refuses is design. The next screen is how I'd
+                    hold it to all of this —
+                    <a
+                        href="#"
+                        class="fail-link"
+                        onclick="goTo('screen-eval'); return false;"
+                        >the eval harness</a
+                    >.
+                    <br />
+                    <button class="eval-back" onclick="goTo('screen-nudge')">
+                        ‹ Back to the walkthrough
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== SCREEN 8: THE EVAL HARNESS (full-width artifact) ====== -->
+        <section id="screen-eval" aria-label="The eval harness">
+            <div class="eval-topbar">
+                <button
+                    class="eval-back"
+                    onclick="goTo('screen-nudge')"
+                    aria-label="Back to the walkthrough"
+                >
+                    ‹ Back to the walkthrough
+                </button>
+                <span class="eval-topbar-meta">08 · The eval harness</span>
+                <button
+                    class="eval-back eval-fwd"
+                    onclick="goTo('screen-fail')"
+                    aria-label="Next: the failure gallery"
+                >
+                    The failure gallery ›
+                </button>
             </div>
 
             <div class="eval-wrap">
@@ -6514,14 +7357,328 @@
                     </div>
                 </div>
 
+                <!-- How I'd validate it with users -->
+                <div class="eval-section">
+                    <h2>How I'd validate it with users</h2>
+                    <p class="eval-section-sub">
+                        The signal a design challenge can't include — and what
+                        I'd run first
+                    </p>
+                    <p class="eval-prose">
+                        The scorecard above measures the agent's output against
+                        ground truth. It doesn't tell me whether the design
+                        holds up for a real person under pressure on a Sunday
+                        afternoon — and it can't say whether chat actually beat
+                        the smart-filter variant I rejected on turn two. That's
+                        a hypothesis, not a finding. Here's the study I'd run to
+                        turn it into one.
+                    </p>
+                    <div class="eval-rubric">
+                        <div class="eval-row head">
+                            <div>What I'd test</div>
+                            <div>How I'd run it</div>
+                            <div>The bet it checks</div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Chat vs. smart-filter</div>
+                            <div class="eval-good">
+                                The same task on the Guide and on a strong
+                                filter build, head to head — which surface they
+                                finish on, which they trust, which is faster.
+                            </div>
+                            <div class="eval-scored">
+                                The core bet — I only get to reject the filter
+                                if users actually confirm it.
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Task completion</div>
+                            <div class="eval-good">
+                                Cold start to a three-home shortlist a
+                                Sarah-type buyer would act on — completion rate
+                                and time-to-shortlist.
+                            </div>
+                            <div class="eval-scored">
+                                Proves the Guide helps, not just demos.
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Trust &amp; provenance</div>
+                            <div class="eval-good">
+                                Do they open "why this matches"? Self-rated
+                                trust with the source pills shown versus hidden.
+                            </div>
+                            <div class="eval-scored">
+                                The pills cost screen space — this checks they
+                                earn it.
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">In-place refinement</div>
+                            <div class="eval-good">
+                                Turn two — do they grasp that the shortlist
+                                re-ranked in place, or think it searched all
+                                over again?
+                            </div>
+                            <div class="eval-scored">
+                                The signature capability — worthless if it's
+                                misread.
+                            </div>
+                        </div>
+                        <div class="eval-row">
+                            <div class="eval-dim">Unhappy-path read</div>
+                            <div class="eval-good">
+                                When the Guide declines or says "I can't confirm
+                                that" — do they read honesty, or a broken
+                                feature?
+                            </div>
+                            <div class="eval-scored">
+                                Graceful degradation only works if it reads as
+                                grace.
+                            </div>
+                        </div>
+                    </div>
+                    <p class="eval-prose" style="margin-top: 18px">
+                        I'd start with five moderated sessions — enough to
+                        surface the structural breaks before they get expensive
+                        to fix — then take the chat-vs-filter question to an
+                        unmoderated preference test at thirty-odd participants,
+                        because that's the one call worth more than five
+                        opinions.
+                    </p>
+                    <p class="eval-note">
+                        None of this is in the prototype: it's a design
+                        challenge, not an engagement, so there's no shipped
+                        metric to point at — and I'd rather show the test I'd
+                        run than invent a number I didn't earn. This is the
+                        distance between "I think chat beats filters here" and
+                        "I tested whether it does." On a real team it runs
+                        before the production code, not after the complaints.
+                    </p>
+                </div>
+
                 <div class="eval-foot">
                     Treating model output as something to measure and iterate —
                     not vibe-check — is the difference between designing for an
                     agent and just drawing its chat bubbles. It's where the
                     budget goes, and it's why I rejected the smart-filter variant
-                    back on turn two.
+                    back on turn two. The rubric says what the Guide has to do;
+                    the next screen shows what that looks like when things go
+                    wrong —
+                    <a
+                        href="#"
+                        class="fail-link"
+                        onclick="goTo('screen-fail'); return false;"
+                        >the failure gallery</a
+                    >.
                     <br />
-                    <button class="eval-back" onclick="navigate(-1)">
+                    <button class="eval-back" onclick="goTo('screen-nudge')">
+                        ‹ Back to the walkthrough
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== SCREEN 9: THE FAILURE GALLERY (full-width artifact) ====== -->
+        <section id="screen-fail" aria-label="The failure gallery">
+            <div class="eval-topbar">
+                <button
+                    class="eval-back"
+                    onclick="goTo('screen-eval')"
+                    aria-label="Back to the eval harness"
+                >
+                    ‹ Back to the eval harness
+                </button>
+                <span class="eval-topbar-meta">09 · The failure gallery</span>
+            </div>
+
+            <div class="eval-wrap">
+                <div class="eval-eyebrow">MyDoor Guide · Unhappy paths</div>
+                <h1>What the Guide does when it's wrong, unsure, or out of its depth.</h1>
+                <p class="eval-lede">
+                    Every screen in the walkthrough was the happy path — strong
+                    matches, clean provenance, a confident answer. That's the
+                    demo. The product is everything the demo skips: zero results,
+                    questions it can't source, data that's stale or contradicts
+                    itself, an answer it simply doesn't have. These are the states
+                    I designed deliberately, because graceful degradation is a
+                    design decision — not something you discover in production.
+                </p>
+                <p class="eval-note">
+                    Pairs with
+                    <a
+                        href="#"
+                        class="fail-link"
+                        onclick="goTo('screen-eval'); return false;"
+                        >the eval harness</a
+                    >: the harness <em>measures</em> these behaviours, this is
+                    what they look like on screen. The out-of-scope case below is
+                    the same gap the scorecard's 18-of-20 flagged — here, closed.
+                </p>
+
+                <div class="eval-section">
+                    <h2>The unhappy paths</h2>
+                    <p class="eval-section-sub">Four states the demo never shows</p>
+
+                    <div class="fail-gallery">
+                        <!-- 1 · ZERO RESULTS -->
+                        <div class="fail-case">
+                            <div class="fail-case-head">
+                                <span class="fail-tag">No results</span>
+                                <span class="fail-trigger"
+                                    >Nothing satisfies every constraint</span
+                                >
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    4-bed in Ponsonby, in zone for a decile-10
+                                    primary, under $900k.
+                                </div>
+                                <div class="eval-bubble guide">
+                                    Nothing matches all three right now — at that
+                                    price, that combination doesn't exist in
+                                    Ponsonby this week. The constraint doing the
+                                    most damage is budget: the cheapest 4-bed in
+                                    those zones is $1.34m
+                                    <span class="src"
+                                        >(source: MyDoor listings)</span
+                                    >. Want me to hold the school zone and lift the
+                                    budget, or hold the budget and widen the
+                                    suburb?
+                                </div>
+                            </div>
+                            <div class="fail-note">
+                                <span class="fail-note-label">The rule</span>
+                                <p>
+                                    No invented listings to fill the gap. Name the
+                                    binding constraint, quantify it from a real
+                                    source, and hand back two honest ways forward.
+                                    An empty result is information, not a dead end.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 2 · OUT OF SCOPE -->
+                        <div class="fail-case">
+                            <div class="fail-case-head">
+                                <span class="fail-tag">Out of scope</span>
+                                <span class="fail-trigger"
+                                    >A question the Guide can't source</span
+                                >
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    Should I buy now or wait for prices to drop?
+                                </div>
+                                <div class="eval-bubble guide">
+                                    I can't call the market — that's a forecast,
+                                    and I'd just be guessing. What I can show you:
+                                    Mt Eden's median has moved +3% over three
+                                    years, with the last two quarters flat
+                                    <span class="src">(source: CoreLogic)</span>.
+                                    And I can flag any listings sitting under that
+                                    median right now. Want those?
+                                </div>
+                            </div>
+                            <div class="fail-note">
+                                <span class="fail-note-label">The rule</span>
+                                <p>
+                                    <b>Suggests, never decides</b> — extended to
+                                    "never pretends to know." It declines the
+                                    forecast, says plainly what it can't know, and
+                                    redirects to what it can actually source. This
+                                    is the designed answer to the failing
+                                    transcript in the eval harness.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 3 · CONFLICTING / STALE DATA -->
+                        <div class="fail-case">
+                            <div class="fail-case-head">
+                                <span class="fail-tag">Conflicting sources</span>
+                                <span class="fail-trigger"
+                                    >Two sources disagree</span
+                                >
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    Is 12 Example St in zone for Maungawhau
+                                    Primary?
+                                </div>
+                                <div class="eval-bubble guide">
+                                    I won't give you a clean yes on this one — two
+                                    sources disagree. The listing says it's in
+                                    zone; the Ministry of Education's current map
+                                    runs the boundary mid-street, and this address
+                                    may fall just outside
+                                    <span class="src"
+                                        >(source: Ministry of Education, updated
+                                        this term)</span
+                                    >. Zones get redrawn — confirm with the school
+                                    directly before it factors into your decision.
+                                </div>
+                            </div>
+                            <div class="fail-note">
+                                <span class="fail-note-label">The rule</span>
+                                <p>
+                                    When sources conflict, surface the conflict
+                                    instead of silently picking one. Trust the
+                                    authoritative source over a listing, show the
+                                    working, and lower confidence out loud rather
+                                    than papering over it.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 4 · CAN'T VERIFY (HALLUCINATION GUARD) -->
+                        <div class="fail-case">
+                            <div class="fail-case-head">
+                                <span class="fail-tag">Can't verify</span>
+                                <span class="fail-trigger"
+                                    >The data to answer doesn't exist yet</span
+                                >
+                            </div>
+                            <div class="eval-bubbles">
+                                <div class="eval-bubble user">
+                                    What's the school zone for this new townhouse?
+                                </div>
+                                <div class="eval-bubble guide">
+                                    I can't confirm a zone for this address yet —
+                                    it's a new subdivision and the Ministry of
+                                    Education hasn't published a boundary for it. I
+                                    won't guess: a wrong school zone is the kind of
+                                    mistake that costs someone a house. Here's the
+                                    MoE zone-finder to check directly once it's
+                                    mapped
+                                    <span class="src"
+                                        >(source: Ministry of Education)</span
+                                    >.
+                                </div>
+                            </div>
+                            <div class="fail-note">
+                                <span class="fail-note-label">The rule</span>
+                                <p>
+                                    The hallucination guard. Where a happy-path
+                                    Guide would invent a plausible decile, this one
+                                    refuses. <b>"I don't know" is a valid answer</b>
+                                    — often the correct one — and it's the hardest
+                                    one to get a model to give. The eval harness
+                                    gates this at zero fabrication.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eval-foot">
+                    Across all four the move is the same: say what's true, name
+                    the source, and when there isn't one, say that too. The happy
+                    path proves the Guide can help. These prove it can be trusted —
+                    which is the only thing that makes the happy path worth
+                    shipping.
+                    <br />
+                    <button class="eval-back" onclick="goTo('screen-nudge')">
                         ‹ Back to the walkthrough
                     </button>
                 </div>
@@ -6536,7 +7693,15 @@
                 "screen-chat-3",
                 "screen-detail",
                 "screen-nudge",
+                "screen-spec",
                 "screen-eval",
+                "screen-fail",
+            ];
+            // Full-width artifacts that overlay the phone, not phone .screens
+            const overlayScreens = [
+                "screen-spec",
+                "screen-eval",
+                "screen-fail",
             ];
             let currentScreen = 0;
             let agentTimeouts = [];
@@ -6557,16 +7722,17 @@
                 document
                     .querySelectorAll(".screen")
                     .forEach((s) => s.classList.remove("active"));
-                // Screen 7 is the full-width eval overlay, not a phone .screen
-                const isEval = screens[idx] === "screen-eval";
-                const evalScreen = document.getElementById("screen-eval");
-                if (evalScreen) evalScreen.classList.toggle("active", isEval);
-                if (isEval) {
-                    evalScreen.scrollTop = 0;
+                // The last two screens are full-width overlays (eval harness,
+                // failure gallery), not phone .screens — toggle them by id.
+                const current = screens[idx];
+                overlayScreens.forEach((id) => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.toggle("active", id === current);
+                });
+                if (overlayScreens.includes(current)) {
+                    document.getElementById(current).scrollTop = 0;
                 } else {
-                    document
-                        .getElementById(screens[idx])
-                        .classList.add("active");
+                    document.getElementById(current).classList.add("active");
                 }
                 currentScreen = idx;
                 document.getElementById("screenCounter").textContent =
@@ -6733,7 +7899,9 @@
             //   .../property-platform-design-agentic-search/#screen-eval
             function applyHashNavigation() {
                 let h = (location.hash || "").replace(/^#/, "");
+                if (h === "spec") h = "screen-spec";
                 if (h === "eval") h = "screen-eval";
+                if (h === "fail") h = "screen-fail";
                 if (h && screens.includes(h)) goTo(h);
             }
             window.addEventListener("hashchange", applyHashNavigation);

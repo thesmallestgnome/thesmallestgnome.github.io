@@ -130,7 +130,7 @@
                the fold, so the top of the first cards peeks up as a scroll cue. */
             .hero {
                 min-height: calc(100vh - 170px);
-                min-height: calc(100svh - 170px);
+                min-height: calc(100svh - 270px);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -146,7 +146,7 @@
             }
 
             h1 {
-                letter-spacing: 1px;
+                letter-spacing: 0.05em;
                 text-transform: uppercase;
                 color: var(--color-primary);
                 font-size: clamp(2.25rem, 9vw, 4rem);
@@ -183,24 +183,35 @@
 
             .work {
                 display: grid;
-                /* 4-col base: the featured Property card spans half the row
-                   (2 cols), the two supporting cards take a quarter each.
+                /* 6-col base so the row can split into thirds and halves:
+                   the Property card leads at two-thirds (4 cols), the metric
+                   card beside it takes one-third (2 cols), and the two cards
+                   below sit half-and-half (3 cols each).
                    Collapses to 2-up, then 1-up, as the container narrows. */
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(6, 1fr);
                 gap: 1rem;
                 margin: 0 0 2.5rem;
                 align-items: stretch;
             }
-            /* Property platform leads at half-width; the rest are quarters. */
-            .card--featured {
+            /* Row 1: two-thirds + one-third. Row 2: two halves. */
+            .card--wide {
+                grid-column: span 4;
+            }
+            .card--narrow {
                 grid-column: span 2;
+            }
+            .card--featured {
+                grid-column: span 3;
             }
 
             .card {
+                position: relative;
+                z-index: 1;
                 border: 1px solid hsl(300 25% 30% / 0.22);
                 border-radius: 14px;
                 padding: 1.4rem 1.5rem;
                 background: hsl(40 100% 98% / 0.4);
+                overflow: hidden;
                 transition:
                     border-color 0.4s ease,
                     background 0.4s ease;
@@ -210,32 +221,52 @@
                 background: hsl(40 100% 98% / 0.75);
             }
 
+            /* Style the background video */
+            #bg-video {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                object-fit: fill;
+            }
+
             .card__title {
+                position: relative;
                 margin: 0;
-                font-size: clamp(1.15rem, 1.65vw, 1.5rem);
+                font-size: clamp(1.15rem, 3.7vw, 2.3rem);
                 font-weight: 600;
                 line-height: 1.2;
-                color: var(--color-primary);
+                color: inherit;
                 word-wrap: normal;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
             }
             .card__sub {
+                position: relative;
                 margin: 0.4rem 0 1.1rem;
                 font-size: 1rem;
                 font-weight: 300;
-                color: hsl(300 12% 42%);
+                color: inherit;
             }
             /* Build credit that cashes in "I design by building" */
             .card__build {
+                position: relative;
                 margin: 0.55rem 0 0;
                 font-size: 0.82rem;
                 font-weight: 400;
                 color: var(--color-text-highlight-sec);
             }
             .card__links__wrap {
-                display: flex;
-                gap: 1rem;
-                justify-content: space-between;
-                align-items: baseline;
+                position: relative;
+                background-image: linear-gradient(
+                    90deg,
+                    hsl(207 60% 18% / 1),
+                    transparent
+                );
+                padding: 1rem;
+                margin: 1rem 0 0 0;
             }
             .card__links {
                 list-style: none;
@@ -246,12 +277,14 @@
                 padding: 0.4rem 0;
                 font-size: clamp(1.05rem, 3vw, 1.25rem);
                 display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+                flex-direction: row;
+                align-items: end;
+                gap: 0.5rem;
             }
 
             /* Big striking number that headlines a metric card */
             .metric {
+                position: relative;
                 margin: 0;
                 font-family: "Fraunces";
                 font-weight: 600;
@@ -260,6 +293,7 @@
                 color: var(--color-primary);
             }
             .metric__label {
+                position: relative;
                 margin: 0.4rem 0 1.1rem;
                 font-size: 1rem;
                 line-height: 1.4;
@@ -267,9 +301,11 @@
                 color: var(--color-bodytext);
             }
             .card__cta {
+                position: relative;
                 font-size: clamp(1.05rem, 3vw, 1.2rem);
             }
             .card-link {
+                position: relative;
                 display: flex;
                 flex-direction: column;
             }
@@ -278,6 +314,28 @@
             .card--illustrated {
                 position: relative;
                 overflow: hidden;
+            }
+            /* Card that has video background */
+            .card--bg-animated:before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                border-radius: 13px;
+                background-image: linear-gradient(-45deg, transparent, #fffbf2);
+            }
+            .card--invert-colours.card--bg-animated:before {
+                display: none;
+            }
+            .card.card--invert-colours.card--bg-animated {
+                color: var(--color-accent);
+
+                .card__build,
+                .descr {
+                    color: var(--color-secondary);
+                }
             }
             /* Full-bleed footer illustration: spans the card's horizontal
                padding and sits flush to the bottom edge, pushed down so it
@@ -315,6 +373,12 @@
                 .work {
                     grid-template-columns: repeat(2, 1fr);
                 }
+                /* All cards go full-width once the row can't hold thirds. */
+                .card--wide,
+                .card--narrow,
+                .card--featured {
+                    grid-column: 1 / -1;
+                }
                 .illustr-report {
                     width: calc(15% + 3rem);
                     transform: rotate(-12deg);
@@ -333,6 +397,8 @@
                 .work {
                     grid-template-columns: 1fr;
                 }
+                .card--wide,
+                .card--narrow,
                 .card--featured {
                     grid-column: auto;
                 }
@@ -345,11 +411,14 @@
             }
 
             a {
-                color: var(--color-primary);
+                color: inherit;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 100;
                 position: relative;
                 z-index: 0;
                 text-decoration: underline;
-                transition: text-decoration 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
             }
             a::before {
                 background: var(--color-secondary);
@@ -364,7 +433,7 @@
             a:hover {
                 color: var(--color-primary);
                 text-decoration: none;
-                transition: text-decoration 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
             }
             a:hover::before {
                 transform: scaleX(1);
@@ -398,6 +467,7 @@
 
             .footer {
                 position: fixed;
+                z-index: 1000;
                 left: 0;
                 bottom: 0;
                 width: 100%;
@@ -449,7 +519,14 @@
             <p class="eyebrow">Selected work</p>
 
             <div class="work">
-                <article class="card card--featured">
+                <article
+                    class="card card--wide card--bg-animated card--invert-colours"
+                >
+                    <!-- The video background element -->
+                    <video autoplay muted loop playsinline id="bg-video">
+                        <source src="assets/bg-video-4.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     <h2 class="card__title">Property platform</h2>
                     <p class="card__sub">
                         Two sides of one business model: a 2026 design
@@ -505,7 +582,15 @@
                     </div>
                 </article>
 
-                <article class="card card--metric card--featured">
+                <!-- Foreground content box -->
+                <article
+                    class="card card--metric card--narrow card--bg-animated"
+                >
+                    <!-- The video background element -->
+                    <video autoplay muted loop playsinline id="bg-video">
+                        <source src="assets/bg-video-1.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     <p class="metric">58%</p>
                     <p class="metric__label">
                         lift in customer satisfaction after the order-placement
@@ -517,15 +602,19 @@
                             href="/case-study-user-stuck-in-order-placement-journey"
                             >Fixing a legacy checkout →</a
                         ><span class="descr"
-                            >Unimarket · <br />procurement &amp; spend-management
-                            platform</span
+                            >Unimarket · <br />procurement &amp;
+                            spend-management platform</span
                         >
                     </div>
                 </article>
 
                 <article
-                    class="card card--metric card--illustrated card--featured"
+                    class="card card--metric card--featured card--bg-animated"
                 >
+                    <video autoplay muted loop playsinline id="bg-video">
+                        <source src="assets/bg-video-2.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     <p class="metric">93%</p>
                     <p class="metric__label">
                         drop in users complaining the product was untruthful
@@ -540,15 +629,14 @@
                             study</span
                         >
                     </div>
-                    <img
-                        class="card__illus illustr-icons"
-                        src="knee-monitor/images/icons-3.svg"
-                        alt="The Knee Monitor's hand crafted icons"
-                        loading="lazy"
-                    />
                 </article>
 
-                <article class="card card--illustrated card--featured">
+                <article class="card card--featured card--bg-animated">
+                    <!-- The video background element -->
+                    <video autoplay muted loop playsinline id="bg-video">
+                        <source src="assets/bg-video-3.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     <h2 class="card__title">
                         Knee Monitor for physiotherapists
                     </h2>
@@ -561,12 +649,6 @@
                             >Project walkthrough →</a
                         >
                     </div>
-                    <img
-                        class="card__illus illustr-report"
-                        src="knee-monitor/images/patient-report-1.png"
-                        alt="The Knee Monitor's four wearable sensors in their dock, with labelled ankle and thigh straps"
-                        loading="lazy"
-                    />
                 </article>
             </div>
         </div>

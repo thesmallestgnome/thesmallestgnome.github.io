@@ -12,6 +12,7 @@
             :root {
                 /* Vibe: Memorable, slightly editorial, ownable. Very few real estate brands use plum — instant recognition.*/
                 --deep-plum-aubergine: #4a2c4a;
+                --deep-cosmic-purple: #1f0328;
                 --butter-yellow: #f2d680; /*— a literal "warm light through the doorway"*/
                 --warm-white: #fffbf2;
                 --color-primary: var(--deep-plum-aubergine);
@@ -202,6 +203,129 @@
             }
             .card--featured {
                 grid-column: span 3;
+            }
+            /* Lead card: full-width flagship for the real, shipped AI work.
+               Borrows Galvanized Pukeko's own deep-purple star-field backdrop
+               so the card reads in the same visual language as the live site. */
+            .card.card--lead {
+                grid-column: 1 / -1;
+                /* Pukeko's star-field gradient (#1a0033 → #0d001a). */
+                background: radial-gradient(
+                    ellipse at center,
+                    #1a0033 0%,
+                    #0d001a 100%
+                );
+                color: var(--color-accent);
+                display: flex;
+                flex-direction: column;
+            }
+            .card.card--lead:hover {
+                border-color: var(--color-secondary);
+                background: radial-gradient(
+                    ellipse at center,
+                    #260047 0%,
+                    #120024 100%
+                );
+            }
+            .card--lead > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Card-local star field — a contained version of Pukeko's
+               "hyperloop" twinkle, sized to the card, sitting behind the copy. */
+            .gs-star-field {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                overflow: hidden;
+                pointer-events: none;
+                border-radius: inherit;
+            }
+            .gs-star {
+                position: absolute;
+                background: #fff;
+                border-radius: 50%;
+                opacity: 0.8;
+                animation: gs-hyperloop 8s linear infinite;
+            }
+            .gs-star:nth-child(odd) {
+                animation-duration: 6s;
+                opacity: 0.6;
+            }
+            .gs-star:nth-child(3n) {
+                animation-duration: 10s;
+                opacity: 0.9;
+            }
+            .gs-star:nth-child(4n) {
+                animation-duration: 12s;
+                opacity: 0.4;
+            }
+            .gs-star:nth-child(5n) {
+                background: #9d4edd;
+                box-shadow: 0 0 6px #9d4edd;
+            }
+            .gs-star:nth-child(7n) {
+                background: #c77dff;
+                box-shadow: 0 0 4px #c77dff;
+            }
+            .gs-star:nth-child(11n) {
+                background: #ffd60a;
+                box-shadow: 0 0 8px #ffd60a;
+            }
+            @keyframes gs-hyperloop {
+                0% {
+                    transform: scale(0.1);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 0.8;
+                }
+                90% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .gs-star {
+                    animation: none;
+                    opacity: 0.55;
+                }
+            }
+            .card--lead .card__title {
+                color: var(--color-secondary);
+            }
+            .card--lead .metric {
+                color: var(--color-secondary);
+            }
+            .card--lead .card__sub,
+            .card--lead .metric__label {
+                color: var(--color-accent);
+            }
+            .card--lead .card__build {
+                color: var(--color-secondary);
+            }
+            .card--lead .descr {
+                color: var(--color-secondary);
+            }
+            /* Lead card lays its big number beside the context copy on wide
+               screens, then stacks once the row gets tight. */
+            .card--lead__top {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                gap: 0.5rem 2rem;
+            }
+            .card--lead__top .metric {
+                flex: 0 0 auto;
+            }
+            .card--lead__top .metric__label {
+                flex: 1 1 14ch;
+                max-width: none;
+                color: var(--color-accent);
             }
 
             .card {
@@ -470,6 +594,170 @@
                 font-weight: 400;
             }
 
+            /* "How I work" — the thesis section. Single editorial column of
+               prose between the hero and the work grid. Space, not rules,
+               separates it from what's around it. */
+            .approach {
+                margin: 0 0 3.5rem;
+            }
+            .approach__body {
+                max-width: 66ch;
+            }
+            .approach__body p {
+                font-size: clamp(1rem, 2.6vw, 18px);
+                line-height: 1.6;
+                margin: 0 0 1.3rem;
+                font-weight: 400;
+            }
+            /* The closing one-liner lands as the section's punctuation. */
+            .approach__kicker {
+                font-family: "Fraunces";
+                font-size: clamp(1.2rem, 3vw, 1.5rem);
+                line-height: 1.4;
+                color: var(--color-primary);
+                margin: 1.75rem 0 0;
+                max-width: 40ch;
+            }
+            .approach__kicker em {
+                color: var(--color-text-highlight-sec);
+            }
+
+            /* "Working with me" — the consulting framing. Opens on the board
+               brief as a pull-quote, points back at the work above as the
+               worked example, closes on a quiet invitation. */
+            .consult {
+                margin: 0 0 3.5rem;
+            }
+            .consult__brief {
+                font-family: "Fraunces italic";
+                font-size: clamp(1.5rem, 4.6vw, 2.25rem);
+                line-height: 1.25;
+                color: var(--color-primary);
+                max-width: 18ch;
+                margin: 0 0 1.5rem;
+            }
+            /* Spot the consulting video drops into once it's produced. */
+            .consult__video {
+                margin: 1.75rem 0 0;
+                aspect-ratio: 16 / 9;
+                width: 100%;
+                max-width: 640px;
+                border-radius: 14px;
+                overflow: hidden;
+                background: var(--color-primary);
+            }
+            .consult__video video,
+            .consult__video iframe {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                display: block;
+                object-fit: cover;
+            }
+
+            /* "Background" — the compressed CV. Three groups in three columns
+               on desktop, stacked on mobile. One tight line per role, dates
+               muted, the odd parenthetical for context — no responsibility
+               dumps. */
+            .background {
+                margin: 0 0 1.5rem;
+            }
+            .bg-cols {
+                display: grid;
+                grid-template-columns: 1.3fr 1fr 1.2fr;
+                gap: 2.5rem;
+                align-items: start;
+            }
+            .bg-group__title {
+                margin: 0 0 1.1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: hsl(300 12% 48%);
+            }
+            .bg-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .bg-role {
+                margin: 0 0 1.1rem;
+                line-height: 1.4;
+            }
+            .bg-role__head {
+                font-size: 0.98rem;
+                font-weight: 400;
+            }
+            .bg-role__head strong {
+                font-weight: 600;
+                color: var(--color-primary);
+            }
+            .bg-role__meta {
+                font-size: 0.85rem;
+                color: hsl(300 12% 48%);
+            }
+            .bg-role__note {
+                display: block;
+                font-size: 0.82rem;
+                font-style: italic;
+                color: var(--color-text-highlight-sec);
+            }
+            /* Conferences + CV link sit full-width beneath the three columns. */
+            .bg-foot {
+                margin: 2.25rem 0 0;
+                padding-top: 1.5rem;
+                border-top: 1px solid hsl(300 25% 30% / 0.18);
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 0.75rem 2rem;
+            }
+            .bg-conferences {
+                font-size: 0.88rem;
+                line-height: 1.5;
+                color: hsl(300 18% 32%);
+                max-width: 60ch;
+                margin: 0;
+            }
+            .bg-cv {
+                font-size: 0.95rem;
+                white-space: nowrap;
+            }
+            @media (max-width: 720px) {
+                .bg-cols {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+            }
+
+            /* Contact — a deliberate section, not the fixed footer strip. The
+               email is the focal point; LinkedIn sits quietly beside it. No
+               form, no newsletter, no "let's chat" widget. */
+            .contact {
+                margin: 3.5rem 0 0;
+            }
+            .contact__email {
+                display: inline-block;
+                font-family: "Fraunces";
+                font-size: clamp(1.6rem, 6vw, 2.75rem);
+                font-weight: 500;
+                line-height: 1.1;
+                text-transform: none;
+                letter-spacing: 0;
+                color: var(--color-primary);
+                margin: 0 0 1rem;
+            }
+            .contact__links {
+                margin: 0;
+                font-size: 1rem;
+            }
+            .contact__links a {
+                text-transform: none;
+                letter-spacing: 0;
+                font-weight: 400;
+            }
+
             .footer {
                 position: fixed;
                 z-index: 1000;
@@ -524,6 +812,46 @@
             <p class="eyebrow">Selected work</p>
 
             <div class="work">
+                <article class="card card--lead">
+                    <div
+                        class="gs-star-field"
+                        id="gsStarField"
+                        aria-hidden="true"
+                    ></div>
+                    <h2 class="card__title">Gaunt Sloth</h2>
+                    <p class="card__sub">
+                        Open-source AI tooling at Galvanized Pukeko: a CLI-based
+                        code-review assistant and a UI-generating framework.
+                        Conversational-AI interface design applied in the open —
+                        where the work and the constraints are visible to anyone
+                        who wants to look.
+                    </p>
+                    <div class="card--lead__top">
+                        <p class="metric">1,000+</p>
+                        <p class="metric__label">
+                            developers using the Gaunt Sloth CLI assistant.
+                            Open-source, shipped, in production.
+                        </p>
+                    </div>
+                    <p class="card__build">
+                        AI Product Contributor · 2024 → present.
+                    </p>
+                    <div class="card__links__wrap">
+                        <ul class="card__links">
+                            <li>
+                                <a href="https://gaunt-sloth-assistant.github.io/"
+                                    >gaunt-sloth-assistant.github.io</a
+                                ><span class="descr">The tool</span>
+                            </li>
+                            <li>
+                                <a href="https://galvanized-pukeko.github.io/"
+                                    >galvanized-pukeko.github.io</a
+                                ><span class="descr">The studio</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
                 <article
                     class="card card--wide card--bg-animated card--invert-colours"
                 >
@@ -662,6 +990,267 @@
                     </div>
                 </article>
             </div>
+
+            <section class="approach">
+                <p class="eyebrow">How I work</p>
+                <div class="approach__body">
+                    <p>
+                        The cost of producing UI has collapsed. What used to take
+                        a week of Figma now takes an afternoon in Cursor with
+                        Claude Code. That changes where the value sits — less in
+                        production, more in deciding what's worth producing in the
+                        first place. So that's where I spend my time: framing the
+                        problem, choosing the direction, then building the
+                        prototype myself rather than describing it.
+                    </p>
+                    <p>
+                        In practice that looks like this: I start with the outcome
+                        and the constraints, sketch the shape of the solution,
+                        then move into a coded prototype early — usually Vue or
+                        React inside an existing design system, deployed to a
+                        branch URL that stakeholders can actually use. That's how
+                        the day-to-day work at Defrr and Galvanized Pukeko gets
+                        shipped. The property-platform design challenge above —
+                        buyer and seller side — was built the same way, end to
+                        end.
+                    </p>
+                    <p>
+                        I've spent the last year deliberately closing the
+                        technical gap that used to sit between designers and
+                        engineers. IBM's AI Product Manager Professional
+                        Certificate and four Generative AI courses through IBM
+                        SkillsBuild covered the model and product fundamentals;
+                        Google Cloud's Conversational AI on Vertex AI and
+                        Dialogflow CX gave me hands-on experience designing for
+                        agent behaviour; LinkedIn Learning's AI Product Ideation
+                        track filled in the discovery side. Combined with shipping
+                        production code at Defrr and Galvanized Pukeko, it means I
+                        can discuss trade-offs with engineers as a peer, not hand
+                        off a static file and wait.
+                    </p>
+                    <p class="approach__kicker">
+                        The constant across all of it is <em>taste</em>. AI gives
+                        you a starting point. Whether it ships as something
+                        coherent or something generic — that's still a human call.
+                    </p>
+                </div>
+            </section>
+
+            <section class="consult">
+                <p class="eyebrow">Working with me</p>
+                <p class="consult__brief">
+                    “The board says we need AI in the product. By Q3. Figure it
+                    out.”
+                </p>
+                <div class="approach__body">
+                    <p>
+                        That brief is landing on product teams everywhere — and
+                        most don't have anyone who has actually built with a
+                        model, wired up an agent, or shipped a tool call to
+                        production. What they need isn't another vendor deck or
+                        another chat box bolted onto search. It's someone who can
+                        hold the trade-offs under sceptical questioning, and who
+                        understands both the AI architecture and the product
+                        surface.
+                    </p>
+                    <p>
+                        The property platform above is the worked example. Not a
+                        chat box pasted on the side — a product redesigned around
+                        what AI is actually good at: the
+                        <em>suggests, never decides</em> posture, the
+                        router-and-specialist architecture, sourced data only, and
+                        the agent-economics trade-off named honestly rather than
+                        hidden.
+                    </p>
+                    <p class="approach__kicker">
+                        If your board has handed you a brief that looks like that —
+                        this is the kind of conversation I have for a living.
+                    </p>
+                </div>
+                <!-- Consulting video: drop the embed in here once produced.
+                     Reveal the wrapper below and add a <video> or <iframe>.
+                <div class="consult__video">
+                    <video src="assets/consulting-intro.mp4" controls playsinline></video>
+                </div>
+                -->
+            </section>
+
+            <section class="background">
+                <p class="eyebrow">Background</p>
+                <div class="bg-cols">
+                    <div class="bg-group">
+                        <h3 class="bg-group__title">Experience</h3>
+                        <ul class="bg-list">
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>Defrr</strong> — Senior UX &amp; UI
+                                    Designer &amp; Product Developer
+                                </div>
+                                <div class="bg-role__meta">
+                                    Auckland · Apr 2025 → present
+                                </div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>Galvanized Pukeko</strong> — AI Product
+                                    Contributor
+                                </div>
+                                <div class="bg-role__meta">current</div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>IMeasureU / Vicon</strong> — Senior
+                                    Product Designer
+                                </div>
+                                <div class="bg-role__meta">
+                                    Auckland · 2019–2024
+                                </div>
+                                <span class="bg-role__note"
+                                    >Knee Monitor, IMU Step, Capture.U, IMU
+                                    Locker</span
+                                >
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>Unimarket</strong> — UI / UX Designer
+                                </div>
+                                <div class="bg-role__meta">
+                                    Auckland · 2018–2019
+                                </div>
+                                <span class="bg-role__note"
+                                    >58% CSAT lift; 100K-user customer onboarded
+                                    after redesign</span
+                                >
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>9 Spokes</strong> — UI / UX Designer /
+                                    Developer
+                                </div>
+                                <div class="bg-role__meta">
+                                    Auckland · 2015–2017
+                                </div>
+                                <span class="bg-role__note"
+                                    >Fintech SaaS; FinancesOnline Great UX Award
+                                    2017</span
+                                >
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    <strong>Kopolo Studio</strong> — Freelancer /
+                                    Web Master
+                                </div>
+                                <div class="bg-role__meta">
+                                    Remote · 2013–2015
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-group">
+                        <h3 class="bg-group__title">Education</h3>
+                        <ul class="bg-list">
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Postgraduate Design Thinking
+                                </div>
+                                <div class="bg-role__meta">
+                                    Media Design School, Auckland · 2025
+                                </div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Web Development Diploma, Information Technology
+                                </div>
+                                <div class="bg-role__meta">
+                                    YOOBEE College of Creative Innovation · 2013
+                                </div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Master's degree (with Honours), Finance &amp;
+                                    Insurance
+                                </div>
+                                <div class="bg-role__meta">
+                                    Far Eastern State University · 2003–2008
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-group">
+                        <h3 class="bg-group__title">Recent learning</h3>
+                        <ul class="bg-list">
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    AI Product Manager Professional Certificate
+                                </div>
+                                <div class="bg-role__meta">IBM · 2025–2026</div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Four Generative AI courses
+                                </div>
+                                <div class="bg-role__meta">IBM SkillsBuild</div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Conversational AI on Vertex AI &amp; Dialogflow
+                                    CX
+                                </div>
+                                <div class="bg-role__meta">Google Cloud · 2024</div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">AI Product Ideation</div>
+                                <div class="bg-role__meta">
+                                    LinkedIn Learning · 2025
+                                </div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    Investment Foundations Certificate
+                                </div>
+                                <div class="bg-role__meta">
+                                    CFA Institute · April 2026
+                                </div>
+                            </li>
+                            <li class="bg-role">
+                                <div class="bg-role__head">
+                                    UI/UX Design Specialisation
+                                </div>
+                                <div class="bg-role__meta">
+                                    California Institute of the Arts · 2019
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-foot">
+                    <p class="bg-conferences">
+                        <strong>Conferences:</strong> ConFig 2023 / 2024 / 2025
+                        (online), Design Buddies (May 2024), 10xDesigners (Feb
+                        2024), UX New Zealand (Wellington, Feb 2023).
+                    </p>
+                    <span class="bg-cv">
+                        <a href="CV-MariKondrateva.pdf">Full CV (PDF) →</a>
+                    </span>
+                </div>
+            </section>
+
+            <section class="contact">
+                <p class="eyebrow">Contact</p>
+                <a
+                    class="contact__email"
+                    href="mailto:thesmallestgnome@gmail.com"
+                    >thesmallestgnome@gmail.com</a
+                >
+                <p class="contact__links">
+                    <a href="https://www.linkedin.com/in/mari-kondrateva/"
+                        >LinkedIn — /in/mari-kondrateva</a
+                    >
+                </p>
+            </section>
         </div>
 
         <footer class="footer">
@@ -792,6 +1381,28 @@
                         requestAnimationFrame(tick);
                     }
                 });
+            })();
+        </script>
+
+        <script>
+            // Card-local star field for the Gaunt Sloth lead card — a scoped
+            // version of the generator on galvanized-pukeko.github.io. Fewer
+            // stars than the full-screen original since the card is smaller.
+            (function () {
+                const field = document.getElementById("gsStarField");
+                if (!field) return;
+                const numStars = 55;
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement("div");
+                    star.className = "gs-star";
+                    star.style.left = Math.random() * 100 + "%";
+                    star.style.top = Math.random() * 100 + "%";
+                    const size = Math.random() * 3 + 1;
+                    star.style.width = size + "px";
+                    star.style.height = size + "px";
+                    star.style.animationDelay = Math.random() * 2 + "s";
+                    field.appendChild(star);
+                }
             })();
         </script>
 

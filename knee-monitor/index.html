@@ -7,8 +7,98 @@
     <title>Knee Monitor - Portfolio</title>
     <script type="module" crossorigin src="/knee-monitor/assets/index-Drm22B7P.js"></script>
     <link rel="stylesheet" crossorigin href="/knee-monitor/assets/index-DD7-dQet.css">
+    <style>
+      /* Self-contained intro block sitting above the React walkthrough so
+         someone landing here cold gets the title, the story, and the outcome
+         before the screen-by-screen tour. Uses the walkthrough's own purple +
+         Figtree system; Fraunces (from the site root) carries the title. */
+      @font-face {
+        font-family: "Fraunces intro";
+        src: url(/fonts/Fraunces/Fraunces-VariableFont_SOFT-WONK-opsz-wght.ttf);
+        font-display: swap;
+      }
+      .km-intro {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+      }
+      .km-intro__back {
+        display: inline-block;
+        margin-bottom: 2rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--color-primary, #6438ff);
+        text-decoration: none;
+      }
+      .km-intro__back:hover {
+        text-decoration: underline;
+      }
+      .km-intro__eyebrow {
+        margin: 0 0 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-gray, #9d9da6);
+      }
+      .km-intro__title {
+        font-family: "Fraunces intro", Georgia, serif;
+        font-weight: 500;
+        font-size: clamp(2rem, 6vw, 3rem);
+        line-height: 1.1;
+        margin: 0 0 1.5rem;
+        color: var(--color-primary-dark, #321f6b);
+      }
+      .km-intro__body {
+        font-size: var(--font-size-lg, 1.25rem);
+        line-height: 1.6;
+        color: var(--color-text, #1d0f48);
+        margin: 0 0 2rem;
+      }
+      .km-intro__outcome {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-gray-light, #eceff0);
+      }
+      .km-intro__metric {
+        font-family: "Fraunces intro", Georgia, serif;
+        font-weight: 600;
+        font-size: clamp(2.5rem, 9vw, 3.75rem);
+        line-height: 1;
+        color: var(--color-primary, #6438ff);
+      }
+      .km-intro__metric-label {
+        font-size: 1rem;
+        line-height: 1.45;
+        color: var(--color-text, #1d0f48);
+      }
+    </style>
   </head>
   <body>
+    <section class="km-intro">
+      <a class="km-intro__back" href="/">← Mari Kondrateva · Portfolio</a>
+      <p class="km-intro__eyebrow">
+        Senior Product Designer · IMeasureU / Vicon · 2022–2024
+      </p>
+      <h1 class="km-intro__title">Knee Monitor for physiotherapists</h1>
+      <p class="km-intro__body">
+        A post-surgery rehab wearable that was failing in the field. On-site
+        research showed the design had been built for the wrong user — surgeons,
+        not the physiotherapists actually using it day to day. Re-labelled
+        sensors and an onboarding flow designed for physios cleared the
+        complaint stream and unblocked the launch. The walkthrough below is the
+        screen-by-screen tour of what shipped.
+      </p>
+      <div class="km-intro__outcome">
+        <span class="km-intro__metric">90%</span>
+        <span class="km-intro__metric-label">
+          drop in customer complaints on device reliability after the
+          physiotherapist-led redesign.
+        </span>
+      </div>
+    </section>
     <div id="root"></div>
   </body>
 </html>

@@ -594,6 +594,38 @@
                 font-weight: 400;
             }
 
+            /* Quiet availability strip below the hero sub-paragraph: green
+               status dot + a one-line availability cue on the left, freshness
+               timestamp on the right. Tells recruiters Mari is open without
+               putting "open to work" anywhere loud. */
+            .hero__meta {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem 1.5rem;
+                font-size: 0.875rem;
+                letter-spacing: 0.01em;
+                color: hsl(300 12% 48%);
+            }
+            .hero__avail {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.55rem;
+                font-weight: 500;
+            }
+            .hero__dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: hsl(145 56% 42%);
+                box-shadow: 0 0 0 3px hsl(145 56% 42% / 0.18);
+                flex: none;
+            }
+            .hero__updated {
+                color: hsl(300 12% 60%);
+            }
+
             /* "How I work" — the thesis section. Single editorial column of
                prose between the hero and the work grid. Space, not rules,
                separates it from what's around it. */
@@ -750,7 +782,8 @@
             }
             .contact__links {
                 margin: 0;
-                font-size: 1rem;
+                font-family: "Fraunces";
+                font-size: clamp(1rem, 4vw, 1.3rem);
             }
             .contact__links a {
                 text-transform: none;
@@ -807,6 +840,15 @@
                     <strong>whether it worked</strong>. Ten+ years across
                     financial and technical products taught me to trust mine.
                 </p>
+
+                <div class="hero__meta">
+                    <span class="hero__avail">
+                        <span class="hero__dot" aria-hidden="true"></span>
+                        Available for senior roles &amp; consulting · Auckland /
+                        remote
+                    </span>
+                    <span class="hero__updated">Updated June 2026</span>
+                </div>
             </header>
 
             <p class="eyebrow">Selected work</p>
@@ -1240,11 +1282,7 @@
 
             <section class="contact">
                 <p class="eyebrow">Contact</p>
-                <a
-                    class="contact__email"
-                    href="mailto:thesmallestgnome@gmail.com"
-                    >thesmallestgnome@gmail.com</a
-                >
+                
                 <p class="contact__links">
                     <a href="https://www.linkedin.com/in/mari-kondrateva/"
                         >LinkedIn — /in/mari-kondrateva</a
@@ -1263,12 +1301,6 @@
                     LinkedIn:
                     <a href="https://www.linkedin.com/in/mari-kondrateva/"
                         >https://www.linkedin.com/in/mari-kondrateva/</a
-                    >
-                </div>
-                <div>
-                    Full deck (Figma):
-                    <a href="https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD"
-                        >https://www.figma.com/proto/hM3xo8v0p9rZRpKi2P1pzD</a
                     >
                 </div>
             </div>

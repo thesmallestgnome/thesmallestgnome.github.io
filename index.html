@@ -193,6 +193,14 @@
                 gap: 1rem;
                 margin: 0 0 2.5rem;
                 align-items: stretch;
+                /* Break the cards out ~1/3 wider than the 900px text column
+                   (up to 1200px), centred on the viewport. The negative
+                   margin-left is clamped against the viewport so the grid
+                   never spills past the body padding on narrower screens —
+                   below ~950px it simply fills the available width. */
+                width: min(1200px, calc(100vw - 48px));
+                margin-left: calc(50% - min(600px, (100vw - 48px) / 2));
+                transform: rotate(-5deg);
             }
             /* Row 1: two-thirds + one-third. Row 2: two halves. */
             .card--wide {
@@ -439,6 +447,70 @@
                 flex-direction: column;
             }
 
+            /* "From the field" — customer voices, set as a quiet editorial
+               grid rather than the old scrolling marquee of cards. Two columns
+               of quotes on a hairline divider; names in plum, the product/role
+               line in the amber highlight. */
+            .field {
+                margin: 0 0 3.5rem;
+            }
+            .field__grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.9rem 2.25rem;
+            }
+            .field__quote {
+                margin: 0;
+                padding: 1rem 0 0;
+                border-top: 1px solid hsl(300 25% 30% / 0.18);
+            }
+            .field__quote blockquote {
+                margin: 0;
+                font-size: 1.02rem;
+                line-height: 1.5;
+                color: var(--color-bodytext);
+            }
+            .field__quote blockquote::before {
+                content: "\201C";
+            }
+            .field__quote blockquote::after {
+                content: "\201D";
+            }
+            .field__quote figcaption {
+                margin: 0.7rem 0 0;
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+            .field__who {
+                font-weight: 600;
+                color: var(--color-primary);
+            }
+            .field__role {
+                display: block;
+                margin-top: 0.1rem;
+                font-size: 0.74rem;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: var(--color-text-highlight-sec);
+            }
+            /* Names that gave feedback without a quotable line, plus the 2017
+               award — surfaced as quiet text, not logos or a badge graphic. */
+            .field__also {
+                margin: 2.25rem 0 0;
+                font-size: 0.95rem;
+                line-height: 1.55;
+                color: var(--color-bodytext);
+            }
+            .field__also strong {
+                font-weight: 600;
+                color: var(--color-primary);
+            }
+            @media (max-width: 600px) {
+                .field__grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
             /* Card that carries an illustration anchored to its bottom edge */
             .card--illustrated {
                 position: relative;
@@ -501,6 +573,7 @@
             @media (max-width: 720px) {
                 .work {
                     grid-template-columns: repeat(2, 1fr);
+                    transform: rotate(0deg);
                 }
                 /* All cards go full-width once the row can't hold thirds. */
                 .card--wide,
@@ -525,6 +598,7 @@
             @media (max-width: 600px) {
                 .work {
                     grid-template-columns: 1fr;
+                    transform: rotate(0deg);
                 }
                 .card--wide,
                 .card--narrow,
@@ -984,7 +1058,7 @@
                 </article>
 
                 <article
-                    class="card card--metric card--featured card--bg-animated"
+                    class="card card--metric card--narrow card--bg-animated"
                 >
                     <video autoplay muted loop playsinline class="bg-video">
                         <source src="assets/bg-video-2.mp4" type="video/mp4" />
@@ -1006,7 +1080,7 @@
                     </div>
                 </article>
 
-                <article class="card card--featured card--bg-animated">
+                <article class="card card--narrow card--bg-animated">
                     <!-- The video background element -->
                     <video
                         autoplay
@@ -1031,7 +1105,130 @@
                         >
                     </div>
                 </article>
+
+                <!-- IMU Step — carries the one genuine external testimonial,
+                     anchored to the real 15% trial-to-customer outcome. No
+                     video bg (all four are in use), so it reads as a quiet
+                     quote card among the animated ones. -->
+                <article class="card card--metric card--narrow">
+                    <p class="metric">15%</p>
+                    <p class="metric__label">
+                        lift in trial-to-customer conversion after the IMU Step
+                        iOS re-launch — what the customer voices below were
+                        responding to
+                    </p>
+                    <p class="card__build">
+                        Senior Product Designer · IMeasureU / Vicon
+                    </p>
+                </article>
             </div>
+
+            <section class="field">
+                <p class="eyebrow">From the field</p>
+                <div class="field__grid">
+                    <figure class="field__quote">
+                        <blockquote>
+                            The data collection is robust, and I love the way the
+                            info is organised in the graphs.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who">Manchester United</span>
+                            <span class="field__role"
+                                >Elite-sports customer · IMU Step</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <figure class="field__quote">
+                        <blockquote>
+                            The new phone app is great. It works fantastic.
+                            Really like being able to footnote a group
+                            simultaneously.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who">Virginia Tech</span>
+                            <span class="field__role"
+                                >Elite-sports customer · IMU Step</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <figure class="field__quote">
+                        <blockquote>
+                            Knee Monitor added value to me as a PT and my
+                            clinical practice — another tool I can use with my
+                            patients, and it's very visual. I can easily observe
+                            progress and compare between sessions, and patients
+                            get the benefit of seeing the changes in the report.
+                            Easy to comprehend, and for patients to track their
+                            own progress.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who">Apryl Neal</span>
+                            <span class="field__role"
+                                >Physical therapist, Plex Rehab · Knee
+                                Monitor</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <figure class="field__quote">
+                        <blockquote>
+                            Patient report and the graphs are visually appealing
+                            and easy to understand. I like being able to click a
+                            particular time point and have it highlight the
+                            results from that session across the different tests.
+                            It's also appealing to the patients.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who"
+                                >Shannon McGinnis, DPT &amp; Margaret Getler,
+                                DPT</span
+                            >
+                            <span class="field__role">Knee Monitor</span>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="field__quote">
+                        <blockquote>
+                            The visuals are very nicely done on the app, and my
+                            patients really liked seeing the visual feedback.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who">Dan Chapman</span>
+                            <span class="field__role"
+                                >Physical therapist &amp; clinic owner · Knee
+                                Monitor</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <figure class="field__quote">
+                        <blockquote>
+                            This is exactly what I want to see.
+                        </blockquote>
+                        <figcaption>
+                            <span class="field__who">Brent George</span>
+                            <span class="field__role"
+                                >Customer, on first seeing the graphs · IMU
+                                Step</span
+                            >
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <p class="field__also">
+                    Also in the field with the <strong>Buffalo Bills</strong> and
+                    the <strong>Portland Trail Blazers</strong>, who moved to IMU
+                    Step for faster set-up, better battery life and clearer
+                    dashboards.
+                </p>
+                <p class="field__also">
+                    Recognised earlier, too:
+                    <strong>Great User Experience Award, 2017</strong> —
+                    FinancesOnline, for the 9 Spokes fintech dashboard.
+                </p>
+            </section>
 
             <section class="approach">
                 <p class="eyebrow">How I work</p>

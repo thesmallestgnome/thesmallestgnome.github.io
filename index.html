@@ -12,7 +12,11 @@
             :root {
                 /* Vibe: Memorable, slightly editorial, ownable. Very few real estate brands use plum — instant recognition.*/
                 --deep-plum-aubergine: #4a2c4a;
-                --deep-cosmic-purple: radial-gradient(ellipse at center, #1a0033 0%, #0d001a 100%);
+                --deep-cosmic-purple: radial-gradient(
+                    ellipse at center,
+                    #1a0033 0%,
+                    #0d001a 100%
+                );
                 --butter-yellow: #f2d680; /*— a literal "warm light through the doorway"*/
                 --warm-white: #fffbf2;
                 --color-primary: var(--deep-plum-aubergine);
@@ -131,10 +135,7 @@
                 border: 1px solid var(--border-color-subtle);
                 border-top: none;
                 border-bottom: none;
-            }
-            .wrap > * {
-                padding: 32px 24px 140px;
-                border-bottom: 1px solid var(--border-color-subtle);
+                padding: 0 4rem;
             }
 
             /* Hero fills most of the first viewport so the statement + sub sit
@@ -178,13 +179,21 @@
                 display: flex;
                 align-items: center;
                 gap: 0.75rem;
-                margin: 0 0 1.25rem;
+                margin: 0 0 4rem;
                 font-size: 0.875rem;
                 font-weight: 500;
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: hsl(300 12% 48%);
-                padding-bottom: 32px;
+                width: 100vw;
+                margin-left: calc(50% - 100vw / 2);
+                border-top: 1px solid var(--border-color-subtle);
+                border-bottom: 1px solid var(--border-color-subtle);
+                padding: 32px 24px;
+
+                &.eyebrow-special {
+                    margin-bottom: 0;
+                }
             }
             .eyebrow::before {
                 content: "";
@@ -854,6 +863,7 @@
                form, no newsletter, no "let's chat" widget. */
             .contact {
                 margin: 3.5rem 0 0;
+                padding-bottom: 140px;
             }
             .contact__email {
                 display: inline-block;
@@ -937,7 +947,7 @@
                 </div>
             </header>
 
-            <p class="eyebrow">Selected work</p>
+            <p class="eyebrow eyebrow-special">Selected work</p>
 
             <div class="work">
                 <article class="card card--lead">

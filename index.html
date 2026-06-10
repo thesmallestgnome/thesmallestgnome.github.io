@@ -12,7 +12,7 @@
             :root {
                 /* Vibe: Memorable, slightly editorial, ownable. Very few real estate brands use plum — instant recognition.*/
                 --deep-plum-aubergine: #4a2c4a;
-                --deep-cosmic-purple: #1f0328;
+                --deep-cosmic-purple: radial-gradient(ellipse at center, #1a0033 0%, #0d001a 100%);
                 --butter-yellow: #f2d680; /*— a literal "warm light through the doorway"*/
                 --warm-white: #fffbf2;
                 --color-primary: var(--deep-plum-aubergine);
@@ -20,8 +20,11 @@
                 --color-secondary: var(--butter-yellow);
                 --color-accent: var(--warm-white);
                 --color-bg: var(--warm-white);
+                --footer-bg: var(--deep-cosmic-purple);
                 --color-bodytext: hsl(300 25% 15% / 1);
                 --color-text-highlight-sec: hsl(45deg 100% 28.8%);
+                --color-text-inverted: var(--warm-white);
+                --border-color-subtle: hsl(219 74% 85% / 1);
             }
 
             @font-face {
@@ -62,6 +65,7 @@
                 margin: 0;
                 min-height: 100vh;
                 padding: 32px 24px 140px;
+                padding: 0;
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
@@ -124,6 +128,13 @@
             .wrap {
                 width: 100%;
                 max-width: 900px;
+                border: 1px solid var(--border-color-subtle);
+                border-top: none;
+                border-bottom: none;
+            }
+            .wrap > * {
+                padding: 32px 24px 140px;
+                border-bottom: 1px solid var(--border-color-subtle);
             }
 
             /* Hero fills most of the first viewport so the statement + sub sit
@@ -173,6 +184,7 @@
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: hsl(300 12% 48%);
+                padding-bottom: 32px;
             }
             .eyebrow::before {
                 content: "";
@@ -191,7 +203,7 @@
                    Collapses to 2-up, then 1-up, as the container narrows. */
                 grid-template-columns: repeat(6, 1fr);
                 gap: 1rem;
-                margin: 0 0 2.5rem;
+                margin: 0 0 5.5rem;
                 align-items: stretch;
                 /* Break the cards out ~1/3 wider than the 900px text column
                    (up to 1200px), centred on the viewport. The negative
@@ -871,8 +883,8 @@
                 left: 0;
                 bottom: 0;
                 width: 100%;
-                color: inherit;
-                background: var(--color-bg);
+                color: var(--color-text-inverted);
+                background: var(--footer-bg);
                 border-top: 1px solid var(--color-secondary);
                 display: flex;
                 flex-wrap: wrap;
@@ -955,7 +967,8 @@
                     <div class="card__links__wrap">
                         <ul class="card__links">
                             <li>
-                                <a href="https://gaunt-sloth-assistant.github.io/"
+                                <a
+                                    href="https://gaunt-sloth-assistant.github.io/"
                                     >gaunt-sloth-assistant.github.io</a
                                 ><span class="descr">The tool</span>
                             </li>
@@ -1128,8 +1141,8 @@
                 <div class="field__grid">
                     <figure class="field__quote">
                         <blockquote>
-                            The data collection is robust, and I love the way the
-                            info is organised in the graphs.
+                            The data collection is robust, and I love the way
+                            the info is organised in the graphs.
                         </blockquote>
                         <figcaption>
                             <span class="field__who">Manchester United</span>
@@ -1177,8 +1190,8 @@
                             Patient report and the graphs are visually appealing
                             and easy to understand. I like being able to click a
                             particular time point and have it highlight the
-                            results from that session across the different tests.
-                            It's also appealing to the patients.
+                            results from that session across the different
+                            tests. It's also appealing to the patients.
                         </blockquote>
                         <figcaption>
                             <span class="field__who"
@@ -1218,8 +1231,9 @@
                 </div>
 
                 <p class="field__also">
-                    Also in the field with the <strong>Buffalo Bills</strong> and
-                    the <strong>Portland Trail Blazers</strong>, who moved to IMU
+                    Also in the field with the
+                    <strong>Buffalo Bills</strong> and the
+                    <strong>Portland Trail Blazers</strong>, who moved to IMU
                     Step for faster set-up, better battery life and clearer
                     dashboards.
                 </p>
@@ -1234,24 +1248,24 @@
                 <p class="eyebrow">How I work</p>
                 <div class="approach__body">
                     <p>
-                        The cost of producing UI has collapsed. What used to take
-                        a week of Figma now takes an afternoon in Cursor with
-                        Claude Code. That changes where the value sits — less in
-                        production, more in deciding what's worth producing in the
-                        first place. So that's where I spend my time: framing the
-                        problem, choosing the direction, then building the
-                        prototype myself rather than describing it.
+                        The cost of producing UI has collapsed. What used to
+                        take a week of Figma now takes an afternoon in Cursor
+                        with Claude Code. That changes where the value sits —
+                        less in production, more in deciding what's worth
+                        producing in the first place. So that's where I spend my
+                        time: framing the problem, choosing the direction, then
+                        building the prototype myself rather than describing it.
                     </p>
                     <p>
-                        In practice that looks like this: I start with the outcome
-                        and the constraints, sketch the shape of the solution,
-                        then move into a coded prototype early — usually Vue or
-                        React inside an existing design system, deployed to a
-                        branch URL that stakeholders can actually use. That's how
-                        the day-to-day work at Defrr and Galvanized Pukeko gets
-                        shipped. The property-platform design challenge above —
-                        buyer and seller side — was built the same way, end to
-                        end.
+                        In practice that looks like this: I start with the
+                        outcome and the constraints, sketch the shape of the
+                        solution, then move into a coded prototype early —
+                        usually Vue or React inside an existing design system,
+                        deployed to a branch URL that stakeholders can actually
+                        use. That's how the day-to-day work at Defrr and
+                        Galvanized Pukeko gets shipped. The property-platform
+                        design challenge above — buyer and seller side — was
+                        built the same way, end to end.
                     </p>
                     <p>
                         I've spent the last year deliberately closing the
@@ -1262,15 +1276,16 @@
                         Google Cloud's Conversational AI on Vertex AI and
                         Dialogflow CX gave me hands-on experience designing for
                         agent behaviour; LinkedIn Learning's AI Product Ideation
-                        track filled in the discovery side. Combined with shipping
-                        production code at Defrr and Galvanized Pukeko, it means I
-                        can discuss trade-offs with engineers as a peer, not hand
-                        off a static file and wait.
+                        track filled in the discovery side. Combined with
+                        shipping production code at Defrr and Galvanized Pukeko,
+                        it means I can discuss trade-offs with engineers as a
+                        peer, not hand off a static file and wait.
                     </p>
                     <p class="approach__kicker">
-                        The constant across all of it is <em>taste</em>. AI gives
-                        you a starting point. Whether it ships as something
-                        coherent or something generic — that's still a human call.
+                        The constant across all of it is <em>taste</em>. AI
+                        gives you a starting point. Whether it ships as
+                        something coherent or something generic — that's still a
+                        human call.
                     </p>
                 </div>
             </section>
@@ -1287,23 +1302,24 @@
                         most don't have anyone who has actually built with a
                         model, wired up an agent, or shipped a tool call to
                         production. What they need isn't another vendor deck or
-                        another chat box bolted onto search. It's someone who can
-                        hold the trade-offs under sceptical questioning, and who
-                        understands both the AI architecture and the product
+                        another chat box bolted onto search. It's someone who
+                        can hold the trade-offs under sceptical questioning, and
+                        who understands both the AI architecture and the product
                         surface.
                     </p>
                     <p>
                         The property platform above is the worked example. Not a
-                        chat box pasted on the side — a product redesigned around
-                        what AI is actually good at: the
+                        chat box pasted on the side — a product redesigned
+                        around what AI is actually good at: the
                         <em>suggests, never decides</em> posture, the
-                        router-and-specialist architecture, sourced data only, and
-                        the agent-economics trade-off named honestly rather than
-                        hidden.
+                        router-and-specialist architecture, sourced data only,
+                        and the agent-economics trade-off named honestly rather
+                        than hidden.
                     </p>
                     <p class="approach__kicker">
-                        If your board has handed you a brief that looks like that —
-                        this is the kind of conversation I have for a living.
+                        If your board has handed you a brief that looks like
+                        that — this is the kind of conversation I have for a
+                        living.
                     </p>
                 </div>
                 <!-- Consulting video: drop the embed in here once produced.
@@ -1331,8 +1347,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    <strong>Galvanized Pukeko</strong> — AI Product
-                                    Contributor
+                                    <strong>Galvanized Pukeko</strong> — AI
+                                    Product Contributor
                                 </div>
                                 <div class="bg-role__meta">current</div>
                             </li>
@@ -1351,7 +1367,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    <strong>Unimarket</strong> — UI / UX Designer
+                                    <strong>Unimarket</strong> — UI / UX
+                                    Designer
                                 </div>
                                 <div class="bg-role__meta">
                                     Auckland · 2018–2019
@@ -1363,8 +1380,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    <strong>9 Spokes</strong> — UI / UX Designer /
-                                    Developer
+                                    <strong>9 Spokes</strong> — UI / UX Designer
+                                    / Developer
                                 </div>
                                 <div class="bg-role__meta">
                                     Auckland · 2015–2017
@@ -1376,8 +1393,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    <strong>Kopolo Studio</strong> — Freelancer /
-                                    Web Master
+                                    <strong>Kopolo Studio</strong> — Freelancer
+                                    / Web Master
                                 </div>
                                 <div class="bg-role__meta">
                                     Remote · 2013–2015
@@ -1399,7 +1416,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    Web Development Diploma, Information Technology
+                                    Web Development Diploma, Information
+                                    Technology
                                 </div>
                                 <div class="bg-role__meta">
                                     YOOBEE College of Creative Innovation · 2013
@@ -1407,8 +1425,8 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    Master's degree (with Honours), Finance &amp;
-                                    Insurance
+                                    Master's degree (with Honours), Finance
+                                    &amp; Insurance
                                 </div>
                                 <div class="bg-role__meta">
                                     Far Eastern State University · 2003–2008
@@ -1434,13 +1452,17 @@
                             </li>
                             <li class="bg-role">
                                 <div class="bg-role__head">
-                                    Conversational AI on Vertex AI &amp; Dialogflow
-                                    CX
+                                    Conversational AI on Vertex AI &amp;
+                                    Dialogflow CX
                                 </div>
-                                <div class="bg-role__meta">Google Cloud · 2024</div>
+                                <div class="bg-role__meta">
+                                    Google Cloud · 2024
+                                </div>
                             </li>
                             <li class="bg-role">
-                                <div class="bg-role__head">AI Product Ideation</div>
+                                <div class="bg-role__head">
+                                    AI Product Ideation
+                                </div>
                                 <div class="bg-role__meta">
                                     LinkedIn Learning · 2025
                                 </div>
@@ -1479,7 +1501,7 @@
 
             <section class="contact">
                 <p class="eyebrow">Contact</p>
-                
+
                 <p class="contact__links">
                     <a href="https://www.linkedin.com/in/mari-kondrateva/"
                         >LinkedIn — /in/mari-kondrateva</a
@@ -1497,7 +1519,7 @@
                 <div>
                     LinkedIn:
                     <a href="https://www.linkedin.com/in/mari-kondrateva/"
-                        >https://www.linkedin.com/in/mari-kondrateva/</a
+                        >linkedin.com/in/mari-kondrateva/</a
                     >
                 </div>
             </div>

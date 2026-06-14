@@ -8,30 +8,72 @@
     <script type="module" crossorigin src="/knee-monitor/assets/index-Drm22B7P.js"></script>
     <link rel="stylesheet" crossorigin href="/knee-monitor/assets/index-DD7-dQet.css">
     <style>
-      /* Self-contained intro block sitting above the React walkthrough so
-         someone landing here cold gets the title, the story, and the outcome
-         before the screen-by-screen tour. Uses the walkthrough's own purple +
-         Figtree system; Fraunces (from the site root) carries the title. */
+      /* Self-contained blocks wrapping the React walkthrough so someone landing
+         here cold gets navigation, the story, the outcome, and the shipped
+         data-visualisation screens around the screen-by-screen tour. Uses the
+         walkthrough's own purple + Figtree system; Fraunces (from the site
+         root) carries the display type. */
       @font-face {
         font-family: "Fraunces intro";
         src: url(/fonts/Fraunces/Fraunces-VariableFont_SOFT-WONK-opsz-wght.ttf);
         font-display: swap;
       }
+
+      /* Sticky top nav — the page is now more than a walkthrough, so it carries
+         its own navigation across overview / walkthrough / data visualisation. */
+      .km-nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 1.5rem;
+        padding: 0.85rem clamp(1rem, 5vw, 3rem);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: saturate(1.3) blur(8px);
+        -webkit-backdrop-filter: saturate(1.3) blur(8px);
+        border-bottom: 1px solid var(--color-gray-light, #eceff0);
+      }
+      .km-nav__home {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-primary-dark, #321f6b);
+        text-decoration: none;
+      }
+      .km-nav__home:hover {
+        color: var(--color-primary, #6438ff);
+      }
+      .km-nav__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .km-nav__links a {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--color-gray, #9d9da6);
+        text-decoration: none;
+      }
+      .km-nav__links a:hover {
+        color: var(--color-primary, #6438ff);
+      }
+
+      /* anchored sections clear the sticky nav when jumped to */
+      .km-intro,
+      #walkthrough,
+      .km-dataviz {
+        scroll-margin-top: 4.5rem;
+      }
+
       .km-intro {
         max-width: 720px;
         margin: 0 auto;
         padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
-      }
-      .km-intro__back {
-        display: inline-block;
-        margin-bottom: 2rem;
-        font-size: 0.9375rem;
-        font-weight: 500;
-        color: var(--color-primary, #6438ff);
-        text-decoration: none;
-      }
-      .km-intro__back:hover {
-        text-decoration: underline;
       }
       .km-intro__eyebrow {
         margin: 0 0 0.75rem;
@@ -74,11 +116,105 @@
         line-height: 1.45;
         color: var(--color-text, #1d0f48);
       }
+
+      /* Data-visualisation closer — the shipped product screens, shown at a
+         readable size with the design reasoning as real, accessible captions
+         (it used to be text baked into a PDF). The tiles are honest device
+         crops carrying the IMeasureU purple, not portfolio chrome. */
+      .km-dataviz {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem);
+      }
+      .km-dataviz__eyebrow {
+        margin: 0 0 0.9rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-gray, #9d9da6);
+      }
+      .km-dataviz__lead {
+        font-family: "Fraunces intro", Georgia, serif;
+        font-weight: 500;
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        line-height: 1.15;
+        margin: 0 0 1rem;
+        color: var(--color-primary-dark, #321f6b);
+      }
+      .km-dataviz__intro {
+        font-size: var(--font-size-lg, 1.25rem);
+        line-height: 1.6;
+        color: var(--color-text, #1d0f48);
+        max-width: 60ch;
+        margin: 0 0 3.5rem;
+      }
+      .km-figure {
+        display: grid;
+        gap: 1.25rem 2.5rem;
+        margin: 0 0 3.5rem;
+        align-items: center;
+      }
+      .km-figure__img {
+        width: 100%;
+        max-width: 380px;
+        height: auto;
+        aspect-ratio: 807 / 1135;
+        border-radius: 14px;
+        justify-self: center;
+      }
+      .km-figure__title {
+        font-weight: 600;
+        font-size: 1.0625rem;
+        color: var(--color-primary-dark, #321f6b);
+        margin: 0 0 0.5rem;
+      }
+      .km-figure__text {
+        font-size: 1rem;
+        line-height: 1.55;
+        color: var(--color-text, #1d0f48);
+        max-width: 52ch;
+        margin: 0;
+      }
+      @media (min-width: 760px) {
+        .km-figure {
+          grid-template-columns: 380px 1fr;
+        }
+      }
+      .km-dataviz__next {
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-gray-light, #eceff0);
+      }
+      .km-dataviz__next a {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--color-primary, #6438ff);
+        text-decoration: none;
+      }
+      .km-dataviz__next a:hover {
+        text-decoration: underline;
+      }
+      .km-dataviz__next .descr {
+        display: block;
+        margin-top: 0.4rem;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        color: var(--color-gray, #9d9da6);
+        max-width: 52ch;
+      }
     </style>
   </head>
   <body>
-    <section class="km-intro">
-      <a class="km-intro__back" href="/">← Mari Kondrateva · Portfolio</a>
+    <nav class="km-nav">
+      <a class="km-nav__home" href="/">← Mari Kondrateva · Portfolio</a>
+      <ul class="km-nav__links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#walkthrough">Walkthrough</a></li>
+        <li><a href="#data-visualisation">Data visualisation</a></li>
+      </ul>
+    </nav>
+
+    <section class="km-intro" id="overview">
       <p class="km-intro__eyebrow">
         Senior Product Designer · IMeasureU / Vicon · 2022–2024
       </p>
@@ -89,7 +225,9 @@
         not the physiotherapists actually using it day to day. Re-labelled
         sensors and an onboarding flow designed for physios cleared the
         complaint stream and unblocked the launch. The walkthrough below is the
-        screen-by-screen tour of what shipped.
+        screen-by-screen tour of what shipped; the data-visualisation work that
+        closes the page is where the four sensors became something a clinician
+        could read.
       </p>
       <div class="km-intro__outcome">
         <span class="km-intro__metric">90%</span>
@@ -99,6 +237,90 @@
         </span>
       </div>
     </section>
+
+    <div id="walkthrough"></div>
     <div id="root"></div>
+
+    <section class="km-dataviz" id="data-visualisation">
+      <p class="km-dataviz__eyebrow">The data visualisation</p>
+      <h2 class="km-dataviz__lead">Four sensors, read in seconds.</h2>
+      <p class="km-dataviz__intro">
+        The product's real job was to turn four wearable sensors into something a
+        physiotherapist could read at a glance, mid-appointment. These are three
+        of the core assessment screens that shipped — and the decisions behind
+        them.
+      </p>
+
+      <figure class="km-figure">
+        <img
+          class="km-figure__img"
+          loading="lazy"
+          width="807"
+          height="1135"
+          src="/assets/knee-angles-chart-tile-ipad.svg"
+          alt="Walking Knee Angles screen: a progress chart of knee range of motion against a goal line, a raw-data distribution plot, and an assessment results table comparing left and right legs."
+        />
+        <figcaption>
+          <p class="km-figure__title">Walking Knee Angles</p>
+          <p class="km-figure__text">
+            Chart colours are derived from the IMeasureU brand palette through
+            lightness and saturation adjustments, and contrast meets WCAG AA. The
+            raw-data distribution is plotted beneath the summary, so a clinician
+            sees the spread across the whole assessment — not just the headline
+            angle.
+          </p>
+        </figcaption>
+      </figure>
+
+      <figure class="km-figure">
+        <img
+          class="km-figure__img"
+          loading="lazy"
+          width="807"
+          height="1135"
+          src="/assets/walking-quality-chart-tile-ipad.svg"
+          alt="Walking Impact Metrics screen: Impact Asymmetry and Impact Intensity charts tracked across weeks against a goal line."
+        />
+        <figcaption>
+          <p class="km-figure__title">Walking Impact Metrics</p>
+          <p class="km-figure__text">
+            Impact Asymmetry and Impact Intensity on one screen — the same
+            asymmetry metric that anchored the IMU Step re-launch. A goal line
+            and a plain “closer to 0% is better” rule turn raw biomechanics into
+            a target a physio and patient can work toward together.
+          </p>
+        </figcaption>
+      </figure>
+
+      <figure class="km-figure">
+        <img
+          class="km-figure__img"
+          loading="lazy"
+          width="807"
+          height="1135"
+          src="/assets/walking-ability-chart-tile-ipad.svg"
+          alt="Walking Speed and Stride Length screen: line and bar charts tracked across weeks against a published normative range."
+        />
+        <figcaption>
+          <p class="km-figure__title">Walking Speed &amp; Stride Length</p>
+          <p class="km-figure__text">
+            Walking speed and stride length, plotted against a published
+            normative range from 565 healthy subjects. The normative band gives
+            every number a reference point, so progress reads as “approaching
+            healthy” rather than just “going up”.
+          </p>
+        </figcaption>
+      </figure>
+
+      <div class="km-dataviz__next">
+        <a href="/case-study-knee-monitor-re-alignment"
+          >Read the data-accuracy case study →</a
+        >
+        <span class="descr">
+          The re-alignment study behind the numbers — how the sensor data was
+          validated so the charts above could be trusted.
+        </span>
+      </div>
+    </section>
   </body>
 </html>

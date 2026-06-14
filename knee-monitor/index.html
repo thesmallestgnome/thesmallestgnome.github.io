@@ -10,7 +10,7 @@
     <style>
       /* Self-contained blocks wrapping the React walkthrough so someone landing
          here cold gets navigation, the story, the outcome, and the shipped
-         data-visualisation screens around the screen-by-screen tour. Uses the
+         data-visualisation screens around the screen-by-screen tour. Uses thein
          walkthrough's own purple + Figtree system; Fraunces (from the site
          root) carries the display type. */
       @font-face {
@@ -99,7 +99,7 @@
       }
       .km-intro__outcome {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         gap: 1rem;
         padding-top: 1.5rem;
         border-top: 1px solid var(--color-gray-light, #eceff0);
@@ -147,7 +147,20 @@
         line-height: 1.6;
         color: var(--color-text, #1d0f48);
         max-width: 60ch;
+        margin: 0 0 1.75rem;
+      }
+      /* Accessibility was a hard constraint on these charts, not a finishing
+         pass — older readers, and print output that can be black-and-white. */
+      .km-dataviz__a11y {
         margin: 0 0 3.5rem;
+        padding: 1.25rem 1.5rem;
+        border-left: 3px solid var(--color-primary, #6438ff);
+        background: rgba(100, 56, 255, 0.05);
+        border-radius: 0 8px 8px 0;
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        color: var(--color-text, #1d0f48);
+        max-width: 64ch;
       }
       .km-figure {
         display: grid;
@@ -251,6 +264,18 @@
         them.
       </p>
 
+      <p class="km-dataviz__a11y">
+        Accessibility set the constraints here, not the finish. The colours
+        that carry meaning — data series, labels, the summary numbers —
+        <strong>clear WCAG AA, and most reach AAA</strong>, in colour contrast
+        <em>and</em> in text size, because the readers are an older patient
+        group, and because assessment screens get printed, often on a
+        black-and-white office printer. So
+        nothing relies on colour alone: shape, position and labels carry the
+        reading, and colour only reinforces it. Drop the chart to a mono printer
+        and it still says the same thing.
+      </p>
+
       <figure class="km-figure">
         <img
           class="km-figure__img"
@@ -264,10 +289,9 @@
           <p class="km-figure__title">Walking Knee Angles</p>
           <p class="km-figure__text">
             Chart colours are derived from the IMeasureU brand palette through
-            lightness and saturation adjustments, and contrast meets WCAG AA. The
-            raw-data distribution is plotted beneath the summary, so a clinician
-            sees the spread across the whole assessment — not just the headline
-            angle.
+            lightness and saturation adjustments. The raw-data distribution is
+            plotted beneath the summary, so a clinician sees the spread across
+            the whole assessment — not just the headline angle.
           </p>
         </figcaption>
       </figure>
